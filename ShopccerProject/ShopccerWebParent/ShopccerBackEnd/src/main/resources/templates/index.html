@@ -1,10 +1,26 @@
 <!DOCTYPE html>
-<html>
+<html xmlns:th="http://www.thymeleaf.org">
+
 <head>
-<meta charset="UTF-8">
-<title>Shopccer Admin Control Panel</title>
+	<meta http-equiv="Content-Type" content="txt/html; charset=UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0">
+	<title>Home - Shopccer Admin</title>
+
+	<link rel="stylesheet" type="text/css" th:href="@{/webjars/bootstrap/css/bootstrap.min.css}">
+	<script type="text/javascript" th:src="@{/webjars/jquery/jquery.min.js}"></script>
+	<script type="text/javascript" th:src="@{/webjars/bootstrap/js/bootstrap.min.js}"></script>
 </head>
+
 <body>
-	<h1>Bienvenidos a SHOPCCER !</h1>
+	<div class="container-fluid">
+		<div>
+			<h1>Shopccer Control Panel</h1>
+		</div>
+
+		<div>
+			<p>Shopccer Control Panel Copyright &copy; Shopccer</p>
+		</div>
+	</div>
 </body>
+
 </html>
