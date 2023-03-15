@@ -1,4 +1,4 @@
-package com.shopccer.admin;
+package com.shopccer.admin.controller;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
