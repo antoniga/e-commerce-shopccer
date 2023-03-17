@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+	<meta http-equiv="Content-Type" content="txt/html; charset=UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0">
+	<title>Crear nuevo usuario</title>
+
+	<link rel="stylesheet" type="text/css" th:href="@{/webjars/bootstrap/css/bootstrap.min.css}">
+	<script type="text/javascript" th:src="@{/webjars/jquery/jquery.min.js}"></script>
+	<script type="text/javascript" th:src="@{/webjars/bootstrap/js/bootstrap.min.js}"></script>
+</head>
+
+<body>
+	<div class="container-fluid">
+		<div>
+			<nav class="navbar navbar-expand-lg bg-dark navbar-dark">
+				<a class="navbar-brand" th:href="@{/}" href=""><img th:src="@{/images/shopccer_logo_small.png}"></a>
+				<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#topNavBar">
+					<span class="navbar-toggler-icon"></span>
+				</button>
+				<div class="collapse navbar-collapse" id="topNavBar">
+					<ul class="navbar-nav">
+						<li class="nav-item"><a class="nav-link" th:href="@{/usuarios}">USUARIOS</a></li>
+						<li class="nav-item"><a class="nav-link" th:href="@{/superficies}">SUPERFICIES</a></li>
+						<li class="nav-item"><a class="nav-link" th:href="@{/marcas}">MARCAS</a>
+						</li>
+						<li class="nav-item"><a class="nav-link" th:href="@{/productos}">PRODUCTOS</a></li>
+						<li class="nav-item"><a class="nav-link" th:href="@{/clientes}">CLIENTES</a></li>
+						<li class="nav-item"><a class="nav-link" th:href="@{/envios}">ENVÍOS</a>
+						</li>
+						<li class="nav-item"><a class="nav-link" th:href="@{/pedidos}">PEDIDOS</a></li>
+						<li class="nav-item"><a class="nav-link" th:href="@{/informe}">INFORME DE VENTAS</a></li>
+						<li class="nav-item"><a class="nav-link" th:href="@{/menus}">MENÚS</a></li>
+						<li class="nav-item"><a class="nav-link" th:href="@{/config}">CONFIGURACIÓN</a></li>
+					</ul>
+				</div>
+			</nav>
+		</div>
+		<div>
+			<h2>Gestión de usuarios | Crear nuevo usuario</h2>
+		</div>
+		<form th:action="@{/usuarios/save}" method="post" style="max-width: 700px; margin: 0 auto;"
+			th:object="${usuario}">
+			<div class="border p-3">
+				<div class="form-group row">
+					<div class="col-sm-12">
+						<label class="form-label" for="inputEmail">Email:</label>
+						<input type="email" class="form-control" id="inputEmail" placeholder="Introduce un email"
+							th:field="*{email}" required minlength="8" maxlength="128">
+					</div>
+				</div>
+				<div class="form-group row">
+					<div class="col-sm-12">
+						<label class="form-label" for="inputNombre">Nombre:</label>
+						<input type="text" class="form-control" id="inputNombre" placeholder="Introduce el nombre"
+							th:field="*{nombre}" required minlength="2" maxlength="45">
+					</div>
+				</div>
+				<div class="form-group row">
+					<div class="col-sm-12">
+						<label class="form-label" for="inputApellidos">Apellidos:</label>
+						<input type="text" class="form-control" id="inputApellidos"
+							placeholder="Introduce los apellidos" th:field="*{apellidos}" required minlength="2"
+							maxlength="90">
+					</div>
+				</div>
+				<div class="form-group row">
+					<div class="col-sm-12">
+						<label class="form-label" for="inputPwd">Contraseña:</label>
+						<input type="password" class="form-control" id="inputPwd" placeholder="Introduce la constraseña"
+							th:field="*{password}" required minlength="8" maxlength="20">
+					</div>
+				</div>
+				<div class="form-group row">
+					<div class="col-sm-12">
+						<label class="form-label">Rol:</label> <br>
+						<th:block th:each=" rol: ${listaRoles}">
+							<input type="radio" th:field="*{rol}" th:text="${rol.nombre}" th:value="${rol.idRol}" name="rol" id=""> <br>
+						</th:block>
+					</div>
+				</div>
+				<div class="form-group row">
+					<div class="col-sm-12">
+						<label class="form-label" for="inputActivo">Activo:</label>
+						<input type="checkbox" th:field="*{activo}">
+					</div>
+				</div>
+
+				<div class="text-center m-3">
+					<input type="submit" value="Guardar" class="btn btn-primary" />
+					<input type="button" value="Cancelar" class="btn btn-secondary" />
+				</div>
+			</div>
+		</form>
+
+
+		<div class="text-center">
+			<p>Shopccer Control Panel Copyright &copy; Shopccer</p>
+		</div>
+
+</body>
+
+</html>

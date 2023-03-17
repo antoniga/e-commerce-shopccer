@@ -12,6 +12,7 @@ import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabas
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.test.annotation.Rollback;
 
+import com.shopccer.admin.repository.RolRepository;
 import com.shopccer.common.entity.Rol;
 
 @DataJpaTest
@@ -25,7 +26,7 @@ public class RolRepositoryTest {
 
 	@Test
 	@Order(1)
-	public void testCreateFirstRol() {
+	public void testCreateAdminRol() {
 		Rol rolAdmin = new Rol("Admin");
 		Rol savedRol = rolRepository.save(rolAdmin);
 		assertThat(savedRol.getIdRol()).isPositive();
@@ -33,7 +34,7 @@ public class RolRepositoryTest {
 
 	@Test
 	@Order(2)
-	public void testCreateRestRol() {
+	public void testCreateClienteRol() {
 		Rol rolClient = new Rol("Cliente");
 		Rol savedRol = rolRepository.save(rolClient);
 		assertThat(savedRol.getIdRol()).isPositive();

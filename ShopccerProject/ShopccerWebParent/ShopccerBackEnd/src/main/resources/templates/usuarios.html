@@ -23,10 +23,12 @@
 					<ul class="navbar-nav">
 						<li class="nav-item"><a class="nav-link" th:href="@{/usuarios}">USUARIOS</a></li>
 						<li class="nav-item"><a class="nav-link" th:href="@{/superficies}">SUPERFICIES</a></li>
-						<li class="nav-item"><a class="nav-link" th:href="@{/marcas}">MARCAS</a> </li>
+						<li class="nav-item"><a class="nav-link" th:href="@{/marcas}">MARCAS</a>
+						</li>
 						<li class="nav-item"><a class="nav-link" th:href="@{/productos}">PRODUCTOS</a></li>
 						<li class="nav-item"><a class="nav-link" th:href="@{/clientes}">CLIENTES</a></li>
-						<li class="nav-item"><a class="nav-link" th:href="@{/envios}">ENVÍOS</a> </li>
+						<li class="nav-item"><a class="nav-link" th:href="@{/envios}">ENVÍOS</a>
+						</li>
 						<li class="nav-item"><a class="nav-link" th:href="@{/pedidos}">PEDIDOS</a></li>
 						<li class="nav-item"><a class="nav-link" th:href="@{/informe}">INFORME DE VENTAS</a></li>
 						<li class="nav-item"><a class="nav-link" th:href="@{/menus}">MENÚS</a></li>
@@ -36,13 +38,42 @@
 			</nav>
 		</div>
 		<div>
-			<h1>Shopccer Control Panel</h1>
+			<h2>Gestión de usuarios</h2>
+			<button type="button" class="btn btn-info m-2"><a class="text-white" th:href="@{/usuarios/nuevo}" style="text-decoration:none">Crear nuevo usuario</a></button>
+		</div>
+
+		<div>
+			<table class="table table-bordered table-striped table-hover table-responsive-xl">
+				<thead class="thead-dark">
+					<tr>
+						<th>ID Usuario</th>
+						<th>Foto</th>
+						<th>Email</th>
+						<th>Nombre</th>
+						<th>Apellidos</th>
+						<th>Activo</th>
+						<th>Rol</th>
+						<th></th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr th:each="usuario : ${listaUsuarios}">
+						<td>[[${usuario.idUsuario}]]</td>
+						<td>[[${usuario.fotos}]]</td>
+						<td>[[${usuario.email}]]</td>
+						<td>[[${usuario.nombre}]]</td>
+						<td>[[${usuario.apellidos}]]</td>
+						<td>[[${usuario.activo}]]</td>
+						<td>[[${usuario.rol.nombre}]]</td>
+						<td>Editar &nbsp; Eliminar</td>
+					</tr>
+				</tbody>
+			</table>
 		</div>
 
 		<div class="text-center">
 			<p>Shopccer Control Panel Copyright &copy; Shopccer</p>
 		</div>
-	</div>
 </body>
 
 </html>

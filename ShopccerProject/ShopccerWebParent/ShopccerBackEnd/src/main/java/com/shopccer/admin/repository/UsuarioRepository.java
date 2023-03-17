@@ -1,4 +1,4 @@
-package com.shopccer.admin.user;
+package com.shopccer.admin.repository;
 
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;

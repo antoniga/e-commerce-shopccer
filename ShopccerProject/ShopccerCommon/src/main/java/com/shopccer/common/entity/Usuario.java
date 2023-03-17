@@ -23,12 +23,12 @@ public class Usuario {
 	private String email;
 
 	@Column(length = 64, nullable = false)
-	private String passsword;
+	private String password;
 
 	@Column(length = 45, nullable = false)
 	private String nombre;
 
-	@Column(length = 45, nullable = false)
+	@Column(length = 90, nullable = false)
 	private String apellidos;
 
 	@Column(length = 64)
@@ -44,11 +44,11 @@ public class Usuario {
 		super();
 	}
 
-	public Usuario(String email, String passsword, String nombre, String apellidos, String fotos, Boolean activo,
+	public Usuario(String email, String password, String nombre, String apellidos, String fotos, Boolean activo,
 			Rol rol) {
 		super();
 		this.email = email;
-		this.passsword = passsword;
+		this.password = password;
 		this.nombre = nombre;
 		this.apellidos = apellidos;
 		this.fotos = fotos;
@@ -56,12 +56,12 @@ public class Usuario {
 		this.rol = rol;
 	}
 
-	public Usuario(Integer idUsuario, String email, String passsword, String nombre, String apellidos, String fotos,
+	public Usuario(Integer idUsuario, String email, String password, String nombre, String apellidos, String fotos,
 			Boolean activo, Rol rol) {
 		super();
 		this.idUsuario = idUsuario;
 		this.email = email;
-		this.passsword = passsword;
+		this.password = password;
 		this.nombre = nombre;
 		this.apellidos = apellidos;
 		this.fotos = fotos;
@@ -85,12 +85,12 @@ public class Usuario {
 		this.email = email;
 	}
 
-	public String getPasssword() {
-		return passsword;
+	public String getpassword() {
+		return password;
 	}
 
-	public void setPasssword(String passsword) {
-		this.passsword = passsword;
+	public void setpassword(String password) {
+		this.password = password;
 	}
 
 	public String getNombre() {
@@ -135,7 +135,7 @@ public class Usuario {
 
 	@Override
 	public int hashCode() {
-		return Objects.hash(activo, apellidos, email, fotos, idUsuario, nombre, passsword, rol);
+		return Objects.hash(activo, apellidos, email, fotos, idUsuario, nombre, password, rol);
 	}
 
 	@Override
@@ -150,12 +150,12 @@ public class Usuario {
 		return Objects.equals(activo, other.activo) && Objects.equals(apellidos, other.apellidos)
 				&& Objects.equals(email, other.email) && Objects.equals(fotos, other.fotos)
 				&& Objects.equals(idUsuario, other.idUsuario) && Objects.equals(nombre, other.nombre)
-				&& Objects.equals(passsword, other.passsword) && Objects.equals(rol, other.rol);
+				&& Objects.equals(password, other.password) && Objects.equals(rol, other.rol);
 	}
 
 	@Override
 	public String toString() {
-		return "Usuario [idUsuario=" + idUsuario + ", email=" + email + ", passsword=" + passsword + ", nombre="
+		return "Usuario [idUsuario=" + idUsuario + ", email=" + email + ", password=" + password + ", nombre="
 				+ nombre + ", apellidos=" + apellidos + ", fotos=" + fotos + ", activo=" + activo + ", rol=" + rol
 				+ "]";
 	}

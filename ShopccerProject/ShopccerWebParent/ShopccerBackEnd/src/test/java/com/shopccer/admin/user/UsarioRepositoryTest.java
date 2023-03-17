@@ -14,6 +14,8 @@ import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabas
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.test.annotation.Rollback;
 
+import com.shopccer.admin.repository.RolRepository;
+import com.shopccer.admin.repository.UsuarioRepository;
 import com.shopccer.common.entity.Rol;
 import com.shopccer.common.entity.Usuario;
 
@@ -21,7 +23,7 @@ import com.shopccer.common.entity.Usuario;
 @AutoConfigureTestDatabase(replace = Replace.NONE)
 @Rollback(false)
 @TestMethodOrder(OrderAnnotation.class)
-public class UusarioRepositoryTest {
+public class UsarioRepositoryTest {
 
 	@Autowired
 	private UsuarioRepository usuarioRepository;
