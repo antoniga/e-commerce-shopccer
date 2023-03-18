@@ -7,6 +7,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.shopccer.admin.service.RolService;
 import com.shopccer.admin.service.UsuarioService;
@@ -42,9 +43,11 @@ public class UserController {
 	}
 	
 	@PostMapping("usuarios/save")
-	public String saveUsuario(Usuario usuario) {
+	public String saveUsuario(Usuario usuario, RedirectAttributes redirectAttributes) {
 		System.out.println(usuario.toString());
 		usuarioService.save(usuario);
+		
+		redirectAttributes.addFlashAttribute("msg","El usuario ha sido guardado correctamente.");
 		return "redirect:/usuarios";
 	}
 

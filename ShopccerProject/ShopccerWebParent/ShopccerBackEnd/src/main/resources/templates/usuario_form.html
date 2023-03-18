@@ -76,7 +76,8 @@
 					<div class="col-sm-12">
 						<label class="form-label">Rol:</label> <br>
 						<th:block th:each=" rol: ${listaRoles}">
-							<input type="radio" th:field="*{rol}" th:text="${rol.nombre}" th:value="${rol.idRol}" name="rol" id=""> <br>
+							<input type="radio" th:field="*{rol}" th:text="${rol.nombre}" th:value="${rol.idRol}"
+								name="rol" id=""><br>
 						</th:block>
 					</div>
 				</div>
@@ -89,7 +90,7 @@
 
 				<div class="text-center m-3">
 					<input type="submit" value="Guardar" class="btn btn-primary" />
-					<input type="button" value="Cancelar" class="btn btn-secondary" />
+					<input type="button" value="Cancelar" class="btn btn-secondary" id="btnCancelar" />
 				</div>
 			</div>
 		</form>
@@ -99,6 +100,14 @@
 			<p>Shopccer Control Panel Copyright &copy; Shopccer</p>
 		</div>
 
+		<script type="text/javascript">
+			$(document).ready(function () {
+				$("#btnCancelar").on("click", function () {
+					window.location = "[[@{/usuarios}]]";
+				});
+				$('input:radio[name="rol"]').filter('[value="2"]').attr('checked', true);
+			});
+		</script>
 </body>
 
 </html>
