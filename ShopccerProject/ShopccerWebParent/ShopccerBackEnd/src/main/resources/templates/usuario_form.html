@@ -41,7 +41,7 @@
 			<h2>Gestión de usuarios | Crear nuevo usuario</h2>
 		</div>
 		<form th:action="@{/usuarios/save}" method="post" style="max-width: 700px; margin: 0 auto;"
-			th:object="${usuario}">
+			th:object="${usuario}" onsubmit="return checkEmailUnique(this);">
 			<div class="border p-3">
 				<div class="form-group row">
 					<div class="col-sm-12">
@@ -89,11 +89,29 @@
 				</div>
 
 				<div class="text-center m-3">
-					<input type="submit" value="Guardar" class="btn btn-primary" />
+					<input type="submit" value="Guardar" class="btn btn-primary" id="btnSubmit" />
 					<input type="button" value="Cancelar" class="btn btn-secondary" id="btnCancelar" />
 				</div>
 			</div>
 		</form>
+
+		<div class="modal fade text-center" id="modalDialog">
+			<div class="modal-dialog">
+				<div class="modal-content">
+					<div class="modal-header">
+						<h4 class="modal-title" id="modalTitle"></h4>
+						<button type="button" class="close" data-dismiss="modal">&times;</button>
+					</div>
+					<div class="modal-body">
+						<span id="modalBody"></span>
+					</div>
+					<div class="modal-footer">
+						<button type="button" class="btn btn-danger" data-dismiss="modal">Cerrar</button>
+					</div>
+				</div>
+			</div>
+
+		</div>
 
 
 		<div class="text-center">
@@ -107,6 +125,35 @@
 				});
 				$('input:radio[name="rol"]').filter('[value="2"]').attr('checked', true);
 			});
+
+			function checkEmailUnique(form) {
+				url = "[[@{/usuarios/checkemail}]]"
+				userEmail = $("#inputEmail").val();
+				csrf = $("input[name='_csrf']").val();
+				data = {
+					email: userEmail,
+					_csrf: csrf
+				};
+				$.post(url, data, function (response) {
+					if (response == "ok") {
+						form.submit();
+					} else if (response == "duplicado") {
+						showModalDialog("Atención", "Ya hay un usuario dado de alta con el siguiente email: " + userEmail);
+					} else {
+						showModalDialog("Error", "Fallo en el servidor desconocido.");
+					}
+
+				}).fail(function () {
+					showModalDialog("Error", "No se pudo conectar con el servidor.");
+				});
+				return false;
+			}
+
+			function showModalDialog(title, message) {
+				$("#modalTitle").text(title);
+				$("#modalBody").text(message);
+				$("#modalDialog").modal();
+			}
 		</script>
 </body>
 
