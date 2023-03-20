@@ -12,5 +12,7 @@ public interface UsuarioService {
 	public List<Usuario> listAll();
 	
 	public Usuario save(Usuario usuario);
+	
+	public Boolean isEmailUnique(String email);
 
 }

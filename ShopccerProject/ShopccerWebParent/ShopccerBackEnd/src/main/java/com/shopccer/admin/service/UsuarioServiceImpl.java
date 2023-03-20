@@ -10,15 +10,15 @@ import com.shopccer.admin.repository.UsuarioRepository;
 import com.shopccer.common.entity.Usuario;
 
 @Service
-public class UsuarioServiceImpl implements UsuarioService{
-	
+public class UsuarioServiceImpl implements UsuarioService {
+
 	@Autowired
 	private UsuarioRepository usuarioRepository;
-	
+
 	@Autowired
 	private PasswordEncoder passwordEncoder;
-	
-	public List<Usuario> listAll(){
+
+	public List<Usuario> listAll() {
 		return (List<Usuario>) usuarioRepository.findAll();
 	}
 
@@ -26,11 +26,17 @@ public class UsuarioServiceImpl implements UsuarioService{
 		encodePassword(usuario);
 		return usuarioRepository.save(usuario);
 	}
-	
+
 	private void encodePassword(Usuario usuario) {
-		
+
 		String encodedPwd = passwordEncoder.encode(usuario.getpassword());
 		usuario.setpassword(encodedPwd);
+	}
+
+	@Override
+	public Boolean isEmailUnique(String email) {
+		Usuario usuarioEmail = usuarioRepository.findByEmail(email);
+		return usuarioEmail == null ? true : false;
 	}
 
 }

@@ -7,5 +7,7 @@ import com.shopccer.common.entity.Usuario;
 
 @Repository
 public interface UsuarioRepository extends CrudRepository<Usuario, Integer>{
+	
+	public Usuario findByEmail(String email);
 
 }

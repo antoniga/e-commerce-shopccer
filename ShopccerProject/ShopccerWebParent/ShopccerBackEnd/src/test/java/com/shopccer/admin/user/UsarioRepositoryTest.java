@@ -64,5 +64,14 @@ public class UsarioRepositoryTest {
 
 		assertThat(usuarioId.getNombre()).isEqualTo("Antonio");
 	}
+	
+	@Test
+	@Order(4)
+	public void testGetUserByEmail() {
+
+		Usuario usuarioEmail = usuarioRepository.findByEmail("ags0389@gmail.com");
+		System.out.println(usuarioEmail);
+		assertThat(usuarioEmail).isNotNull();
+	}
 
 }
