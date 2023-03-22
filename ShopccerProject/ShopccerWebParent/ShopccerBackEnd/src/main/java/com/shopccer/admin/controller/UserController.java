@@ -6,9 +6,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import com.shopccer.admin.exception.UserNotFoundException;
 import com.shopccer.admin.service.RolService;
 import com.shopccer.admin.service.UsuarioService;
 import com.shopccer.common.entity.Rol;
@@ -38,17 +40,38 @@ public class UserController {
 		List<Rol> listaRoles = rolService.listAll();
 		model.addAttribute("usuario", usuario);
 		model.addAttribute("listaRoles", listaRoles);
+		model.addAttribute("tituloPagina", "Crear nuevo usuario");
 		
 		return "usuario_form";
 	}
 	
 	@PostMapping("usuarios/save")
 	public String saveUsuario(Usuario usuario, RedirectAttributes redirectAttributes) {
-		System.out.println(usuario.toString());
+		
 		usuarioService.save(usuario);
 		
 		redirectAttributes.addFlashAttribute("msg","El usuario ha sido guardado correctamente.");
 		return "redirect:/usuarios";
 	}
+	
+	@GetMapping("usuarios/edit/{idUsuario}")
+	public String editUsuario(@PathVariable(name="idUsuario") Integer idUsuario, Model model, RedirectAttributes redirectAttributes) {
+		
+		try {
+			
+			Usuario usuario = usuarioService.findById(idUsuario);
+			List<Rol> listaRoles = rolService.listAll();
+			model.addAttribute("usuario", usuario);
+			model.addAttribute("listaRoles", listaRoles);
+			model.addAttribute("tituloPagina", "Editar usuario (Id: "+idUsuario+") ");
+			return "usuario_form";
+		} catch (UserNotFoundException e) {
+
+			redirectAttributes.addFlashAttribute("msg",e.getMessage());
+			return "redirect:/usuarios";
+		}
+		
+	}
+	
 
 }

@@ -4,7 +4,7 @@
 <head>
 	<meta http-equiv="Content-Type" content="txt/html; charset=UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0">
-	<title>Crear nuevo usuario</title>
+	<title>[[${tituloPagina}]]</title>
 
 	<link rel="stylesheet" type="text/css" th:href="@{/webjars/bootstrap/css/bootstrap.min.css}">
 	<script type="text/javascript" th:src="@{/webjars/jquery/jquery.min.js}"></script>
@@ -38,10 +38,11 @@
 			</nav>
 		</div>
 		<div>
-			<h2>Gestión de usuarios | Crear nuevo usuario</h2>
+			<h2>Gestión de usuarios | [[${tituloPagina}]]</h2>
 		</div>
 		<form th:action="@{/usuarios/save}" method="post" style="max-width: 700px; margin: 0 auto;"
 			th:object="${usuario}" onsubmit="return checkEmailUnique(this);">
+			<input type="hidden" th:field="*{idUsuario}" id="idHidden" name="">
 			<div class="border p-3">
 				<div class="form-group row">
 					<div class="col-sm-12">
@@ -68,8 +69,10 @@
 				<div class="form-group row">
 					<div class="col-sm-12">
 						<label class="form-label" for="inputPwd">Contraseña:</label>
-						<input type="password" class="form-control" id="inputPwd" placeholder="Introduce la constraseña"
+						<input th:if="${usuario.idUsuario == null}" type="password" class="form-control" id="inputPwd" placeholder="Introduce la constraseña"
 							th:field="*{password}" required minlength="8" maxlength="20">
+						<input th:if="${usuario.idUsuario != null}" type="password" class="form-control" id="inputPwd" placeholder="Introduce nueva constraseña si la desea actualizar"
+							th:field="*{password}" minlength="8" maxlength="20">
 					</div>
 				</div>
 				<div class="form-group row">
@@ -123,14 +126,16 @@
 				$("#btnCancelar").on("click", function () {
 					window.location = "[[@{/usuarios}]]";
 				});
-				$('input:radio[name="rol"]').filter('[value="2"]').attr('checked', true);
+				/**$('input:radio[name="rol"]').filter('[value="2"]').attr('checked', true);*/
 			});
 
 			function checkEmailUnique(form) {
 				url = "[[@{/usuarios/checkemail}]]"
 				userEmail = $("#inputEmail").val();
+				userId=  $("#idHidden").val();
 				csrf = $("input[name='_csrf']").val();
 				data = {
+					idUsuario: userId,
 					email: userEmail,
 					_csrf: csrf
 				};

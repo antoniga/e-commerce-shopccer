@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.springframework.stereotype.Service;
 
+import com.shopccer.admin.exception.UserNotFoundException;
 import com.shopccer.common.entity.Usuario;
 
 @Service
@@ -13,6 +14,8 @@ public interface UsuarioService {
 	
 	public Usuario save(Usuario usuario);
 	
-	public Boolean isEmailUnique(String email);
+	public Boolean isEmailUnique(Integer id, String email);
+	
+	public Usuario findById(Integer id) throws UserNotFoundException;
 
 }

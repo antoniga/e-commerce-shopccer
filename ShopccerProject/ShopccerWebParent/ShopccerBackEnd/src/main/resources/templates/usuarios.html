@@ -77,7 +77,10 @@
 							<a th:if="${usuario.activo} != true" class="fa-regular fa-square fa-2x icon-silver" style="text-decoration:none" href=""></a>
 						</td>
 						<td>[[${usuario.rol.nombre}]]</td>
-						<td><a class="fa-solid fa-user-pen fa-2x icon-green" style="text-decoration:none" href=""></a> &nbsp; <a class="fa-solid fa-user-slash fa-2x icon-red" style="text-decoration:none" href=""></a></td>
+						<td>
+						<a class="fa-solid fa-user-pen fa-2x icon-green" style="text-decoration:none" th:href="@{'/usuarios/edit/'+${usuario.idUsuario}}" title="Editar usuario"></a> &nbsp; 
+						<a class="fa-solid fa-user-slash fa-2x icon-red" style="text-decoration:none" href=""></a>
+						</td>
 					</tr>
 				</tbody>
 			</table>
