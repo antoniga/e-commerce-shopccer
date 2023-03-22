@@ -7,6 +7,8 @@
 	<title>Home - Shopccer Admin</title>
 
 	<link rel="stylesheet" type="text/css" th:href="@{/webjars/bootstrap/css/bootstrap.min.css}">
+	<link rel="stylesheet" type="text/css" th:href="@{/fontawesome/all.css}">
+	<link rel="stylesheet" type="text/css" th:href="@{/style.css}">
 	<script type="text/javascript" th:src="@{/webjars/jquery/jquery.min.js}"></script>
 	<script type="text/javascript" th:src="@{/webjars/bootstrap/js/bootstrap.min.js}"></script>
 </head>
@@ -66,13 +68,16 @@
 				<tbody>
 					<tr th:each="usuario : ${listaUsuarios}">
 						<td>[[${usuario.idUsuario}]]</td>
-						<td>[[${usuario.fotos}]]</td>
+						<td><i class="fa-solid fa-image-portrait fa-3x icon-silver"></i></td>
 						<td>[[${usuario.email}]]</td>
 						<td>[[${usuario.nombre}]]</td>
 						<td>[[${usuario.apellidos}]]</td>
-						<td>[[${usuario.activo}]]</td>
+						<td>
+							<a th:if="${usuario.activo} == true" class="fa-regular fa-square-check fa-2x icon-green" style="text-decoration:none" href=""></a>
+							<a th:if="${usuario.activo} != true" class="fa-regular fa-square fa-2x icon-silver" style="text-decoration:none" href=""></a>
+						</td>
 						<td>[[${usuario.rol.nombre}]]</td>
-						<td>Editar &nbsp; Eliminar</td>
+						<td><a class="fa-solid fa-user-pen fa-2x icon-green" style="text-decoration:none" href=""></a> &nbsp; <a class="fa-solid fa-user-slash fa-2x icon-red" style="text-decoration:none" href=""></a></td>
 					</tr>
 				</tbody>
 			</table>
