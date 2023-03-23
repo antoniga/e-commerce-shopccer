@@ -73,22 +73,50 @@
 						<td>[[${usuario.nombre}]]</td>
 						<td>[[${usuario.apellidos}]]</td>
 						<td>
-							<a th:if="${usuario.activo} == true" class="fa-regular fa-square-check fa-2x icon-green" style="text-decoration:none" href=""></a>
-							<a th:if="${usuario.activo} != true" class="fa-regular fa-square fa-2x icon-silver" style="text-decoration:none" href=""></a>
+							<a th:if="${usuario.activo} == true" class="fa-solid fa-square-check fa-2x icon-green" style="text-decoration:none" th:href="@{'/usuarios/' + ${usuario.idUsuario} + '/activo/false'}" title="Desactiva usuario"></a>
+							<a th:if="${usuario.activo} != true" class="fa-solid fa-square fa-2x icon-silver" style="text-decoration:none" th:href="@{'/usuarios/' + ${usuario.idUsuario} + '/activo/true'}" title="Activa usuario"></a>
 						</td>
 						<td>[[${usuario.rol.nombre}]]</td>
 						<td>
-						<a class="fa-solid fa-user-pen fa-2x icon-green" style="text-decoration:none" th:href="@{'/usuarios/edit/'+${usuario.idUsuario}}" title="Editar usuario"></a> &nbsp; 
-						<a class="fa-solid fa-user-slash fa-2x icon-red" style="text-decoration:none" href=""></a>
+						<a class="fa-solid fa-user-pen fa-2x icon-green" style="text-decoration:none" th:href="@{'/usuarios/edit/'+${usuario.idUsuario}}" title="Editar usuario"></a> &nbsp;
+						<a class="fa-solid fa-user-slash fa-2x icon-red link-delete" style="text-decoration:none" th:href="@{'/usuarios/delete/'+${usuario.idUsuario}}" th:userId="${usuario.idUsuario}" title="Eliminar usuario"></a>
 						</td>
 					</tr>
 				</tbody>
 			</table>
 		</div>
 
+		<div class="modal fade text-center" id="confirmDelete">
+			<div class="modal-dialog">
+				<div class="modal-content">
+					<div class="modal-header">
+						<h4 class="modal-title">Confirma eliminación</h4>
+						<button type="button" class="close" data-dismiss="modal">&times;</button>
+					</div>
+					<div class="modal-body">
+						<span id="confirmText"></span>
+					</div>
+					<div class="modal-footer">
+						<a class="btn btn-success" href="" id="btnSi">Sí</a>
+						<button type="button" class="btn btn-danger" data-dismiss="modal">No</button>
+					</div>
+				</div>
+			</div>
+		</div>
+
 		<div class="text-center">
 			<p>Shopccer Control Panel Copyright &copy; Shopccer</p>
 		</div>
-</body>
+		<script type="text/javascript">
+		$(document).ready(function () {
+			$(".link-delete").on("click", function(e){
+				e.preventDefault();
+				userId=$(this).attr("userId");
+				$("#btnSi").attr("href",$(this).attr("href"));
+				$("#confirmText").text("¿Seguro que desea eliminar el usuario con id: "+userId+" ?");
+				$("#confirmDelete").modal();
+			})
+		});
+		</script></body>
 
 </html>

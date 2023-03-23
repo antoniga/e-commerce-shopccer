@@ -10,7 +10,10 @@ import com.shopccer.admin.exception.UserNotFoundException;
 import com.shopccer.admin.repository.UsuarioRepository;
 import com.shopccer.common.entity.Usuario;
 
+import jakarta.transaction.Transactional;
+
 @Service
+@Transactional
 public class UsuarioServiceImpl implements UsuarioService {
 
 	@Autowired
@@ -81,6 +84,22 @@ public class UsuarioServiceImpl implements UsuarioService {
 
 		return usuarioRepository.findById(id)
 				.orElseThrow(() -> new UserNotFoundException("No existe ningún usuario con id: " + id));
+	}
+
+	public void deleteByID(Integer id) throws UserNotFoundException {
+
+		if (usuarioRepository.findById(id).isPresent()) {
+			usuarioRepository.deleteById(id);
+		} else {
+			throw new UserNotFoundException("No existe ningún usuario con id: " + id);
+
+		}
+
+	}
+	
+	public void updateUsuarioActivo(Integer id, Boolean activo) {
+		
+		usuarioRepository.updateUsuarioActivo(id, activo);
 	}
 
 }

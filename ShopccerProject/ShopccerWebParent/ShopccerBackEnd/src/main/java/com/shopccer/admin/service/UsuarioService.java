@@ -17,5 +17,9 @@ public interface UsuarioService {
 	public Boolean isEmailUnique(Integer id, String email);
 	
 	public Usuario findById(Integer id) throws UserNotFoundException;
+	
+	public void deleteByID(Integer id) throws UserNotFoundException;
+	
+	public void updateUsuarioActivo(Integer id, Boolean activo);
 
 }

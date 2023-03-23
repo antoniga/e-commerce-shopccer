@@ -73,5 +73,18 @@ public class UsarioRepositoryTest {
 		System.out.println(usuarioEmail);
 		assertThat(usuarioEmail).isNotNull();
 	}
+	
+	@Test
+	@Order(5)
+	public void testDesactivaUsuario() {
+		usuarioRepository.updateUsuarioActivo(2, false);
+	}
+	
+	@Test
+	@Order(6)
+	public void testActivaUsuario() {
+
+		usuarioRepository.updateUsuarioActivo(2, true);
+	}
 
 }
