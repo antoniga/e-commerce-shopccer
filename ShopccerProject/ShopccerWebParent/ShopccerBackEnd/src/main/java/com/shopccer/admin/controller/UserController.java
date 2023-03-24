@@ -8,6 +8,8 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.shopccer.admin.exception.UserNotFoundException;
@@ -46,11 +48,11 @@ public class UserController {
 	}
 	
 	@PostMapping("usuarios/save")
-	public String saveUsuario(Usuario usuario, RedirectAttributes redirectAttributes) {
+	public String saveUsuario(Usuario usuario, RedirectAttributes redirectAttributes, @RequestParam("usuarioImg") MultipartFile multipartFile) {
+		System.out.println(multipartFile.getOriginalFilename());
+		//usuarioService.save(usuario);
 		
-		usuarioService.save(usuario);
-		
-		redirectAttributes.addFlashAttribute("msg","El usuario ha sido guardado correctamente.");
+		//redirectAttributes.addFlashAttribute("msg","El usuario ha sido guardado correctamente.");
 		return "redirect:/usuarios";
 	}
 	
