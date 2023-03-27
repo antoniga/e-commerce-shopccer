@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.util.StringUtils;
@@ -17,6 +18,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import com.shopccer.admin.exception.UsuarioNotFoundException;
 import com.shopccer.admin.service.RolService;
 import com.shopccer.admin.service.UsuarioService;
+import com.shopccer.admin.service.UsuarioServiceImpl;
 import com.shopccer.admin.utils.FileLoadUtil;
 import com.shopccer.common.entity.Rol;
 import com.shopccer.common.entity.Usuario;
@@ -31,10 +33,34 @@ public class UsuarioController {
 	private RolService rolService;
 	
 	@GetMapping("/usuarios")
-	public String listAll(Model model) {
-		
+	public String listFirstPage(Model model) {
+		/*
 		List<Usuario> listaUsuarios = usuarioService.listAll();
 		model.addAttribute("listaUsuarios",listaUsuarios);
+		return "usuarios";
+		*/
+		return listByPage(1,model);
+	}
+	
+	@GetMapping("/usuarios/pagina/{numeroPagina}")
+	public String listByPage(@PathVariable(name="numeroPagina") Integer numeroPagina,Model model) {
+		
+		Page<Usuario> pagina = usuarioService.listByPage(numeroPagina);		
+		List<Usuario> listaUsuarios = pagina.getContent();
+		
+		long startCount = (numeroPagina -1) * UsuarioServiceImpl.USUARIOS_POR_PAG + 1;
+		long endCount = startCount + UsuarioServiceImpl.USUARIOS_POR_PAG - 1;
+		
+		if (endCount > pagina.getTotalElements()) {
+			endCount = pagina.getTotalElements();
+		}
+		
+		model.addAttribute("listaUsuarios",listaUsuarios);
+		model.addAttribute("paginaActual",numeroPagina);
+		model.addAttribute("paginasTotales",pagina.getTotalPages());
+		model.addAttribute("startCount",startCount);
+		model.addAttribute("endCount",endCount);
+		model.addAttribute("usuariosTotales",pagina.getTotalElements());
 		return "usuarios";
 	}
 	

@@ -12,6 +12,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase.Replace;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.test.annotation.Rollback;
 
 import com.shopccer.admin.repository.RolRepository;
@@ -85,6 +88,22 @@ public class UsarioRepositoryTest {
 	public void testActivaUsuario() {
 
 		usuarioRepository.updateUsuarioActivo(2, true);
+	}
+	
+	@Test
+	@Order(7)
+	public void testListFirstPage() {
+		
+		int numeroPagina = 0;
+		int tamanioPagina = 4;
+		
+		Pageable pageable = PageRequest.of(numeroPagina, tamanioPagina);
+		Page<Usuario> pagina = usuarioRepository.findAll(pageable);
+		
+		List<Usuario> listaUsuarios = pagina.getContent();
+		listaUsuarios.forEach(usuario -> System.out.println(usuario.toString()));
+		
+		assertThat(listaUsuarios.size()).isEqualTo(tamanioPagina);		
 	}
 
 }

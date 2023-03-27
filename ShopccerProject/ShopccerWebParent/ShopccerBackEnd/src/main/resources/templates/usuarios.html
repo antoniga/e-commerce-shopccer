@@ -2,37 +2,48 @@
 <html xmlns:th="http://www.thymeleaf.org">
 
 <head>
-	<meta http-equiv="Content-Type" content="txt/html; charset=UTF-8">
-	<meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0">
-	<title>Home - Shopccer Admin</title>
+<meta http-equiv="Content-Type" content="txt/html; charset=UTF-8">
+<meta name="viewport"
+	content="width=device-width, initial-scale=1.0, minimum-scale=1.0">
+<title>Home - Shopccer Admin</title>
 
-	<link rel="stylesheet" type="text/css" th:href="@{/webjars/bootstrap/css/bootstrap.min.css}">
-	<link rel="stylesheet" type="text/css" th:href="@{/fontawesome/all.css}">
-	<link rel="stylesheet" type="text/css" th:href="@{/style.css}">
-	<script type="text/javascript" th:src="@{/webjars/jquery/jquery.min.js}"></script>
-	<script type="text/javascript" th:src="@{/webjars/bootstrap/js/bootstrap.min.js}"></script>
+<link rel="stylesheet" type="text/css"
+	th:href="@{/webjars/bootstrap/css/bootstrap.min.css}">
+<link rel="stylesheet" type="text/css" th:href="@{/fontawesome/all.css}">
+<link rel="stylesheet" type="text/css" th:href="@{/style.css}">
+<script type="text/javascript" th:src="@{/webjars/jquery/jquery.min.js}"></script>
+<script type="text/javascript"
+	th:src="@{/webjars/bootstrap/js/bootstrap.min.js}"></script>
 </head>
 
 <body>
 	<div class="container-fluid">
 		<div>
 			<nav class="navbar navbar-expand-lg bg-dark navbar-dark">
-				<a class="navbar-brand" th:href="@{/}" href=""><img th:src="@{/images/shopccer_logo_small.png}"></a>
-				<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#topNavBar">
+				<a class="navbar-brand" th:href="@{/}" href=""><img
+					th:src="@{/images/shopccer_logo_small.png}"></a>
+				<button class="navbar-toggler" type="button" data-toggle="collapse"
+					data-target="#topNavBar">
 					<span class="navbar-toggler-icon"></span>
 				</button>
 				<div class="collapse navbar-collapse" id="topNavBar">
 					<ul class="navbar-nav">
-						<li class="nav-item"><a class="nav-link" th:href="@{/usuarios}">USUARIOS</a></li>
-						<li class="nav-item"><a class="nav-link" th:href="@{/superficies}">SUPERFICIES</a></li>
+						<li class="nav-item"><a class="nav-link"
+							th:href="@{/usuarios}">USUARIOS</a></li>
+						<li class="nav-item"><a class="nav-link"
+							th:href="@{/superficies}">SUPERFICIES</a></li>
 						<li class="nav-item"><a class="nav-link" th:href="@{/marcas}">MARCAS</a>
 						</li>
-						<li class="nav-item"><a class="nav-link" th:href="@{/productos}">PRODUCTOS</a></li>
-						<li class="nav-item"><a class="nav-link" th:href="@{/clientes}">CLIENTES</a></li>
+						<li class="nav-item"><a class="nav-link"
+							th:href="@{/productos}">PRODUCTOS</a></li>
+						<li class="nav-item"><a class="nav-link"
+							th:href="@{/clientes}">CLIENTES</a></li>
 						<li class="nav-item"><a class="nav-link" th:href="@{/envios}">ENVÍOS</a>
 						</li>
-						<li class="nav-item"><a class="nav-link" th:href="@{/pedidos}">PEDIDOS</a></li>
-						<li class="nav-item"><a class="nav-link" th:href="@{/informe}">INFORME DE VENTAS</a></li>
+						<li class="nav-item"><a class="nav-link"
+							th:href="@{/pedidos}">PEDIDOS</a></li>
+						<li class="nav-item"><a class="nav-link"
+							th:href="@{/informe}">INFORME DE VENTAS</a></li>
 						<li class="nav-item"><a class="nav-link" th:href="@{/menus}">MENÚS</a></li>
 						<li class="nav-item"><a class="nav-link" th:href="@{/config}">CONFIGURACIÓN</a></li>
 					</ul>
@@ -41,18 +52,24 @@
 		</div>
 		<div>
 			<h2>Gestión de usuarios</h2>
-			<button type="button" class="btn btn-info m-2"><a class="text-white" th:href="@{/usuarios/nuevo}" style="text-decoration:none">Crear nuevo usuario</a></button>
+			<button type="button" class="btn btn-info m-2">
+				<a class="text-white" th:href="@{/usuarios/nuevo}"
+					style="text-decoration: none">Crear nuevo usuario</a>
+			</button>
 		</div>
 
-		<div th:if="${msg != null}" class="alert alert-success alert-dismissible fade show text-center" role="alert">
+		<div th:if="${msg != null}"
+			class="alert alert-success alert-dismissible fade show text-center"
+			role="alert">
 			[[${msg}]]
-			<button type="button" class="close" data-dismiss="alert" aria-label="Close">
+			<button type="button" class="close" data-dismiss="alert"
+				aria-label="Close">
 				<span aria-hidden="true">&times;</span>
-			  </button>
+			</button>
 		</div>
 
 		<div>
-			<table class="table table-bordered table-striped table-hover table-responsive-xl">
+			<table class="table table-bordered table-hover table-responsive-xl">
 				<thead class="thead-dark">
 					<tr>
 						<th>ID Usuario</th>
@@ -68,26 +85,58 @@
 				<tbody>
 					<tr th:each="usuario : ${listaUsuarios}">
 						<td>[[${usuario.idUsuario}]]</td>
-						<td>
-							<i th:if="${usuario.fotos} == null" class="fa-solid fa-image-portrait fa-3x icon-silver"></i>
-							<img th:if="${usuario.fotos} != null" th:src="@{${usuario.pathFotos}}" alt="" style="width: 100px;">
-						</td>
+						<td><i th:if="${usuario.fotos} == null"
+							class="fa-solid fa-image-portrait fa-3x icon-silver"></i> <img
+							th:if="${usuario.fotos} != null" th:src="@{${usuario.pathFotos}}"
+							alt="" style="width: 100px;"></td>
 						<td>[[${usuario.email}]]</td>
 						<td>[[${usuario.nombre}]]</td>
 						<td>[[${usuario.apellidos}]]</td>
-						<td>
-							<a th:if="${usuario.activo} == true" class="fa-solid fa-square-check fa-2x icon-green" style="text-decoration:none" th:href="@{'/usuarios/' + ${usuario.idUsuario} + '/activo/false'}" title="Desactiva usuario"></a>
-							<a th:if="${usuario.activo} != true" class="fa-solid fa-square fa-2x icon-silver" style="text-decoration:none" th:href="@{'/usuarios/' + ${usuario.idUsuario} + '/activo/true'}" title="Activa usuario"></a>
-						</td>
+						<td><a th:if="${usuario.activo} == true"
+							class="fa-solid fa-square-check fa-2x icon-green"
+							style="text-decoration: none"
+							th:href="@{'/usuarios/' + ${usuario.idUsuario} + '/activo/false'}"
+							title="Desactiva usuario"></a> <a
+							th:if="${usuario.activo} != true"
+							class="fa-solid fa-square fa-2x icon-silver"
+							style="text-decoration: none"
+							th:href="@{'/usuarios/' + ${usuario.idUsuario} + '/activo/true'}"
+							title="Activa usuario"></a></td>
 						<td>[[${usuario.rol.nombre}]]</td>
-						<td>
-						<a class="fa-solid fa-user-pen fa-2x icon-green" style="text-decoration:none" th:href="@{'/usuarios/edit/'+${usuario.idUsuario}}" title="Editar usuario"></a> &nbsp;
-						<a class="fa-solid fa-user-slash fa-2x icon-red link-delete" style="text-decoration:none" th:href="@{'/usuarios/delete/'+${usuario.idUsuario}}" th:userId="${usuario.idUsuario}" title="Eliminar usuario"></a>
-						</td>
+						<td><a class="fa-solid fa-user-pen fa-2x icon-green"
+							style="text-decoration: none"
+							th:href="@{'/usuarios/edit/'+${usuario.idUsuario}}"
+							title="Editar usuario"></a> &nbsp; <a
+							class="fa-solid fa-user-slash fa-2x icon-red link-delete"
+							style="text-decoration: none"
+							th:href="@{'/usuarios/delete/'+${usuario.idUsuario}}"
+							th:userId="${usuario.idUsuario}" title="Eliminar usuario"></a></td>
 					</tr>
 				</tbody>
 			</table>
 		</div>
+
+		<div class= "text-center m-1" th:if="${usuariosTotales > 0}">
+			<span>Mostrando los usuarios del [[${startCount}]] al [[${endCount}]] de [[${usuariosTotales}]] </span>
+		</div>
+		<div class="text-center m-1" th:unless="${usuariosTotales > 0}">
+			<span>No se encontraron usuarios </span>
+		</div>
+
+		<div>
+			<nav aria-label="Page navigation example">
+				<ul class="pagination justify-content-center">
+					<li th:class="${paginaActual > 1 ? 'page-item':'page-item disabled'}"><a class="page-link" th:href="@{/usuarios/pagina/1}"><<</a></li>
+					<li th:class="${paginaActual > 1 ? 'page-item':'page-item disabled'}"><a class="page-link" th:href="@{'/usuarios/pagina/'+${paginaActual - 1}}"><</a></li>
+
+					<li th:class="${paginaActual != i ? 'page-item':'page-item active'}" th:each="i : ${#numbers.sequence(1,paginasTotales)}"><a class="page-link" th:href="@{'/usuarios/pagina/'+${i}}">[[${i}]]</a></li>
+
+					<li th:class="${paginaActual < paginasTotales ? 'page-item':'page-item disabled'}"><a class="page-link" th:href="@{'/usuarios/pagina/'+${paginaActual + 1}}">></a></li>
+					<li th:class="${paginaActual < paginasTotales ? 'page-item':'page-item disabled'}"><a class="page-link" th:href="@{'/usuarios/pagina/'+${paginasTotales}}">>></a></li>
+				</ul>
+			</nav>
+		</div>
+
 
 		<div class="modal fade text-center" id="confirmDelete">
 			<div class="modal-dialog">
@@ -106,20 +155,27 @@
 				</div>
 			</div>
 		</div>
+	</div>
 
-		<div class="text-center">
-			<p>Shopccer Control Panel Copyright &copy; Shopccer</p>
-		</div>
-		<script type="text/javascript">
-		$(document).ready(function () {
-			$(".link-delete").on("click", function(e){
-				e.preventDefault();
-				userId=$(this).attr("userId");
-				$("#btnSi").attr("href",$(this).attr("href"));
-				$("#confirmText").text("¿Seguro que desea eliminar el usuario con id: "+userId+" ?");
-				$("#confirmDelete").modal();
-			})
-		});
-		</script></body>
+	<div class="text-center">
+		<p>Shopccer Control Panel Copyright &copy; Shopccer</p>
+	</div>
+	<script type="text/javascript">
+		$(document).ready(
+				function() {
+					$(".link-delete").on(
+							"click",
+							function(e) {
+								e.preventDefault();
+								userId = $(this).attr("userId");
+								$("#btnSi").attr("href", $(this).attr("href"));
+								$("#confirmText").text(
+										"¿Seguro que desea eliminar el usuario con id: "
+												+ userId + " ?");
+								$("#confirmDelete").modal();
+							})
+				});
+	</script>
+</body>
 
 </html>

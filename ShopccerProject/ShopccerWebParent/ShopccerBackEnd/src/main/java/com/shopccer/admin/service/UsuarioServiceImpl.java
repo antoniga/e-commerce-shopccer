@@ -3,6 +3,9 @@ package com.shopccer.admin.service;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -15,6 +18,8 @@ import jakarta.transaction.Transactional;
 @Service
 @Transactional
 public class UsuarioServiceImpl implements UsuarioService {
+	
+	public static final Integer USUARIOS_POR_PAG = 4;
 
 	@Autowired
 	private UsuarioRepository usuarioRepository;
@@ -100,6 +105,14 @@ public class UsuarioServiceImpl implements UsuarioService {
 	public void updateUsuarioActivo(Integer id, Boolean activo) {
 		
 		usuarioRepository.updateUsuarioActivo(id, activo);
+	}
+
+	
+	public Page<Usuario> listByPage(Integer numeroPagina) {
+		
+		Pageable pageable = PageRequest.of(numeroPagina - 1, USUARIOS_POR_PAG);
+
+		return usuarioRepository.findAll(pageable);
 	}
 
 }

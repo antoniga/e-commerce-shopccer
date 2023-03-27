@@ -2,6 +2,7 @@ package com.shopccer.admin.service;
 
 import java.util.List;
 
+import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Service;
 
 import com.shopccer.admin.exception.UsuarioNotFoundException;
@@ -21,5 +22,7 @@ public interface UsuarioService {
 	public void deleteByID(Integer id) throws UsuarioNotFoundException;
 	
 	public void updateUsuarioActivo(Integer id, Boolean activo);
+	
+	public Page<Usuario> listByPage(Integer numeroPagina);
 
 }
