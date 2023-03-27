@@ -27,5 +27,26 @@ public class FileLoadUtil {
 			throw new IOException("No se puede guardar el archivo: " + nombreArchivo, e);
 		}
 	}
+	
+	public static void cleanDir(String dir) {
+
+		Path dirPath = Paths.get(dir);
+
+		try {
+			Files.list(dirPath).forEach(archivo -> {
+
+				if (!Files.isDirectory(archivo)) {
+					try {
+						Files.delete(archivo);
+					} catch (IOException e) {
+						System.out.println("No se pudo eliminar el archivo: " + archivo);
+					}
+
+				}
+			});
+		} catch (IOException e) {
+			System.out.println("No se pudo listar el directorio: " + dirPath);
+		}
+	}
 
 }

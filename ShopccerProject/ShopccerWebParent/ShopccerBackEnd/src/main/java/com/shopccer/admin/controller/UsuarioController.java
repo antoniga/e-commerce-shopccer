@@ -59,11 +59,18 @@ public class UsuarioController {
 			usuario.setFotos(nombreArchivo);
 			Usuario savedUsuario = usuarioService.save(usuario);
 			String dirSubida = "fotos-usuarios/" + savedUsuario.getIdUsuario();		
+			
+			FileLoadUtil.cleanDir(dirSubida);
 			FileLoadUtil.saveFile(dirSubida, nombreArchivo, multipartFile);
+		}else {
+			
+			if (usuario.getFotos().isEmpty()) {
+				usuario.setFotos(null);
+			}
+			usuarioService.save(usuario);			
 		}
 		
 		
-		//usuarioService.save(usuario);
 		
 		redirectAttributes.addFlashAttribute("msg","El usuario ha sido guardado correctamente.");
 		return "redirect:/usuarios";
