@@ -10,6 +10,7 @@ import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
+import jakarta.persistence.Transient;
 
 @Entity
 @Table(name = "usuarios")
@@ -158,6 +159,14 @@ public class Usuario {
 		return "Usuario [idUsuario=" + idUsuario + ", email=" + email + ", password=" + password + ", nombre="
 				+ nombre + ", apellidos=" + apellidos + ", fotos=" + fotos + ", activo=" + activo + ", rol=" + rol
 				+ "]";
+	}
+	
+	@Transient
+	public String getPathFotos() {
+		if(idUsuario == null || fotos == null) {
+			return "/images/default-user.png";
+		}
+		return "/fotos-usuarios/" + this.idUsuario + "/" + this.fotos;
 	}
 	
 	

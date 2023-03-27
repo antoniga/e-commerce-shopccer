@@ -1,10 +1,12 @@
 package com.shopccer.admin.controller;
 
+import java.io.IOException;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -12,14 +14,15 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import com.shopccer.admin.exception.UserNotFoundException;
+import com.shopccer.admin.exception.UsuarioNotFoundException;
 import com.shopccer.admin.service.RolService;
 import com.shopccer.admin.service.UsuarioService;
+import com.shopccer.admin.utils.FileLoadUtil;
 import com.shopccer.common.entity.Rol;
 import com.shopccer.common.entity.Usuario;
 
 @Controller
-public class UserController {
+public class UsuarioController {
 	
 	@Autowired
 	private UsuarioService usuarioService;
@@ -48,11 +51,21 @@ public class UserController {
 	}
 	
 	@PostMapping("usuarios/save")
-	public String saveUsuario(Usuario usuario, RedirectAttributes redirectAttributes, @RequestParam("usuarioImg") MultipartFile multipartFile) {
-		System.out.println(multipartFile.getOriginalFilename());
+	public String saveUsuario(Usuario usuario, RedirectAttributes redirectAttributes, @RequestParam("usuarioImg") MultipartFile multipartFile) throws IOException {
+				
+		if (!multipartFile.isEmpty()) {
+			
+			String nombreArchivo = StringUtils.cleanPath(multipartFile.getOriginalFilename());
+			usuario.setFotos(nombreArchivo);
+			Usuario savedUsuario = usuarioService.save(usuario);
+			String dirSubida = "fotos-usuarios/" + savedUsuario.getIdUsuario();		
+			FileLoadUtil.saveFile(dirSubida, nombreArchivo, multipartFile);
+		}
+		
+		
 		//usuarioService.save(usuario);
 		
-		//redirectAttributes.addFlashAttribute("msg","El usuario ha sido guardado correctamente.");
+		redirectAttributes.addFlashAttribute("msg","El usuario ha sido guardado correctamente.");
 		return "redirect:/usuarios";
 	}
 	
@@ -67,7 +80,7 @@ public class UserController {
 			model.addAttribute("listaRoles", listaRoles);
 			model.addAttribute("tituloPagina", "Editar usuario (Id: "+idUsuario+") ");
 			return "usuario_form";
-		} catch (UserNotFoundException e) {
+		} catch (UsuarioNotFoundException e) {
 
 			redirectAttributes.addFlashAttribute("msg",e.getMessage());
 			return "redirect:/usuarios";
@@ -82,7 +95,7 @@ public class UserController {
 
 			usuarioService.deleteByID(idUsuario);
 			redirectAttributes.addFlashAttribute("msg", "El usuario con id: " + idUsuario + " ha sido eliminado.");
-		} catch (UserNotFoundException e) {
+		} catch (UsuarioNotFoundException e) {
 
 			redirectAttributes.addFlashAttribute("msg", e.getMessage());
 		}

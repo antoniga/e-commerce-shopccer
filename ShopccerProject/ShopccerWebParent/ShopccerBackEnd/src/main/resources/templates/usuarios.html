@@ -68,7 +68,10 @@
 				<tbody>
 					<tr th:each="usuario : ${listaUsuarios}">
 						<td>[[${usuario.idUsuario}]]</td>
-						<td><i class="fa-solid fa-image-portrait fa-3x icon-silver"></i></td>
+						<td>
+							<i th:if="${usuario.fotos} == null" class="fa-solid fa-image-portrait fa-3x icon-silver"></i>
+							<img th:if="${usuario.fotos} != null" th:src="@{${usuario.pathFotos}}" alt="" style="width: 100px;">
+						</td>
 						<td>[[${usuario.email}]]</td>
 						<td>[[${usuario.nombre}]]</td>
 						<td>[[${usuario.apellidos}]]</td>

@@ -6,7 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import com.shopccer.admin.exception.UserNotFoundException;
+import com.shopccer.admin.exception.UsuarioNotFoundException;
 import com.shopccer.admin.repository.UsuarioRepository;
 import com.shopccer.common.entity.Usuario;
 
@@ -80,18 +80,18 @@ public class UsuarioServiceImpl implements UsuarioService {
 	}
 
 	
-	public Usuario findById(Integer id) throws UserNotFoundException {
+	public Usuario findById(Integer id) throws UsuarioNotFoundException {
 
 		return usuarioRepository.findById(id)
-				.orElseThrow(() -> new UserNotFoundException("No existe ningún usuario con id: " + id));
+				.orElseThrow(() -> new UsuarioNotFoundException("No existe ningún usuario con id: " + id));
 	}
 
-	public void deleteByID(Integer id) throws UserNotFoundException {
+	public void deleteByID(Integer id) throws UsuarioNotFoundException {
 
 		if (usuarioRepository.findById(id).isPresent()) {
 			usuarioRepository.deleteById(id);
 		} else {
-			throw new UserNotFoundException("No existe ningún usuario con id: " + id);
+			throw new UsuarioNotFoundException("No existe ningún usuario con id: " + id);
 
 		}
 
