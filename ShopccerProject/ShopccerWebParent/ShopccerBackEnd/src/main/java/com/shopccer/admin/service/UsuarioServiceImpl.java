@@ -109,13 +109,18 @@ public class UsuarioServiceImpl implements UsuarioService {
 	}
 
 	
-	public Page<Usuario> listByPage(Integer numeroPagina, String campoOrden, String dirOrden) {
+	public Page<Usuario> listByPage(Integer numeroPagina, String campoOrden, String dirOrden, String palabraClave) {
 
 		Sort sort = Sort.by(campoOrden);
 
 		sort = dirOrden.equals("asc") ? sort.ascending() : sort.descending();
 
 		Pageable pageable = PageRequest.of(numeroPagina - 1, USUARIOS_POR_PAG, sort);
+
+		if (palabraClave != null) {
+
+			return usuarioRepository.findAll(palabraClave, pageable);
+		}
 
 		return usuarioRepository.findAll(pageable);
 	}

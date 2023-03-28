@@ -105,5 +105,22 @@ public class UsarioRepositoryTest {
 		
 		assertThat(listaUsuarios.size()).isEqualTo(tamanioPagina);		
 	}
+	
+	@Test
+	@Order(8)
+	public void testSearchUsuarios() {
+		String palabraClave = "Antonio";
+		
+		int numeroPagina = 0;
+		int tamanioPagina = 4;
+		
+		Pageable pageable = PageRequest.of(numeroPagina, tamanioPagina);
+		Page<Usuario> pagina = usuarioRepository.findAll(palabraClave, pageable);
+		
+		List<Usuario> listaUsuarios = pagina.getContent();
+		listaUsuarios.forEach(usuario -> System.out.println(usuario.toString()));
+		
+		assertThat(listaUsuarios.size()).isGreaterThan(0);
+	}
 
 }

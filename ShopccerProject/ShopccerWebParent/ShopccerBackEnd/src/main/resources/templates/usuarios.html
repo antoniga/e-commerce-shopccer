@@ -69,35 +69,48 @@
 		</div>
 
 		<div>
+			<form th:action="@{/usuarios/pagina/1}" class="form-inline m-3">
+				<input type="hidden" name="campoOrden" th:value="${campoOrden}">
+				<input type="hidden" name="dirOrden" th:value="${dirOrden}">
+				Filtrar:&nbsp;
+				<input type="search" name="palabraClave" th:value="${palabraClave}" class="form-control" required/>
+				&nbsp;&nbsp;
+				<input type="submit" value="Buscar" class="btn btn-primary"/>
+				&nbsp;&nbsp;
+				<input type="button" value="Limpiar" class="btn btn-secondary" onclick="limpiarFiltro()"/>
+			</form>
+		</div>
+
+		<div>
 			<table class="table table-bordered table-hover table-responsive-xl">
 				<thead class="thead-dark">
 					<tr>
 						<th><!--ID Usuario-->
-							<a th:if="${campoOrden != 'idUsuario'}" th:href="@{'/usuarios/pagina/' + ${paginaActual} + '?campoOrden=idUsuario&dirOrden='+${dirOrden}}" class="text-white" style="text-decoration: none">ID Usuario</a>
-							<a th:if="${campoOrden == 'idUsuario'}" th:href="@{'/usuarios/pagina/' + ${paginaActual} + '?campoOrden=idUsuario&dirOrden='+${dirOrdenContrario}}" class="text-white" style="text-decoration: none">ID Usuario</a>
+							<a th:if="${campoOrden != 'idUsuario'}" th:href="@{'/usuarios/pagina/' + ${paginaActual} + '?campoOrden=idUsuario&dirOrden='+${dirOrden} + ${palabraClave !=null ? '&palabraClave='+palabraClave : ''}}" class="text-white" style="text-decoration: none">ID Usuario</a>
+							<a th:if="${campoOrden == 'idUsuario'}" th:href="@{'/usuarios/pagina/' + ${paginaActual} + '?campoOrden=idUsuario&dirOrden='+${dirOrdenContrario} + ${palabraClave !=null ? '&palabraClave='+palabraClave : ''}}" class="text-white" style="text-decoration: none">ID Usuario</a>
 							<span th:if="${campoOrden == 'idUsuario'}" th:class="${dirOrden == 'asc' ? 'fas fa-sort-up' : 'fas fa-sort-down'}"></span>
 						</th>
 						<th>Foto</th>
 						<th><!--Email-->
-							<a th:if="${campoOrden != 'email'}" th:href="@{'/usuarios/pagina/' + ${paginaActual} + '?campoOrden=email&dirOrden='+${dirOrden}}" class="text-white" style="text-decoration: none">Email</a>
-							<a th:if="${campoOrden == 'email'}" th:href="@{'/usuarios/pagina/' + ${paginaActual} + '?campoOrden=email&dirOrden='+${dirOrdenContrario}}" class="text-white" style="text-decoration: none">Email</a>
+							<a th:if="${campoOrden != 'email'}" th:href="@{'/usuarios/pagina/' + ${paginaActual} + '?campoOrden=email&dirOrden='+${dirOrden} + ${palabraClave !=null ? '&palabraClave='+palabraClave : ''}}" class="text-white" style="text-decoration: none">Email</a>
+							<a th:if="${campoOrden == 'email'}" th:href="@{'/usuarios/pagina/' + ${paginaActual} + '?campoOrden=email&dirOrden='+${dirOrdenContrario} + ${palabraClave !=null ? '&palabraClave='+palabraClave : ''}}" class="text-white" style="text-decoration: none">Email</a>
 							<span th:if="${campoOrden == 'email'}" th:class="${dirOrden == 'asc' ? 'fas fa-sort-up' : 'fas fa-sort-down'}"></span>
 						</th>
 
 						<th><!--Nombre-->
-							<a th:if="${campoOrden != 'nombre'}" th:href="@{'/usuarios/pagina/' + ${paginaActual} + '?campoOrden=nombre&dirOrden='+${dirOrden}}" class="text-white" style="text-decoration: none">Nombre</a>
-							<a th:if="${campoOrden == 'nombre'}" th:href="@{'/usuarios/pagina/' + ${paginaActual} + '?campoOrden=nombre&dirOrden='+${dirOrdenContrario}}" class="text-white" style="text-decoration: none">Nombre</a>
+							<a th:if="${campoOrden != 'nombre'}" th:href="@{'/usuarios/pagina/' + ${paginaActual} + '?campoOrden=nombre&dirOrden='+${dirOrden} + ${palabraClave !=null ? '&palabraClave='+palabraClave : ''}}" class="text-white" style="text-decoration: none">Nombre</a>
+							<a th:if="${campoOrden == 'nombre'}" th:href="@{'/usuarios/pagina/' + ${paginaActual} + '?campoOrden=nombre&dirOrden='+${dirOrdenContrario} + ${palabraClave !=null ? '&palabraClave='+palabraClave : ''}}" class="text-white" style="text-decoration: none">Nombre</a>
 							<span th:if="${campoOrden == 'nombre'}" th:class="${dirOrden == 'asc' ? 'fas fa-sort-up' : 'fas fa-sort-down'}"></span>
 						</th>
 
 						<th><!--Apellidos-->
-							<a th:if="${campoOrden != 'apellidos'}" th:href="@{'/usuarios/pagina/' + ${paginaActual} + '?campoOrden=apellidos&dirOrden='+${dirOrden}}" class="text-white" style="text-decoration: none">Apellidos</a>
-							<a th:if="${campoOrden == 'apellidos'}" th:href="@{'/usuarios/pagina/' + ${paginaActual} + '?campoOrden=apellidos&dirOrden='+${dirOrdenContrario}}" class="text-white" style="text-decoration: none">Apellidos</a>
+							<a th:if="${campoOrden != 'apellidos'}" th:href="@{'/usuarios/pagina/' + ${paginaActual} + '?campoOrden=apellidos&dirOrden='+${dirOrden} + ${palabraClave !=null ? '&palabraClave='+palabraClave : ''}}" class="text-white" style="text-decoration: none">Apellidos</a>
+							<a th:if="${campoOrden == 'apellidos'}" th:href="@{'/usuarios/pagina/' + ${paginaActual} + '?campoOrden=apellidos&dirOrden='+${dirOrdenContrario} + ${palabraClave !=null ? '&palabraClave='+palabraClave : ''}}" class="text-white" style="text-decoration: none">Apellidos</a>
 							<span th:if="${campoOrden == 'apellidos'}" th:class="${dirOrden == 'asc' ? 'fas fa-sort-up' : 'fas fa-sort-down'}"></span>
 						</th>
 						<th><!--Activo-->
-							<a th:if="${campoOrden != 'activo'}" th:href="@{'/usuarios/pagina/' + ${paginaActual} + '?campoOrden=activo&dirOrden='+${dirOrden}}" class="text-white" style="text-decoration: none">Activo</a>
-							<a th:if="${campoOrden == 'activo'}" th:href="@{'/usuarios/pagina/' + ${paginaActual} + '?campoOrden=activo&dirOrden='+${dirOrdenContrario}}" class="text-white" style="text-decoration: none">Activo</a>
+							<a th:if="${campoOrden != 'activo'}" th:href="@{'/usuarios/pagina/' + ${paginaActual} + '?campoOrden=activo&dirOrden='+${dirOrden} + ${palabraClave !=null ? '&palabraClave='+palabraClave : ''}}" class="text-white" style="text-decoration: none">Activo</a>
+							<a th:if="${campoOrden == 'activo'}" th:href="@{'/usuarios/pagina/' + ${paginaActual} + '?campoOrden=activo&dirOrden='+${dirOrdenContrario} + ${palabraClave !=null ? '&palabraClave='+palabraClave : ''}}" class="text-white" style="text-decoration: none">Activo</a>
 							<span th:if="${campoOrden == 'activo'}" th:class="${dirOrden == 'asc' ? 'fas fa-sort-up' : 'fas fa-sort-down'}"></span>
 						</th>
 						<th>Rol</th>
@@ -130,16 +143,16 @@
 			<span>No se encontraron usuarios </span>
 		</div>
 
-		<div>
+		<div th:if="${paginasTotales > 1}">
 			<nav aria-label="Page navigation example">
 				<ul class="pagination justify-content-center">
-					<li th:class="${paginaActual > 1 ? 'page-item':'page-item disabled'}"><a class="page-link" th:href="@{'/usuarios/pagina/1?campoOrden='+${campoOrden}+'&dirOrden='+${dirOrden}}"><<</a></li>
-					<li th:class="${paginaActual > 1 ? 'page-item':'page-item disabled'}"><a class="page-link" th:href="@{'/usuarios/pagina/'+${paginaActual - 1}+'?campoOrden='+${campoOrden}+'&dirOrden='+${dirOrden}}"><</a></li>
+					<li th:class="${paginaActual > 1 ? 'page-item':'page-item disabled'}"><a class="page-link" th:href="@{'/usuarios/pagina/1?campoOrden='+${campoOrden}+'&dirOrden='+${dirOrden} + ${palabraClave !=null ? '&palabraClave='+palabraClave : ''}}"><<</a></li>
+					<li th:class="${paginaActual > 1 ? 'page-item':'page-item disabled'}"><a class="page-link" th:href="@{'/usuarios/pagina/'+${paginaActual - 1}+'?campoOrden='+${campoOrden}+'&dirOrden='+${dirOrden} + ${palabraClave !=null ? '&palabraClave='+palabraClave : ''}}"><</a></li>
 
-					<li th:class="${paginaActual != i ? 'page-item':'page-item active'}" th:each="i : ${#numbers.sequence(1,paginasTotales)}"><a class="page-link" th:href="@{'/usuarios/pagina/'+${i}+'?campoOrden='+${campoOrden}+'&dirOrden='+${dirOrden}}">[[${i}]]</a></li>
+					<li th:class="${paginaActual != i ? 'page-item':'page-item active'}" th:each="i : ${#numbers.sequence(1,paginasTotales)}"><a class="page-link" th:href="@{'/usuarios/pagina/'+${i}+'?campoOrden='+${campoOrden}+'&dirOrden='+${dirOrden} + ${palabraClave !=null ? '&palabraClave='+palabraClave : ''}}">[[${i}]]</a></li>
 
-					<li th:class="${paginaActual < paginasTotales ? 'page-item':'page-item disabled'}"><a class="page-link" th:href="@{'/usuarios/pagina/'+${paginaActual + 1}+'?campoOrden='+${campoOrden}+'&dirOrden='+${dirOrden}}">></a></li>
-					<li th:class="${paginaActual < paginasTotales ? 'page-item':'page-item disabled'}"><a class="page-link" th:href="@{'/usuarios/pagina/'+${paginasTotales}+'?campoOrden='+${campoOrden}+'&dirOrden='+${dirOrden}}">>></a></li>
+					<li th:class="${paginaActual < paginasTotales ? 'page-item':'page-item disabled'}"><a class="page-link" th:href="@{'/usuarios/pagina/'+${paginaActual + 1}+'?campoOrden='+${campoOrden}+'&dirOrden='+${dirOrden} + ${palabraClave !=null ? '&palabraClave='+palabraClave : ''}}">></a></li>
+					<li th:class="${paginaActual < paginasTotales ? 'page-item':'page-item disabled'}"><a class="page-link" th:href="@{'/usuarios/pagina/'+${paginasTotales}+'?campoOrden='+${campoOrden}+'&dirOrden='+${dirOrden} + ${palabraClave !=null ? '&palabraClave='+palabraClave : ''}}">>></a></li>
 				</ul>
 			</nav>
 		</div>
@@ -168,20 +181,19 @@
 		<p>Shopccer Control Panel Copyright &copy; Shopccer</p>
 	</div>
 	<script type="text/javascript">
-		$(document).ready(
-				function() {
-					$(".link-delete").on(
-							"click",
-							function(e) {
-								e.preventDefault();
-								userId = $(this).attr("userId");
-								$("#btnSi").attr("href", $(this).attr("href"));
-								$("#confirmText").text(
-										"¿Seguro que desea eliminar el usuario con id: "
-												+ userId + " ?");
-								$("#confirmDelete").modal();
-							})
-				});
+		$(document).ready(function() {
+			$(".link-delete").on("click",function(e) {
+				e.preventDefault();
+				userId = $(this).attr("userId");
+				$("#btnSi").attr("href", $(this).attr("href"));
+				$("#confirmText").text("¿Seguro que desea eliminar el usuario con id: "+ userId + " ?");
+				$("#confirmDelete").modal();
+			})
+		});
+
+		function limpiarFiltro(){
+			window.location ="[[@{/usuarios}]]";
+		}
 	</script>
 </body>
 

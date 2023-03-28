@@ -23,6 +23,6 @@ public interface UsuarioService {
 	
 	public void updateUsuarioActivo(Integer id, Boolean activo);
 	
-	public Page<Usuario> listByPage(Integer numeroPagina, String campoOrden, String dirOrden);
+	public Page<Usuario> listByPage(Integer numeroPagina, String campoOrden, String dirOrden, String palabraClave);
 
 }

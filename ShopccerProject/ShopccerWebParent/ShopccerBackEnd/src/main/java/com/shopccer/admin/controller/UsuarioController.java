@@ -39,14 +39,15 @@ public class UsuarioController {
 		 * List<Usuario> listaUsuarios = usuarioService.listAll();
 		 * model.addAttribute("listaUsuarios",listaUsuarios); return "usuarios";
 		 */
-		return listByPage(1, model, "idUsuario", "asc");
+		return listByPage(1, model, "idUsuario", "asc", null);
 	}
 	
 	@GetMapping("/usuarios/pagina/{numeroPagina}")
 	public String listByPage(@PathVariable(name="numeroPagina") Integer numeroPagina,Model model,
-			@Param("campoOrden") String campoOrden, @Param("dirOrden") String dirOrden) {
+			@Param("campoOrden") String campoOrden, @Param("dirOrden") String dirOrden,
+			@Param("palabraClave") String palabraClave) {
 		
-		Page<Usuario> pagina = usuarioService.listByPage(numeroPagina, campoOrden, dirOrden);		
+		Page<Usuario> pagina = usuarioService.listByPage(numeroPagina, campoOrden, dirOrden, palabraClave);		
 		List<Usuario> listaUsuarios = pagina.getContent();
 		
 		long startCount = (numeroPagina -1) * UsuarioServiceImpl.USUARIOS_POR_PAG + 1;
@@ -68,6 +69,7 @@ public class UsuarioController {
 		model.addAttribute("campoOrden",campoOrden);
 		model.addAttribute("dirOrden",dirOrden);
 		model.addAttribute("dirOrdenContrario",dirOrdenContrario);
+		model.addAttribute("palabraClave",palabraClave);
 		return "usuarios";
 	}
 	
