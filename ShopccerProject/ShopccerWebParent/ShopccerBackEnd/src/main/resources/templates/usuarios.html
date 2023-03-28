@@ -72,12 +72,34 @@
 			<table class="table table-bordered table-hover table-responsive-xl">
 				<thead class="thead-dark">
 					<tr>
-						<th>ID Usuario</th>
+						<th><!--ID Usuario-->
+							<a th:if="${campoOrden != 'idUsuario'}" th:href="@{'/usuarios/pagina/' + ${paginaActual} + '?campoOrden=idUsuario&dirOrden='+${dirOrden}}" class="text-white" style="text-decoration: none">ID Usuario</a>
+							<a th:if="${campoOrden == 'idUsuario'}" th:href="@{'/usuarios/pagina/' + ${paginaActual} + '?campoOrden=idUsuario&dirOrden='+${dirOrdenContrario}}" class="text-white" style="text-decoration: none">ID Usuario</a>
+							<span th:if="${campoOrden == 'idUsuario'}" th:class="${dirOrden == 'asc' ? 'fas fa-sort-up' : 'fas fa-sort-down'}"></span>
+						</th>
 						<th>Foto</th>
-						<th>Email</th>
-						<th>Nombre</th>
-						<th>Apellidos</th>
-						<th>Activo</th>
+						<th><!--Email-->
+							<a th:if="${campoOrden != 'email'}" th:href="@{'/usuarios/pagina/' + ${paginaActual} + '?campoOrden=email&dirOrden='+${dirOrden}}" class="text-white" style="text-decoration: none">Email</a>
+							<a th:if="${campoOrden == 'email'}" th:href="@{'/usuarios/pagina/' + ${paginaActual} + '?campoOrden=email&dirOrden='+${dirOrdenContrario}}" class="text-white" style="text-decoration: none">Email</a>
+							<span th:if="${campoOrden == 'email'}" th:class="${dirOrden == 'asc' ? 'fas fa-sort-up' : 'fas fa-sort-down'}"></span>
+						</th>
+
+						<th><!--Nombre-->
+							<a th:if="${campoOrden != 'nombre'}" th:href="@{'/usuarios/pagina/' + ${paginaActual} + '?campoOrden=nombre&dirOrden='+${dirOrden}}" class="text-white" style="text-decoration: none">Nombre</a>
+							<a th:if="${campoOrden == 'nombre'}" th:href="@{'/usuarios/pagina/' + ${paginaActual} + '?campoOrden=nombre&dirOrden='+${dirOrdenContrario}}" class="text-white" style="text-decoration: none">Nombre</a>
+							<span th:if="${campoOrden == 'nombre'}" th:class="${dirOrden == 'asc' ? 'fas fa-sort-up' : 'fas fa-sort-down'}"></span>
+						</th>
+
+						<th><!--Apellidos-->
+							<a th:if="${campoOrden != 'apellidos'}" th:href="@{'/usuarios/pagina/' + ${paginaActual} + '?campoOrden=apellidos&dirOrden='+${dirOrden}}" class="text-white" style="text-decoration: none">Apellidos</a>
+							<a th:if="${campoOrden == 'apellidos'}" th:href="@{'/usuarios/pagina/' + ${paginaActual} + '?campoOrden=apellidos&dirOrden='+${dirOrdenContrario}}" class="text-white" style="text-decoration: none">Apellidos</a>
+							<span th:if="${campoOrden == 'apellidos'}" th:class="${dirOrden == 'asc' ? 'fas fa-sort-up' : 'fas fa-sort-down'}"></span>
+						</th>
+						<th><!--Activo-->
+							<a th:if="${campoOrden != 'activo'}" th:href="@{'/usuarios/pagina/' + ${paginaActual} + '?campoOrden=activo&dirOrden='+${dirOrden}}" class="text-white" style="text-decoration: none">Activo</a>
+							<a th:if="${campoOrden == 'activo'}" th:href="@{'/usuarios/pagina/' + ${paginaActual} + '?campoOrden=activo&dirOrden='+${dirOrdenContrario}}" class="text-white" style="text-decoration: none">Activo</a>
+							<span th:if="${campoOrden == 'activo'}" th:class="${dirOrden == 'asc' ? 'fas fa-sort-up' : 'fas fa-sort-down'}"></span>
+						</th>
 						<th>Rol</th>
 						<th></th>
 					</tr>
@@ -85,32 +107,17 @@
 				<tbody>
 					<tr th:each="usuario : ${listaUsuarios}">
 						<td>[[${usuario.idUsuario}]]</td>
-						<td><i th:if="${usuario.fotos} == null"
-							class="fa-solid fa-image-portrait fa-3x icon-silver"></i> <img
-							th:if="${usuario.fotos} != null" th:src="@{${usuario.pathFotos}}"
-							alt="" style="width: 100px;"></td>
+						<td><i th:if="${usuario.fotos} == null" class="fa-solid fa-image-portrait fa-3x icon-silver"></i> <img th:if="${usuario.fotos} != null" th:src="@{${usuario.pathFotos}}" alt="" style="width: 100px;"></td>
 						<td>[[${usuario.email}]]</td>
 						<td>[[${usuario.nombre}]]</td>
 						<td>[[${usuario.apellidos}]]</td>
-						<td><a th:if="${usuario.activo} == true"
-							class="fa-solid fa-square-check fa-2x icon-green"
-							style="text-decoration: none"
-							th:href="@{'/usuarios/' + ${usuario.idUsuario} + '/activo/false'}"
-							title="Desactiva usuario"></a> <a
-							th:if="${usuario.activo} != true"
-							class="fa-solid fa-square fa-2x icon-silver"
-							style="text-decoration: none"
-							th:href="@{'/usuarios/' + ${usuario.idUsuario} + '/activo/true'}"
-							title="Activa usuario"></a></td>
+						<td><a th:if="${usuario.activo} == true" class="fa-solid fa-square-check fa-2x icon-green" style="text-decoration: none" th:href="@{'/usuarios/' + ${usuario.idUsuario} + '/activo/false'}" title="Desactiva usuario"></a>
+							<a th:if="${usuario.activo} != true" class="fa-solid fa-square fa-2x icon-silver" style="text-decoration: none" th:href="@{'/usuarios/' + ${usuario.idUsuario} + '/activo/true'}" title="Activa usuario"></a>
+						</td>
 						<td>[[${usuario.rol.nombre}]]</td>
-						<td><a class="fa-solid fa-user-pen fa-2x icon-green"
-							style="text-decoration: none"
-							th:href="@{'/usuarios/edit/'+${usuario.idUsuario}}"
-							title="Editar usuario"></a> &nbsp; <a
-							class="fa-solid fa-user-slash fa-2x icon-red link-delete"
-							style="text-decoration: none"
-							th:href="@{'/usuarios/delete/'+${usuario.idUsuario}}"
-							th:userId="${usuario.idUsuario}" title="Eliminar usuario"></a></td>
+						<td><a class="fa-solid fa-user-pen fa-2x icon-green" style="text-decoration: none" th:href="@{'/usuarios/edit/'+${usuario.idUsuario}}" title="Editar usuario"></a> &nbsp;
+							<a class="fa-solid fa-user-slash fa-2x icon-red link-delete" style="text-decoration: none" th:href="@{'/usuarios/delete/'+${usuario.idUsuario}}" th:userId="${usuario.idUsuario}" title="Eliminar usuario"></a>
+						</td>
 					</tr>
 				</tbody>
 			</table>
@@ -126,13 +133,13 @@
 		<div>
 			<nav aria-label="Page navigation example">
 				<ul class="pagination justify-content-center">
-					<li th:class="${paginaActual > 1 ? 'page-item':'page-item disabled'}"><a class="page-link" th:href="@{/usuarios/pagina/1}"><<</a></li>
-					<li th:class="${paginaActual > 1 ? 'page-item':'page-item disabled'}"><a class="page-link" th:href="@{'/usuarios/pagina/'+${paginaActual - 1}}"><</a></li>
+					<li th:class="${paginaActual > 1 ? 'page-item':'page-item disabled'}"><a class="page-link" th:href="@{'/usuarios/pagina/1?campoOrden='+${campoOrden}+'&dirOrden='+${dirOrden}}"><<</a></li>
+					<li th:class="${paginaActual > 1 ? 'page-item':'page-item disabled'}"><a class="page-link" th:href="@{'/usuarios/pagina/'+${paginaActual - 1}+'?campoOrden='+${campoOrden}+'&dirOrden='+${dirOrden}}"><</a></li>
 
-					<li th:class="${paginaActual != i ? 'page-item':'page-item active'}" th:each="i : ${#numbers.sequence(1,paginasTotales)}"><a class="page-link" th:href="@{'/usuarios/pagina/'+${i}}">[[${i}]]</a></li>
+					<li th:class="${paginaActual != i ? 'page-item':'page-item active'}" th:each="i : ${#numbers.sequence(1,paginasTotales)}"><a class="page-link" th:href="@{'/usuarios/pagina/'+${i}+'?campoOrden='+${campoOrden}+'&dirOrden='+${dirOrden}}">[[${i}]]</a></li>
 
-					<li th:class="${paginaActual < paginasTotales ? 'page-item':'page-item disabled'}"><a class="page-link" th:href="@{'/usuarios/pagina/'+${paginaActual + 1}}">></a></li>
-					<li th:class="${paginaActual < paginasTotales ? 'page-item':'page-item disabled'}"><a class="page-link" th:href="@{'/usuarios/pagina/'+${paginasTotales}}">>></a></li>
+					<li th:class="${paginaActual < paginasTotales ? 'page-item':'page-item disabled'}"><a class="page-link" th:href="@{'/usuarios/pagina/'+${paginaActual + 1}+'?campoOrden='+${campoOrden}+'&dirOrden='+${dirOrden}}">></a></li>
+					<li th:class="${paginaActual < paginasTotales ? 'page-item':'page-item disabled'}"><a class="page-link" th:href="@{'/usuarios/pagina/'+${paginasTotales}+'?campoOrden='+${campoOrden}+'&dirOrden='+${dirOrden}}">>></a></li>
 				</ul>
 			</nav>
 		</div>

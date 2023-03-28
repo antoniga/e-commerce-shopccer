@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -108,9 +109,13 @@ public class UsuarioServiceImpl implements UsuarioService {
 	}
 
 	
-	public Page<Usuario> listByPage(Integer numeroPagina) {
-		
-		Pageable pageable = PageRequest.of(numeroPagina - 1, USUARIOS_POR_PAG);
+	public Page<Usuario> listByPage(Integer numeroPagina, String campoOrden, String dirOrden) {
+
+		Sort sort = Sort.by(campoOrden);
+
+		sort = dirOrden.equals("asc") ? sort.ascending() : sort.descending();
+
+		Pageable pageable = PageRequest.of(numeroPagina - 1, USUARIOS_POR_PAG, sort);
 
 		return usuarioRepository.findAll(pageable);
 	}

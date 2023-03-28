@@ -5,6 +5,7 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.util.StringUtils;
@@ -35,17 +36,17 @@ public class UsuarioController {
 	@GetMapping("/usuarios")
 	public String listFirstPage(Model model) {
 		/*
-		List<Usuario> listaUsuarios = usuarioService.listAll();
-		model.addAttribute("listaUsuarios",listaUsuarios);
-		return "usuarios";
-		*/
-		return listByPage(1,model);
+		 * List<Usuario> listaUsuarios = usuarioService.listAll();
+		 * model.addAttribute("listaUsuarios",listaUsuarios); return "usuarios";
+		 */
+		return listByPage(1, model, "idUsuario", "asc");
 	}
 	
 	@GetMapping("/usuarios/pagina/{numeroPagina}")
-	public String listByPage(@PathVariable(name="numeroPagina") Integer numeroPagina,Model model) {
+	public String listByPage(@PathVariable(name="numeroPagina") Integer numeroPagina,Model model,
+			@Param("campoOrden") String campoOrden, @Param("dirOrden") String dirOrden) {
 		
-		Page<Usuario> pagina = usuarioService.listByPage(numeroPagina);		
+		Page<Usuario> pagina = usuarioService.listByPage(numeroPagina, campoOrden, dirOrden);		
 		List<Usuario> listaUsuarios = pagina.getContent();
 		
 		long startCount = (numeroPagina -1) * UsuarioServiceImpl.USUARIOS_POR_PAG + 1;
@@ -55,12 +56,18 @@ public class UsuarioController {
 			endCount = pagina.getTotalElements();
 		}
 		
+		String dirOrdenContrario = dirOrden.equals("asc") ? "desc" : "asc";
+		System.out.println(dirOrdenContrario);
+		
 		model.addAttribute("listaUsuarios",listaUsuarios);
 		model.addAttribute("paginaActual",numeroPagina);
 		model.addAttribute("paginasTotales",pagina.getTotalPages());
 		model.addAttribute("startCount",startCount);
 		model.addAttribute("endCount",endCount);
 		model.addAttribute("usuariosTotales",pagina.getTotalElements());
+		model.addAttribute("campoOrden",campoOrden);
+		model.addAttribute("dirOrden",dirOrden);
+		model.addAttribute("dirOrdenContrario",dirOrdenContrario);
 		return "usuarios";
 	}
 	
