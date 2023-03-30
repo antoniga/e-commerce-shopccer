@@ -52,10 +52,6 @@
 		</div>
 		<div>
 			<h2>Gestión de usuarios</h2>
-			<button type="button" class="btn btn-info m-2">
-				<a class="text-white" th:href="@{/usuarios/nuevo}"
-					style="text-decoration: none">Crear nuevo usuario</a>
-			</button>
 		</div>
 
 		<div th:if="${msg != null}"
@@ -68,17 +64,23 @@
 			</button>
 		</div>
 
-		<div>
-			<form th:action="@{/usuarios/pagina/1}" class="form-inline m-3">
-				<input type="hidden" name="campoOrden" th:value="${campoOrden}">
-				<input type="hidden" name="dirOrden" th:value="${dirOrden}">
-				Filtrar:&nbsp;
-				<input type="search" name="palabraClave" th:value="${palabraClave}" class="form-control" required/>
-				&nbsp;&nbsp;
-				<input type="submit" value="Buscar" class="btn btn-primary"/>
-				&nbsp;&nbsp;
-				<input type="button" value="Limpiar" class="btn btn-secondary" onclick="limpiarFiltro()"/>
-			</form>
+		<div class="row justify-content-between">
+			<div class="col-lg-5 col-md-12 mt-1 mb-1">
+				<button type="button" class="btn btn-info mt-2 mb-1">
+					<a class="text-white" th:href="@{/usuarios/nuevo}" style="text-decoration: none"> <i class="fa-solid fa-user-plus"></i>&nbsp;&nbsp;Crear nuevo usuario</a>
+				</button>
+			</div>
+			<div class="col-lg-7 col-md-12 d-lg-flex ">
+				<form th:action="@{/usuarios/pagina/1}" class="form-inline mt-1 mb-1 ml-auto">
+					<input type="hidden" name="campoOrden" th:value="${campoOrden}">
+					<input type="hidden" name="dirOrden" th:value="${dirOrden}">
+					<input type="search" name="palabraClave" placeholder="Busca por id, email, nombre, apellido" th:value="${palabraClave}" class="form-control" size="40%" required/>
+					&nbsp;&nbsp;
+					<input type="submit" value="Buscar" class="btn btn-info mt-2 mb-1"/>
+					&nbsp;&nbsp;
+					<input type="button" value="Limpiar" class="btn btn-secondary mt-2 mb-1" onclick="limpiarFiltro()"/>
+				</form>
+			</div>
 		</div>
 
 		<div>
