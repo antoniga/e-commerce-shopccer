@@ -13,6 +13,9 @@
         <span th:if="${campoOrden == fieldName}" th:class="${dirOrden == 'asc' ? 'fas fa-sort-up' : 'fas fa-sort-down'}"></span>
     </th>
 
+    <a th:fragment="pageLink(numPag, label)" class="page-link"
+        th:href="@{'/usuarios/pagina/'+${numPag}+'?campoOrden='+${campoOrden}+'&dirOrden='+${dirOrden} + ${palabraClave !=null ? '&palabraClave='+palabraClave : ''}}">[[${label}]]</a>
+
 </body>
 
 </html>
