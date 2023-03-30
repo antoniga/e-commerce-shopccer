@@ -7,7 +7,7 @@
 
 <body>
     <!-- Plantilla para escribir codigo reusable por thymeleaf en nuestras vistas -->
-    <th th:fragment="columnLink(fieldName, columnLabel)">
+    <th th:fragment="columnLink(fieldName, columnLabel, removeTag)" th:remove="${removeTag}">
         <a th:href="@{'/usuarios/pagina/' + ${paginaActual} + '?campoOrden=' + ${fieldName} +'&dirOrden='+${campoOrden != fieldName ? dirOrden : dirOrdenContrario} + ${palabraClave !=null ? '&palabraClave='+palabraClave : ''}}"
             class="text-white" style="text-decoration: none">[[${columnLabel}]]</a>
         <span th:if="${campoOrden == fieldName}" th:class="${dirOrden == 'asc' ? 'fas fa-sort-up' : 'fas fa-sort-down'}"></span>

@@ -66,9 +66,7 @@
 
 		<div class="row justify-content-between">
 			<div class="col-lg-5 col-md-12 mt-1 mb-1">
-				<button type="button" class="btn btn-info mt-2 mb-1">
-					<a class="text-white" th:href="@{/usuarios/nuevo}" style="text-decoration: none"> <i class="fa-solid fa-user-plus"></i>&nbsp;&nbsp;Crear nuevo usuario</a>
-				</button>
+				<a class="fas fa-user-plus fa-2x icon-shopccer" th:href="@{/usuarios/nuevo}" style="text-decoration: none"></a>
 			</div>
 			<div class="col-lg-7 col-md-12 d-lg-flex ">
 				<form th:action="@{/usuarios/pagina/1}" class="form-inline mt-1 mb-1 ml-auto">
@@ -76,44 +74,69 @@
 					<input type="hidden" name="dirOrden" th:value="${dirOrden}">
 					<input type="search" name="palabraClave" placeholder="Busca por id, email, nombre, apellido" th:value="${palabraClave}" class="form-control" size="40%" required/>
 					&nbsp;&nbsp;
-					<input type="submit" value="Buscar" class="btn btn-info mt-2 mb-1"/>
+					<button type="submit" class="btn btn-info mt-2 mt-sm-0"><i class="fas fa-search"></i></button>
 					&nbsp;&nbsp;
-					<input type="button" value="Limpiar" class="btn btn-secondary mt-2 mb-1" onclick="limpiarFiltro()"/>
+					<button type="button" class="btn btn-secondary mt-2 mt-sm-0" onclick="limpiarFiltro()"/><i class="fas fa-eraser"></i></button>
 				</form>
 			</div>
 		</div>
 
-		<div>
+		<div class="full-details">
 			<table class="table table-bordered table-hover table-responsive-xl">
 				<thead class="thead-dark">
 					<tr>
-						<th th:replace="fragments :: columnLink ('idUsuario', 'ID Usuario')"></th>
+						<th class="hideable-column">
+							<th th:replace="fragments :: columnLink ('idUsuario', 'ID Usuario','tag')" ></th>
+						</th>
 						<th>Foto</th>
-						<th th:replace="fragments :: columnLink ('email', 'Email')"></th>
-						<th th:replace="fragments :: columnLink ('nombre', 'Nombre')"></th>
-						<th th:replace="fragments :: columnLink ('apellidos', 'Apellidos')"></th>
-						<th th:replace="fragments :: columnLink ('activo', 'Activo')"></th>
+						<th th:replace="fragments :: columnLink ('email', 'Email','none')"></th>
+						<th th:replace="fragments :: columnLink ('nombre', 'Nombre','none')"></th>
+						<th class="hideable-column">
+							<th th:replace="fragments :: columnLink ('apellidos', 'Apellidos','tag')"></th>
+						</th>
+						<th th:replace="fragments :: columnLink ('activo', 'Activo','none')"></th>
 						<th>Rol</th>
 						<th></th>
 					</tr>
 				</thead>
 				<tbody>
 					<tr th:each="usuario : ${listaUsuarios}">
-						<td>[[${usuario.idUsuario}]]</td>
+						<td class="hideable-column">[[${usuario.idUsuario}]]</td>
 						<td><i th:if="${usuario.fotos} == null" class="fa-solid fa-image-portrait fa-3x icon-silver"></i> <img th:if="${usuario.fotos} != null" th:src="@{${usuario.pathFotos}}" alt="" style="width: 100px;"></td>
 						<td>[[${usuario.email}]]</td>
 						<td>[[${usuario.nombre}]]</td>
-						<td>[[${usuario.apellidos}]]</td>
+						<td class="hideable-column">[[${usuario.apellidos}]]</td>
 						<td><a th:if="${usuario.activo} == true" class="fa-solid fa-square-check fa-2x icon-green" style="text-decoration: none" th:href="@{'/usuarios/' + ${usuario.idUsuario} + '/activo/false'}" title="Desactiva usuario"></a>
 							<a th:if="${usuario.activo} != true" class="fa-solid fa-square fa-2x icon-silver" style="text-decoration: none" th:href="@{'/usuarios/' + ${usuario.idUsuario} + '/activo/true'}" title="Activa usuario"></a>
 						</td>
 						<td>[[${usuario.rol.nombre}]]</td>
-						<td><a class="fa-solid fa-user-pen fa-2x icon-green" style="text-decoration: none" th:href="@{'/usuarios/edit/'+${usuario.idUsuario}}" title="Editar usuario"></a> &nbsp;
-							<a class="fa-solid fa-user-slash fa-2x icon-red link-delete" style="text-decoration: none" th:href="@{'/usuarios/delete/'+${usuario.idUsuario}}" th:userId="${usuario.idUsuario}" title="Eliminar usuario"></a>
+						<td><a class="fa-solid fa-edit fa-2x icon-green" style="text-decoration: none" th:href="@{'/usuarios/edit/'+${usuario.idUsuario}}" title="Editar usuario"></a> &nbsp;
+							<a class="fa-solid fa-trash fa-2x icon-dark link-delete" style="text-decoration: none" th:href="@{'/usuarios/delete/'+${usuario.idUsuario}}" th:userId="${usuario.idUsuario}" title="Eliminar usuario"></a>
 						</td>
 					</tr>
 				</tbody>
 			</table>
+		</div>
+
+		<div class="less-details">
+			<div class="row m-1" th:each="usuario : ${listaUsuarios}">
+				<div class="col-4">
+					<i th:if="${usuario.fotos} == null" class="fa-solid fa-image-portrait fa-3x icon-silver"></i> <img th:if="${usuario.fotos} != null" th:src="@{${usuario.pathFotos}}"
+						alt="" style="width: 100px;">
+				</div>
+				<div class="col-8">
+					<div>[[${usuario.FullName}]]</div>
+					<div><em>[[${usuario.rol.nombre}]]</em></div>
+					<div class="mt-2">
+						<a th:if="${usuario.activo} == true" class="fa-solid fa-square-check fa-2x icon-green" style="text-decoration: none" th:href="@{'/usuarios/' + ${usuario.idUsuario} + '/activo/false'}" title="Desactiva usuario"></a>
+						<a th:if="${usuario.activo} != true" class="fa-solid fa-square fa-2x icon-silver" style="text-decoration: none" th:href="@{'/usuarios/' + ${usuario.idUsuario} + '/activo/true'}" title="Activa usuario"></a>
+						&nbsp;&nbsp;
+						<a class="fa-solid fa-edit fa-2x icon-green" style="text-decoration: none" th:href="@{'/usuarios/edit/'+${usuario.idUsuario}}" title="Editar usuario"></a> &nbsp;
+						<a class="fa-solid fa-trash fa-2x icon-dark link-delete" style="text-decoration: none" th:href="@{'/usuarios/delete/'+${usuario.idUsuario}}" th:userId="${usuario.idUsuario}" title="Eliminar usuario"></a>
+					</div>
+				</div>
+				<div>&nbsp;</div>
+			</div>
 		</div>
 
 		<div class= "text-center m-1" th:if="${usuariosTotales > 0}">

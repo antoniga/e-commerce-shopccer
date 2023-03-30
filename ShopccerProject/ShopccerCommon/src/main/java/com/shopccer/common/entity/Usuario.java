@@ -167,7 +167,13 @@ public class Usuario {
 			return "/images/default-user.png";
 		}
 		return "/fotos-usuarios/" + this.idUsuario + "/" + this.fotos;
+	}	
+	
+	@Transient
+	public String getFullName() {
+		return this.nombre + " " + this.apellidos;
 	}
+	
 	
 	
 	
