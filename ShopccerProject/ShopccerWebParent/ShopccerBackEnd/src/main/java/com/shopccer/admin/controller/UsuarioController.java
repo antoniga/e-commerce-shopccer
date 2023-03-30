@@ -105,11 +105,11 @@ public class UsuarioController {
 			usuarioService.save(usuario);			
 		}
 		
-		
-		
 		redirectAttributes.addFlashAttribute("msg","El usuario ha sido guardado correctamente.");
-		return "redirect:/usuarios";
+		
+		return getRedirectUrlToAffectedUsuario(usuario);
 	}
+
 	
 	@GetMapping("usuarios/edit/{idUsuario}")
 	public String editUsuario(@PathVariable(name="idUsuario") Integer idUsuario, Model model, RedirectAttributes redirectAttributes) {
@@ -156,6 +156,19 @@ public class UsuarioController {
 		redirectAttributes.addFlashAttribute("msg", msg);
 		
 		return "redirect:/usuarios";
+	}
+	
+
+	/**
+	 * Para redirigir la vista de usuarios tras actualizar o crear un nuevo usuario
+	 * y que solo se muestre el usuario afectado.
+	 * @param usuario
+	 * @return url
+	 */
+	private String getRedirectUrlToAffectedUsuario(Usuario usuario) {
+		String splitEmail = usuario.getEmail().split("@")[0];
+		
+		return "redirect:/usuarios/pagina/1?campoOrden=idUsuario&dirOrden=asc&palabraClave=" + splitEmail;
 	}
 		
 	
