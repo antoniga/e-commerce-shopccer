@@ -87,34 +87,12 @@
 			<table class="table table-bordered table-hover table-responsive-xl">
 				<thead class="thead-dark">
 					<tr>
-						<th><!--ID Usuario-->
-							<a th:if="${campoOrden != 'idUsuario'}" th:href="@{'/usuarios/pagina/' + ${paginaActual} + '?campoOrden=idUsuario&dirOrden='+${dirOrden} + ${palabraClave !=null ? '&palabraClave='+palabraClave : ''}}" class="text-white" style="text-decoration: none">ID Usuario</a>
-							<a th:if="${campoOrden == 'idUsuario'}" th:href="@{'/usuarios/pagina/' + ${paginaActual} + '?campoOrden=idUsuario&dirOrden='+${dirOrdenContrario} + ${palabraClave !=null ? '&palabraClave='+palabraClave : ''}}" class="text-white" style="text-decoration: none">ID Usuario</a>
-							<span th:if="${campoOrden == 'idUsuario'}" th:class="${dirOrden == 'asc' ? 'fas fa-sort-up' : 'fas fa-sort-down'}"></span>
-						</th>
+						<th th:replace="fragments :: columnLink ('idUsuario', 'ID Usuario')"></th>
 						<th>Foto</th>
-						<th><!--Email-->
-							<a th:if="${campoOrden != 'email'}" th:href="@{'/usuarios/pagina/' + ${paginaActual} + '?campoOrden=email&dirOrden='+${dirOrden} + ${palabraClave !=null ? '&palabraClave='+palabraClave : ''}}" class="text-white" style="text-decoration: none">Email</a>
-							<a th:if="${campoOrden == 'email'}" th:href="@{'/usuarios/pagina/' + ${paginaActual} + '?campoOrden=email&dirOrden='+${dirOrdenContrario} + ${palabraClave !=null ? '&palabraClave='+palabraClave : ''}}" class="text-white" style="text-decoration: none">Email</a>
-							<span th:if="${campoOrden == 'email'}" th:class="${dirOrden == 'asc' ? 'fas fa-sort-up' : 'fas fa-sort-down'}"></span>
-						</th>
-
-						<th><!--Nombre-->
-							<a th:if="${campoOrden != 'nombre'}" th:href="@{'/usuarios/pagina/' + ${paginaActual} + '?campoOrden=nombre&dirOrden='+${dirOrden} + ${palabraClave !=null ? '&palabraClave='+palabraClave : ''}}" class="text-white" style="text-decoration: none">Nombre</a>
-							<a th:if="${campoOrden == 'nombre'}" th:href="@{'/usuarios/pagina/' + ${paginaActual} + '?campoOrden=nombre&dirOrden='+${dirOrdenContrario} + ${palabraClave !=null ? '&palabraClave='+palabraClave : ''}}" class="text-white" style="text-decoration: none">Nombre</a>
-							<span th:if="${campoOrden == 'nombre'}" th:class="${dirOrden == 'asc' ? 'fas fa-sort-up' : 'fas fa-sort-down'}"></span>
-						</th>
-
-						<th><!--Apellidos-->
-							<a th:if="${campoOrden != 'apellidos'}" th:href="@{'/usuarios/pagina/' + ${paginaActual} + '?campoOrden=apellidos&dirOrden='+${dirOrden} + ${palabraClave !=null ? '&palabraClave='+palabraClave : ''}}" class="text-white" style="text-decoration: none">Apellidos</a>
-							<a th:if="${campoOrden == 'apellidos'}" th:href="@{'/usuarios/pagina/' + ${paginaActual} + '?campoOrden=apellidos&dirOrden='+${dirOrdenContrario} + ${palabraClave !=null ? '&palabraClave='+palabraClave : ''}}" class="text-white" style="text-decoration: none">Apellidos</a>
-							<span th:if="${campoOrden == 'apellidos'}" th:class="${dirOrden == 'asc' ? 'fas fa-sort-up' : 'fas fa-sort-down'}"></span>
-						</th>
-						<th><!--Activo-->
-							<a th:if="${campoOrden != 'activo'}" th:href="@{'/usuarios/pagina/' + ${paginaActual} + '?campoOrden=activo&dirOrden='+${dirOrden} + ${palabraClave !=null ? '&palabraClave='+palabraClave : ''}}" class="text-white" style="text-decoration: none">Activo</a>
-							<a th:if="${campoOrden == 'activo'}" th:href="@{'/usuarios/pagina/' + ${paginaActual} + '?campoOrden=activo&dirOrden='+${dirOrdenContrario} + ${palabraClave !=null ? '&palabraClave='+palabraClave : ''}}" class="text-white" style="text-decoration: none">Activo</a>
-							<span th:if="${campoOrden == 'activo'}" th:class="${dirOrden == 'asc' ? 'fas fa-sort-up' : 'fas fa-sort-down'}"></span>
-						</th>
+						<th th:replace="fragments :: columnLink ('email', 'Email')"></th>
+						<th th:replace="fragments :: columnLink ('nombre', 'Nombre')"></th>
+						<th th:replace="fragments :: columnLink ('apellidos', 'Apellidos')"></th>
+						<th th:replace="fragments :: columnLink ('activo', 'Activo')"></th>
 						<th>Rol</th>
 						<th></th>
 					</tr>

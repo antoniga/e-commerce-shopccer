@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+</head>
+
+<body>
+    <!-- Plantilla para escribir codigo reusable por thymeleaf en nuestras vistas -->
+    <th th:fragment="columnLink(fieldName, columnLabel)">
+        <a th:href="@{'/usuarios/pagina/' + ${paginaActual} + '?campoOrden=' + ${fieldName} +'&dirOrden='+${campoOrden != fieldName ? dirOrden : dirOrdenContrario} + ${palabraClave !=null ? '&palabraClave='+palabraClave : ''}}"
+            class="text-white" style="text-decoration: none">[[${columnLabel}]]</a>
+        <span th:if="${campoOrden == fieldName}" th:class="${dirOrden == 'asc' ? 'fas fa-sort-up' : 'fas fa-sort-down'}"></span>
+    </th>
+
+</body>
+
+</html>
