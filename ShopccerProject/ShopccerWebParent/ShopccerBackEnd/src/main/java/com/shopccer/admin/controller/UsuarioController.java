@@ -35,10 +35,7 @@ public class UsuarioController {
 	
 	@GetMapping("/usuarios")
 	public String listFirstPage(Model model) {
-		/*
-		 * List<Usuario> listaUsuarios = usuarioService.listAll();
-		 * model.addAttribute("listaUsuarios",listaUsuarios); return "usuarios";
-		 */
+		
 		return listByPage(1, model, "idUsuario", "asc", null);
 	}
 	
@@ -57,8 +54,7 @@ public class UsuarioController {
 			endCount = pagina.getTotalElements();
 		}
 		
-		String dirOrdenContrario = dirOrden.equals("asc") ? "desc" : "asc";
-		System.out.println(dirOrdenContrario);
+		String dirOrdenContrario = ("asc").equals(dirOrden) ? "desc" : "asc";
 		
 		model.addAttribute("listaUsuarios",listaUsuarios);
 		model.addAttribute("paginaActual",numeroPagina);
@@ -70,6 +66,7 @@ public class UsuarioController {
 		model.addAttribute("dirOrden",dirOrden);
 		model.addAttribute("dirOrdenContrario",dirOrdenContrario);
 		model.addAttribute("palabraClave",palabraClave);
+		
 		return "usuarios";
 	}
 	

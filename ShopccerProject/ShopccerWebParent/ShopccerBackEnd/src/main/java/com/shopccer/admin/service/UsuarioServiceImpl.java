@@ -113,7 +113,8 @@ public class UsuarioServiceImpl implements UsuarioService {
 
 		Sort sort = Sort.by(campoOrden);
 
-		sort = dirOrden.equals("asc") ? sort.ascending() : sort.descending();
+		sort = ("asc").equals(dirOrden) ? sort.ascending() : sort.descending();
+		
 
 		Pageable pageable = PageRequest.of(numeroPagina - 1, USUARIOS_POR_PAG, sort);
 
