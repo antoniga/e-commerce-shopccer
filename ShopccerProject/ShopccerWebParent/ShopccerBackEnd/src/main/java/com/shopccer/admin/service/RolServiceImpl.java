@@ -18,4 +18,10 @@ public class RolServiceImpl implements RolService {
 		return (List<Rol>) rolRepository.findAll();
 	}
 
+	@Override
+	public Rol findById(Integer id) {
+		
+		return rolRepository.findById(id).get();
+	}
+
 }

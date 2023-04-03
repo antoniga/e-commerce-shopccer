@@ -10,5 +10,7 @@ import com.shopccer.common.entity.Rol;
 public interface RolService {
 	
 	public List<Rol> listAll();
+	
+	public Rol findById(Integer id);
 
 }

@@ -39,8 +39,8 @@ public class UsuarioServiceImpl implements UsuarioService {
 		if (isUpdateUsuario) {
 			Usuario usuarioEditar = usuarioRepository.findById(usuario.getIdUsuario()).get();
 
-			if (usuario.getpassword().isEmpty()) {
-				usuario.setpassword(usuarioEditar.getpassword());
+			if (usuario.getPassword().isEmpty()) {
+				usuario.setPassword(usuarioEditar.getPassword());
 			} else {
 				encodePassword(usuario);
 			}
@@ -55,8 +55,8 @@ public class UsuarioServiceImpl implements UsuarioService {
 
 	private void encodePassword(Usuario usuario) {
 
-		String encodedPwd = passwordEncoder.encode(usuario.getpassword());
-		usuario.setpassword(encodedPwd);
+		String encodedPwd = passwordEncoder.encode(usuario.getPassword());
+		usuario.setPassword(encodedPwd);
 	}
 
 	public Boolean isEmailUnique(Integer id, String email) {

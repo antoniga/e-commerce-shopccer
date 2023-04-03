@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+	<meta http-equiv="Content-Type" content="txt/html; charset=UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0">
+	<title>Login - Shopccer Admin</title>
+
+	<link rel="stylesheet" type="text/css" th:href="@{/webjars/bootstrap/css/bootstrap.min.css}">
+	<link rel="stylesheet" type="text/css" th:href="@{/fontawesome/all.css}">
+	<link rel="stylesheet" type="text/css" th:href="@{/css/style.css}">
+</head>
+
+<body>
+	<div class="container-fluid text-center">
+		<div>
+	</div>
+		<div>
+			<img th:src="@{/images/shopccer_logo.png}" alt="">
+		</div>
+
+		<form th:action="@{/login}" method="post" style="max-width: 45%; margin: 0 auto;">
+			<div th:if="${param.error}">
+				<p class="text-danger">[[${session.SPRING_SECURITY_LAST_EXCEPTION.message}]]</p>
+			</div>
+		<div class="border  border-light rounded p-3 form-login">
+			<p><i class="fas fa-key fa-2x text-white"></i></p>
+			<h4 class="text-white">Panel de administración</h4>
+			<p><input type="email" name="email" class="form-control" placeholder="e-mail" required></p>
+			<p><input type="password" name="password" class="form-control" placeholder="password" required></p>
+			<p><input type="submit" value="LOGIN" class="btn btn-outline-info"></p>
+		</div>
+		</form>
+
+		<div class="text-center">
+			<p>Shopccer Control Panel Copyright &copy; Shopccer</p>
+		</div>
+	</div>
+</body>
+
+</html>
