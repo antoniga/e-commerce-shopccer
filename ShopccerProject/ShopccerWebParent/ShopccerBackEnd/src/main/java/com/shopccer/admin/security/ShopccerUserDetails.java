@@ -63,5 +63,9 @@ public class ShopccerUserDetails implements UserDetails {
 	public boolean isEnabled() {
 		return usuario.getActivo();
 	}
+	
+	public String getFullname() {
+		return this.usuario.getNombre()+" "+this.usuario.getApellidos();
+	}
 
 }

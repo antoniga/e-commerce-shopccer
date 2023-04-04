@@ -45,7 +45,8 @@ public class WebSecurityConfig{
 	public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
 		
 		//http.authorizeHttpRequests().anyRequest().permitAll();
-		http.authorizeHttpRequests().anyRequest().authenticated().and().formLogin().usernameParameter("email").loginPage("/login").permitAll();
+		http.authorizeHttpRequests().anyRequest().authenticated().and().formLogin().loginPage("/login")
+				.usernameParameter("email").permitAll().and().logout().permitAll().and().rememberMe().key("klfsSDFWEfoskdg3294825lksdf");
 		return http.build();
 	}
 	
