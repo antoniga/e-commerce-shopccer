@@ -1,23 +1,23 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 
-<head th:replace="fragments :: pageHead(${tituloPagina})"></head>
+<head th:replace="fragments :: pageHead(${'Detalles de la cuenta'})"></head>
 
 <body>
 	<div class="container-fluid">
 		<div th:replace="navigation :: menu"></div>
-		<div>
-			<h2>Gestión de usuarios | [[${tituloPagina}]]</h2>
+		<form th:action="@{/cuenta/update}" method="post" style="max-width: 700px; margin: 0 auto;" enctype="multipart/form-data"
+		th:object="${usuario}">
+		<div class="text-center"> 
+			<h2>Detalles de la cuenta</h2>
 		</div>
-		<form th:action="@{/usuarios/save}" method="post" style="max-width: 700px; margin: 0 auto;" enctype="multipart/form-data"
-			th:object="${usuario}" onsubmit="return checkEmailUnique(this);">
 			<input type="hidden" th:field="*{idUsuario}" id="idHidden" name="">
 			<div class="border p-3">
 				<div class="form-group row">
 					<div class="col-sm-12">
 						<label class="form-label" for="inputEmail">Email:</label>
 						<input type="email" class="form-control" id="inputEmail" placeholder="Introduce un email"
-							th:field="*{email}" required minlength="8" maxlength="128">
+							th:field="*{email}" readonly="readonly">
 					</div>
 				</div>
 				<div class="form-group row">
@@ -38,25 +38,20 @@
 				<div class="form-group row">
 					<div class="col-sm-12">
 						<label class="form-label" for="inputPwd">Contraseña:</label>
-						<input th:if="${usuario.idUsuario == null}" type="password" class="form-control" id="inputPwd" placeholder="Introduce la constraseña"
-							th:field="*{password}" required minlength="8" maxlength="20">
-						<input th:if="${usuario.idUsuario != null}" type="password" class="form-control" id="inputPwd" placeholder="Introduce nueva constraseña si la desea actualizar"
+						<input type="password" class="form-control" placeholder="Dejar en blanco si no se desea actualizar"
 							th:field="*{password}" minlength="8" maxlength="20">
 					</div>
 				</div>
 				<div class="form-group row">
 					<div class="col-sm-12">
-						<label class="form-label">Rol:</label> <br>
-						<th:block th:each=" rol: ${listaRoles}">
-							<input type="radio" th:field="*{rol}" th:text="${rol.nombre}" th:value="${rol.idRol}"
-								name="rol" id=""><br>
-						</th:block>
+						<label class="form-label" for="confirmPwd">Confirma contraseña:</label>
+						<input type="password" class="form-control" id="confirmPwd" minlength="8" maxlength="20" onblur="checkPasswordMatch(this)">
 					</div>
 				</div>
 				<div class="form-group row">
 					<div class="col-sm-12">
-						<label class="form-label" for="inputActivo">Activo:</label>
-						<input type="checkbox" th:field="*{activo}">
+						<label class="form-label">Rol asignado:</label>
+						<span><b>[[${usuario.rol.nombre}]]</b></span>
 					</div>
 				</div>
 				<div class="form-group row">
@@ -121,38 +116,17 @@
 					$("#thumbnail").attr("src", e.target.result);
 				  };
 				  reader.readAsDataURL(file);
+			}
+
+			function checkPasswordMatch(confirmPwd){
+				console.log("chqueando pwd")
+				if (confirmPwd.value != $("#password").val()){
+					confirmPwd.setCustomValidity("Las contraseñas no son iguales");
+				}else{
+					confirmPwd.setCustomValidity("");
 				}
-
-			function checkEmailUnique(form) {
-				url = "[[@{/usuarios/checkemail}]]"
-				userEmail = $("#inputEmail").val();
-				userId=  $("#idHidden").val();
-				csrf = $("input[name='_csrf']").val();
-				data = {
-					idUsuario: userId,
-					email: userEmail,
-					_csrf: csrf
-				};
-				$.post(url, data, function (response) {
-					if (response == "ok") {
-						form.submit();
-					} else if (response == "duplicado") {
-						showModalDialog("Atención", "Ya hay un usuario dado de alta con el siguiente email: " + userEmail);
-					} else {
-						showModalDialog("Error", "Fallo en el servidor desconocido.");
-					}
-
-				}).fail(function () {
-					showModalDialog("Error", "No se pudo conectar con el servidor.");
-				});
-				return false;
 			}
 
-			function showModalDialog(title, message) {
-				$("#modalTitle").text(title);
-				$("#modalBody").text(message);
-				$("#modalDialog").modal();
-			}
 		</script>
 </body>
 

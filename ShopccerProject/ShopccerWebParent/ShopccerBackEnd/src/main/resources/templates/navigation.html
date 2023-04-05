@@ -33,8 +33,11 @@
                     <li class="nav-item pl-2"><span class="fas fa-user fa-2x icon-silver"></span></li>
                     <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle"  data-toggle="dropdown" sec:authentication="principal.fullname"></a>
-                        <div class="dropdown-menu"><a class="dropdown-item" id="logoutLink" th:href="@{/logout}">Cerrar sesión</a></div>
-                    </li>
+						<div class="dropdown-menu">
+							<a class="dropdown-item" id="" th:href="@{/cuenta}">Actualizar cuenta</a>
+							<a class="dropdown-item" id="logoutLink" th:href="@{/logout}">Cerrar sesión</a>
+						</div>
+					</li>
                 </ul>
             </div>
         </nav>

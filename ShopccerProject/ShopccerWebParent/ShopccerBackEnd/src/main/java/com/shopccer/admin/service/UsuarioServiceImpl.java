@@ -126,4 +126,9 @@ public class UsuarioServiceImpl implements UsuarioService {
 		return usuarioRepository.findAll(pageable);
 	}
 
+
+	public Usuario findByEmail(String email) {
+		return usuarioRepository.findByEmail(email);
+	}
+
 }
