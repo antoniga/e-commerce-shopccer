@@ -6,66 +6,82 @@
 <body>
 	<div class="container-fluid">
 		<div th:replace="navigation :: menu"></div>
-		<form th:action="@{/cuenta/update}" method="post" style="max-width: 700px; margin: 0 auto;" enctype="multipart/form-data"
-		th:object="${usuario}">
-		<div class="text-center"> 
-			<h2>Detalles de la cuenta</h2>
-		</div>
+		<form th:action="@{/cuenta/update}" method="post"
+			style="max-width: 700px; margin: 0 auto;"
+			enctype="multipart/form-data" th:object="${usuario}">
+			<div class="text-center">
+				<h2>Detalles de la cuenta</h2>
+			</div>
+			<div th:if="${msg != null}"
+				class="alert alert-success alert-dismissible fade show text-center"
+				role="alert">
+				[[${msg}]]
+				<button type="button" class="close" data-dismiss="alert"
+					aria-label="Close">
+					<span aria-hidden="true">&times;</span>
+				</button>
+			</div>
 			<input type="hidden" th:field="*{idUsuario}" id="idHidden" name="">
 			<div class="border p-3">
 				<div class="form-group row">
 					<div class="col-sm-12">
-						<label class="form-label" for="inputEmail">Email:</label>
-						<input type="email" class="form-control" id="inputEmail" placeholder="Introduce un email"
-							th:field="*{email}" readonly="readonly">
+						<label class="form-label" for="inputEmail">Email:</label> <input
+							type="email" class="form-control" id="inputEmail"
+							placeholder="Introduce un email" th:field="*{email}"
+							readonly="readonly">
 					</div>
 				</div>
 				<div class="form-group row">
 					<div class="col-sm-12">
-						<label class="form-label" for="inputNombre">Nombre:</label>
-						<input type="text" class="form-control" id="inputNombre" placeholder="Introduce el nombre"
-							th:field="*{nombre}" required minlength="2" maxlength="45">
+						<label class="form-label" for="inputNombre">Nombre:</label> <input
+							type="text" class="form-control" id="inputNombre"
+							placeholder="Introduce el nombre" th:field="*{nombre}" required
+							minlength="2" maxlength="45">
 					</div>
 				</div>
 				<div class="form-group row">
 					<div class="col-sm-12">
 						<label class="form-label" for="inputApellidos">Apellidos:</label>
 						<input type="text" class="form-control" id="inputApellidos"
-							placeholder="Introduce los apellidos" th:field="*{apellidos}" required minlength="2"
-							maxlength="90">
+							placeholder="Introduce los apellidos" th:field="*{apellidos}"
+							required minlength="2" maxlength="90">
 					</div>
 				</div>
 				<div class="form-group row">
 					<div class="col-sm-12">
-						<label class="form-label" for="inputPwd">Contraseña:</label>
-						<input type="password" class="form-control" placeholder="Dejar en blanco si no se desea actualizar"
+						<label class="form-label" for="inputPwd">Contraseña:</label> <input
+							type="password" class="form-control"
+							placeholder="Dejar en blanco si no se desea actualizar"
 							th:field="*{password}" minlength="8" maxlength="20">
 					</div>
 				</div>
 				<div class="form-group row">
 					<div class="col-sm-12">
-						<label class="form-label" for="confirmPwd">Confirma contraseña:</label>
-						<input type="password" class="form-control" id="confirmPwd" minlength="8" maxlength="20" onblur="checkPasswordMatch(this)">
+						<label class="form-label" for="confirmPwd">Confirma
+							contraseña:</label> <input type="password" class="form-control"
+							id="confirmPwd" minlength="8" maxlength="20"
+							onblur="checkPasswordMatch(this)">
 					</div>
 				</div>
 				<div class="form-group row">
 					<div class="col-sm-12">
-						<label class="form-label">Rol asignado:</label>
-						<span><b>[[${usuario.rol.nombre}]]</b></span>
+						<label class="form-label">Rol asignado:</label> <span><b>[[${usuario.rol.nombre}]]</b></span>
 					</div>
 				</div>
 				<div class="form-group row">
 					<div class="col-sm-12">
-						<label class="form-label" for="inputActivo">Fotos:</label>
-						<input type="hidden" th:field="*{fotos}">
-						<input type="file" id="fileImg" name="usuarioImg" accept="image/png, image/jpeg">
-						<img id="thumbnail" th:src="@{${usuario.pathFotos}}" class="img-fluid" alt="">
+						<label class="form-label" for="inputActivo">Fotos:</label> <input
+							type="hidden" th:field="*{fotos}"> <input type="file"
+							id="fileImg" name="usuarioImg" accept="image/png, image/jpeg">
+						<img id="thumbnail" th:src="@{${usuario.pathFotos}}"
+							class="img-fluid" alt="">
 					</div>
 				</div>
 
 				<div class="text-center m-3">
-					<input type="submit" value="Guardar" class="btn btn-primary" id="btnSubmit" />
-					<input type="button" value="Cancelar" class="btn btn-secondary" id="btnCancelar" />
+					<input type="submit" value="Guardar" class="btn btn-primary"
+						id="btnSubmit" /> <input type="button" value="Cancelar"
+						class="btn btn-secondary" id="btnCancelar" />
 				</div>
 			</div>
 		</form>
@@ -88,45 +104,50 @@
 		</div>
 
 
-	<div th:replace="fragments :: footer"></div>
+		<div th:replace="fragments :: footer"></div>
 
 		<script type="text/javascript">
-			$(document).ready(function () {
-				$("#btnCancelar").on("click", function () {
-					window.location = "[[@{/usuarios}]]";
-				});
-				/**$('input:radio[name="rol"]').filter('[value="2"]').attr('checked', true);*/
-				$("#fileImg").change(function(){
-					fileSize = this.files[0].size;
+			$(document)
+					.ready(
+							function() {
+								$("#btnCancelar").on("click", function() {
+									window.location = "[[@{/usuarios}]]";
+								});
+								/**$('input:radio[name="rol"]').filter('[value="2"]').attr('checked', true);*/
+								$("#fileImg")
+										.change(
+												function() {
+													fileSize = this.files[0].size;
 
-					if(fileSize > 1048576){//1MB
-						this.setCustomValidity("Debes seleccionar una imagen de una tamaño menor a 1MB");
-						this.reportValidity();
-					}else{
-						showImageThumbnail(this);
-					}
+													if (fileSize > 1048576) {//1MB
+														this
+																.setCustomValidity("Debes seleccionar una imagen de una tamaño menor a 1MB");
+														this.reportValidity();
+													} else {
+														showImageThumbnail(this);
+													}
 
-				})
-			});
+												})
+							});
 
-			function showImageThumbnail(fileInput){
+			function showImageThumbnail(fileInput) {
 				var file = fileInput.files[0];
 				var reader = new FileReader();
-				reader.onload = function (e) {
+				reader.onload = function(e) {
 					$("#thumbnail").attr("src", e.target.result);
-				  };
-				  reader.readAsDataURL(file);
+				};
+				reader.readAsDataURL(file);
 			}
 
-			function checkPasswordMatch(confirmPwd){
+			function checkPasswordMatch(confirmPwd) {
 				console.log("chqueando pwd")
-				if (confirmPwd.value != $("#password").val()){
-					confirmPwd.setCustomValidity("Las contraseñas no son iguales");
-				}else{
+				if (confirmPwd.value != $("#password").val()) {
+					confirmPwd
+							.setCustomValidity("Las contraseñas no son iguales");
+				} else {
 					confirmPwd.setCustomValidity("");
 				}
 			}
-
 		</script>
 </body>
 

@@ -82,7 +82,7 @@ public class UsuarioController {
 		return "usuario_form";
 	}
 	
-	@PostMapping("usuarios/save")
+	@PostMapping("/usuarios/save")
 	public String saveUsuario(Usuario usuario, RedirectAttributes redirectAttributes, @RequestParam("usuarioImg") MultipartFile multipartFile) throws IOException {
 				
 		if (!multipartFile.isEmpty()) {
@@ -108,7 +108,7 @@ public class UsuarioController {
 	}
 
 	
-	@GetMapping("usuarios/edit/{idUsuario}")
+	@GetMapping("/usuarios/edit/{idUsuario}")
 	public String editUsuario(@PathVariable(name="idUsuario") Integer idUsuario, Model model, RedirectAttributes redirectAttributes) {
 		
 		try {
@@ -127,7 +127,7 @@ public class UsuarioController {
 		
 	}
 	
-	@GetMapping("usuarios/delete/{idUsuario}")
+	@GetMapping("/usuarios/delete/{idUsuario}")
 	public String deleteUsuario(@PathVariable(name = "idUsuario") Integer idUsuario, Model model, RedirectAttributes redirectAttributes) {
 		
 		try {
@@ -142,7 +142,7 @@ public class UsuarioController {
 		return "redirect:/usuarios";
 	}
 	
-	@GetMapping("usuarios/{idUsuario}/activo/{bool}")
+	@GetMapping("/usuarios/{idUsuario}/activo/{bool}")
 	public String updateUsuarioActivo(@PathVariable(name = "idUsuario") Integer idUsuario,
 			@PathVariable(name = "bool") Boolean activo, RedirectAttributes redirectAttributes) {
 

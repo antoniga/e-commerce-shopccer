@@ -53,12 +53,6 @@ public class UsuarioServiceImpl implements UsuarioService {
 		return usuarioRepository.save(usuario);
 	}
 
-	private void encodePassword(Usuario usuario) {
-
-		String encodedPwd = passwordEncoder.encode(usuario.getPassword());
-		usuario.setPassword(encodedPwd);
-	}
-
 	public Boolean isEmailUnique(Integer id, String email) {
 		
 		/**Buscamos el usuario por el email*/
@@ -129,6 +123,34 @@ public class UsuarioServiceImpl implements UsuarioService {
 
 	public Usuario findByEmail(String email) {
 		return usuarioRepository.findByEmail(email);
+	}
+
+	@Override
+	public Usuario updateCuenta(Usuario usuario) {
+		
+		Usuario usuarioBd = usuarioRepository.findById(usuario.getIdUsuario()).get();
+		
+		//solo actualizamos los datos que hayan cambiado
+		if (!usuario.getPassword().isEmpty()) {
+			usuarioBd.setPassword(usuario.getPassword());
+			encodePassword(usuarioBd);
+		}
+		
+		if(usuario.getFotos() !=null) {
+			usuarioBd.setFotos(usuario.getFotos());
+			
+		}
+		
+		usuarioBd.setNombre(usuario.getNombre());
+		usuarioBd.setApellidos(usuario.getApellidos());
+		
+		return usuarioRepository.save(usuarioBd);
+	}
+
+	private void encodePassword(Usuario usuario) {
+
+		String encodedPwd = passwordEncoder.encode(usuario.getPassword());
+		usuario.setPassword(encodedPwd);
 	}
 
 }

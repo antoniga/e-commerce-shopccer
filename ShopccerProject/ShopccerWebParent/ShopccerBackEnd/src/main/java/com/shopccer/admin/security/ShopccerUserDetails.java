@@ -67,5 +67,13 @@ public class ShopccerUserDetails implements UserDetails {
 	public String getFullname() {
 		return this.usuario.getNombre()+" "+this.usuario.getApellidos();
 	}
+	
+	public void setNombre(String nombre) {
+		this.usuario.setNombre(nombre);
+	}
+	
+	public void setApellidos(String apellidos) {
+		this.usuario.setApellidos(apellidos);
+	}
 
 }

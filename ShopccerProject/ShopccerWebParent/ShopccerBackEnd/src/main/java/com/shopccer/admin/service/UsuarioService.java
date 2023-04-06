@@ -26,5 +26,7 @@ public interface UsuarioService {
 	public Page<Usuario> listByPage(Integer numeroPagina, String campoOrden, String dirOrden, String palabraClave);
 	
 	public Usuario findByEmail(String email);
+	
+	public Usuario updateCuenta(Usuario usuario);
 
 }
