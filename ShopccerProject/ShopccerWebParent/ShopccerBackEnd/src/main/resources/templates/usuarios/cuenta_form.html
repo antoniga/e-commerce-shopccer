@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head th:replace="fragments :: pageHead(${'Detalles de la cuenta'})"></head>
+
+<body>
+	<div class="container-fluid">
+		<div th:replace="navigation :: menu"></div>
+		<form th:action="@{/cuenta/update}" method="post"
+			style="max-width: 700px; margin: 0 auto;"
+			enctype="multipart/form-data" th:object="${usuario}">
+			<div class="text-center">
+				<h2>Detalles de la cuenta</h2>
+			</div>
+			<div th:if="${msg != null}"
+				class="alert alert-success alert-dismissible fade show text-center"
+				role="alert">
+				[[${msg}]]
+				<button type="button" class="close" data-dismiss="alert"
+					aria-label="Close">
+					<span aria-hidden="true">&times;</span>
+				</button>
+			</div>
+			<input type="hidden" th:field="*{idUsuario}" id="idHidden" name="">
+			<div class="border p-3">
+				<div class="form-group row">
+					<div class="col-sm-12">
+						<label class="form-label" for="inputEmail">Email:</label> <input
+							type="email" class="form-control" id="inputEmail"
+							placeholder="Introduce un email" th:field="*{email}"
+							readonly="readonly">
+					</div>
+				</div>
+				<div class="form-group row">
+					<div class="col-sm-12">
+						<label class="form-label" for="inputNombre">Nombre:</label> <input
+							type="text" class="form-control" id="inputNombre"
+							placeholder="Introduce el nombre" th:field="*{nombre}" required
+							minlength="2" maxlength="45">
+					</div>
+				</div>
+				<div class="form-group row">
+					<div class="col-sm-12">
+						<label class="form-label" for="inputApellidos">Apellidos:</label>
+						<input type="text" class="form-control" id="inputApellidos"
+							placeholder="Introduce los apellidos" th:field="*{apellidos}"
+							required minlength="2" maxlength="90">
+					</div>
+				</div>
+				<div class="form-group row">
+					<div class="col-sm-12">
+						<label class="form-label" for="inputPwd">Contraseña:</label> <input
+							type="password" class="form-control"
+							placeholder="Dejar en blanco si no se desea actualizar"
+							th:field="*{password}" minlength="8" maxlength="20">
+					</div>
+				</div>
+				<div class="form-group row">
+					<div class="col-sm-12">
+						<label class="form-label" for="confirmPwd">Confirma
+							contraseña:</label> <input type="password" class="form-control"
+							id="confirmPwd" minlength="8" maxlength="20"
+							onblur="checkPasswordMatch(this)">
+					</div>
+				</div>
+				<div class="form-group row">
+					<div class="col-sm-12">
+						<label class="form-label">Rol asignado:</label> <span><b>[[${usuario.rol.nombre}]]</b></span>
+					</div>
+				</div>
+				<div class="form-group row">
+					<div class="col-sm-12">
+						<label class="form-label" for="inputActivo">Fotos:</label> <input
+							type="hidden" th:field="*{fotos}"> <input type="file"
+							id="fileImg" name="usuarioImg" accept="image/png, image/jpeg">
+						<img id="thumbnail" th:src="@{${usuario.pathFotos}}"
+							class="img-fluid" alt="">
+					</div>
+				</div>
+
+				<div class="text-center m-3">
+					<input type="submit" value="Guardar" class="btn btn-primary"
+						id="btnSubmit" /> <input type="button" value="Cancelar"
+						class="btn btn-secondary" id="btnCancelar" />
+				</div>
+			</div>
+		</form>
+
+		<div th:replace="fragments :: footer"></div>
+		<script type="text/javascript">
+			$(document).ready(function() {
+				$("#btnCancelar").on("click", function() {
+					window.location = "[[@{/}]]";
+				});
+			});
+		</script>
+		<script type="text/javascript" th:src="@{/js/common_form.js}"></script>
+</body>
+
+</html>

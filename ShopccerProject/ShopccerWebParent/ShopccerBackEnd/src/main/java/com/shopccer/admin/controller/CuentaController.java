@@ -33,7 +33,7 @@ public class CuentaController {
 
 		model.addAttribute("usuario", usuario);
 
-		return "cuenta_form";
+		return "usuarios/cuenta_form";
 	}
 
 	@PostMapping("/cuenta/update")

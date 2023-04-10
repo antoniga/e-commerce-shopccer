@@ -67,7 +67,7 @@ public class UsuarioController {
 		model.addAttribute("dirOrdenContrario",dirOrdenContrario);
 		model.addAttribute("palabraClave",palabraClave);
 		
-		return "usuarios";
+		return "usuarios/usuarios";
 	}
 	
 	@GetMapping("/usuarios/nuevo")
@@ -79,7 +79,7 @@ public class UsuarioController {
 		model.addAttribute("listaRoles", listaRoles);
 		model.addAttribute("tituloPagina", "Crear nuevo usuario");
 		
-		return "usuario_form";
+		return "usuarios/usuario_form";
 	}
 	
 	@PostMapping("/usuarios/save")
@@ -118,7 +118,7 @@ public class UsuarioController {
 			model.addAttribute("usuario", usuario);
 			model.addAttribute("listaRoles", listaRoles);
 			model.addAttribute("tituloPagina", "Editar usuario (Id: "+idUsuario+") ");
-			return "usuario_form";
+			return "usuarios/usuario_form";
 		} catch (UsuarioNotFoundException e) {
 
 			redirectAttributes.addFlashAttribute("msg",e.getMessage());

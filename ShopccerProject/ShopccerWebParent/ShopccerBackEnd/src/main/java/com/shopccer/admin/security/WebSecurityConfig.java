@@ -45,7 +45,9 @@ public class WebSecurityConfig{
 	public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
 		// tokenValiditySeconds(7 * 24 * 60 * 60) mantenemos sesion durante una semana, expresado en segundos
 		//http.authorizeHttpRequests().anyRequest().permitAll();
-		http.authorizeHttpRequests().anyRequest().authenticated().and()
+		http.authorizeHttpRequests()
+			.requestMatchers("/usuarios/**","/config/**").hasAuthority("Super-Admin")
+			.anyRequest().authenticated().and()
 			.formLogin().loginPage("/login").usernameParameter("email").permitAll().and()
 			.logout().permitAll().and()
 			.rememberMe().key("klfsSDFWEfoskdg3294825lksdf").tokenValiditySeconds(7 * 24 * 60 * 60);

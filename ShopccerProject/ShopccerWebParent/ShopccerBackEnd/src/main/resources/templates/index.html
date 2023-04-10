@@ -7,7 +7,10 @@
 	<div class="container-fluid">
 		<div th:replace="navigation :: menu"></div>
 		<div>
-			<h1>Shopccer Control Panel</h1>
+			<h2>Shopccer Control Panel</h2>
+			Bienvenido
+			<a th:href="@{/cuenta}" sec:authentication="principal.fullname"></a>
+			<strong><span sec:authentication="principal.authorities"></span></strong>
 		</div>
 
 	<div th:replace="fragments :: footer"></div>

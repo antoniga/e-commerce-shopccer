@@ -11,26 +11,25 @@ import org.springframework.security.core.userdetails.UserDetails;
 import com.shopccer.common.entity.Usuario;
 
 public class ShopccerUserDetails implements UserDetails {
-	
+
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
 
-	
-	private Usuario usuario;	
+	private Usuario usuario;
 
 	public ShopccerUserDetails(Usuario usuario) {
 		this.usuario = usuario;
 	}
 
 	@Override
-	public Collection<? extends GrantedAuthority> getAuthorities() {		
-		
+	public Collection<? extends GrantedAuthority> getAuthorities() {
+
 		List<SimpleGrantedAuthority> authories = new ArrayList<>();
-		
+
 		authories.add(new SimpleGrantedAuthority(usuario.getRol().getNombre()));
-		
+
 		return authories;
 	}
 
@@ -63,15 +62,15 @@ public class ShopccerUserDetails implements UserDetails {
 	public boolean isEnabled() {
 		return usuario.getActivo();
 	}
-	
+
 	public String getFullname() {
-		return this.usuario.getNombre()+" "+this.usuario.getApellidos();
+		return this.usuario.getNombre() + " " + this.usuario.getApellidos();
 	}
-	
+
 	public void setNombre(String nombre) {
 		this.usuario.setNombre(nombre);
 	}
-	
+
 	public void setApellidos(String apellidos) {
 		this.usuario.setApellidos(apellidos);
 	}
