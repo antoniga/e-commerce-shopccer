@@ -27,12 +27,3 @@ function showImageThumbnail(fileInput) {
 	reader.readAsDataURL(file);
 }
 
-function checkPasswordMatch(confirmPwd) {
-	console.log("chqueando pwd")
-	if (confirmPwd.value != $("#password").val()) {
-		confirmPwd
-			.setCustomValidity("Las contraseñas no son iguales");
-	} else {
-		confirmPwd.setCustomValidity("");
-	}
-}

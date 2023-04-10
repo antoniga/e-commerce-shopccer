@@ -163,7 +163,8 @@ public class UsuarioController {
 	 * @return url
 	 */
 	private String getRedirectUrlToAffectedUsuario(Usuario usuario) {
-		String splitEmail = usuario.getEmail().split("@")[0];
+//		String splitEmail = usuario.getEmail().split("@")[0];
+		String splitEmail = usuario.getEmail();
 		
 		return "redirect:/usuarios/pagina/1?campoOrden=idUsuario&dirOrden=asc&palabraClave=" + splitEmail;
 	}

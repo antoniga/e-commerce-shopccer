@@ -9,87 +9,78 @@
 		<div>
 			<h2>Gestión de usuarios | [[${tituloPagina}]]</h2>
 		</div>
-		<form th:action="@{/usuarios/save}" method="post"
-			style="max-width: 700px; margin: 0 auto;"
-			enctype="multipart/form-data" th:object="${usuario}"
-			onsubmit="return checkEmailUnique(this);">
+		<form th:action="@{/usuarios/save}" method="post" style="max-width: 700px; margin: 0 auto;"
+			enctype="multipart/form-data" th:object="${usuario}" onsubmit="return checkEmailUnique(this);">
 			<input type="hidden" th:field="*{idUsuario}" id="idHidden" name="">
 			<div class="border p-3">
 				<div class="form-group row">
 					<div class="col-sm-12">
-						<label class="form-label" for="inputEmail">Email:</label> <input
-							type="email" class="form-control" id="inputEmail"
-							placeholder="Introduce un email" th:field="*{email}" required
-							minlength="8" maxlength="128">
+						<label class="form-label" for="inputEmail">Email:</label> <input type="email"
+							class="form-control" id="inputEmail" placeholder="Introduce un email" th:field="*{email}"
+							required minlength="8" maxlength="128">
 					</div>
 				</div>
 				<div class="form-group row">
 					<div class="col-sm-12">
-						<label class="form-label" for="inputNombre">Nombre:</label> <input
-							type="text" class="form-control" id="inputNombre"
-							placeholder="Introduce el nombre" th:field="*{nombre}" required
-							minlength="2" maxlength="45">
+						<label class="form-label" for="inputNombre">Nombre:</label> <input type="text"
+							class="form-control" id="inputNombre" placeholder="Introduce el nombre" th:field="*{nombre}"
+							required minlength="2" maxlength="45">
 					</div>
 				</div>
 				<div class="form-group row">
 					<div class="col-sm-12">
 						<label class="form-label" for="inputApellidos">Apellidos:</label>
 						<input type="text" class="form-control" id="inputApellidos"
-							placeholder="Introduce los apellidos" th:field="*{apellidos}"
-							required minlength="2" maxlength="90">
+							placeholder="Introduce los apellidos" th:field="*{apellidos}" required minlength="2"
+							maxlength="90">
 					</div>
 				</div>
 				<div class="form-group row">
 					<div class="col-sm-12">
 						<label class="form-label" for="inputPwd">Contraseña:</label> <input
-							th:if="${usuario.idUsuario == null}" type="password"
+							th:if="${usuario.idUsuario == null}" type="password" class="form-control" id="inputPwd"
+							placeholder="Introduce la constraseña" th:field="*{password}" required minlength="8"
+							maxlength="20"> <input th:if="${usuario.idUsuario != null}" type="password"
 							class="form-control" id="inputPwd"
-							placeholder="Introduce la constraseña" th:field="*{password}"
-							required minlength="8" maxlength="20"> <input
-							th:if="${usuario.idUsuario != null}" type="password"
-							class="form-control" id="inputPwd"
-							placeholder="Introduce nueva constraseña si la desea actualizar"
-							th:field="*{password}" minlength="8" maxlength="20">
+							placeholder="Introduce nueva constraseña si la desea actualizar" th:field="*{password}"
+							minlength="8" maxlength="20">
 					</div>
 				</div>
 				<div class="form-group row">
 					<div class="col-sm-12">
 						<label class="form-label" for="confirmPwd">Confirma
-							contraseña:</label> <input type="password" class="form-control"
-							id="confirmPwd" minlength="8" maxlength="20"
-							onblur="checkPasswordMatch(this)">
+							contraseña:</label> <input type="password" class="form-control" id="confirmPwd"
+							minlength="8" maxlength="20" onblur="checkPasswordMatch(this)">
 					</div>
 				</div>
 				<div class="form-group row">
 					<div class="col-sm-12">
 						<label class="form-label">Rol:</label> <br>
 						<th:block th:each=" rol: ${listaRoles}">
-							<input type="radio" th:field="*{rol}" th:text="${rol.nombre}"
-								th:value="${rol.idRol}" name="rol" id="">
+							<input type="radio" th:field="*{rol}" th:text="${rol.nombre}" th:value="${rol.idRol}"
+								name="rol" id="">
 							<br>
 						</th:block>
 					</div>
 				</div>
 				<div class="form-group row">
 					<div class="col-sm-12">
-						<label class="form-label" for="inputActivo">Activo:</label> <input
-							type="checkbox" th:field="*{activo}">
+						<label class="form-label" for="inputActivo">Activo:</label> <input type="checkbox"
+							th:field="*{activo}">
 					</div>
 				</div>
 				<div class="form-group row">
 					<div class="col-sm-12">
-						<label class="form-label" for="inputActivo">Fotos:</label> <input
-							type="hidden" th:field="*{fotos}"> <input type="file"
-							id="fileImg" name="usuarioImg" accept="image/png, image/jpeg">
-						<img id="thumbnail" th:src="@{${usuario.pathFotos}}"
-							class="img-fluid" alt="">
+						<label class="form-label" for="inputActivo">Fotos:</label> <input type="hidden"
+							th:field="*{fotos}"> <input type="file" id="fileImg" name="usuarioImg"
+							accept="image/png, image/jpeg">
+						<img id="thumbnail" th:src="@{${usuario.pathFotos}}" class="img-fluid" alt="">
 					</div>
 				</div>
 
 				<div class="text-center m-3">
-					<input type="submit" value="Guardar" class="btn btn-primary"
-						id="btnSubmit" /> <input type="button" value="Cancelar"
-						class="btn btn-secondary" id="btnCancelar" />
+					<input type="submit" value="Guardar" class="btn btn-primary" id="btnSubmit" /> <input type="button"
+						value="Cancelar" class="btn btn-secondary" id="btnCancelar" />
 				</div>
 			</div>
 		</form>
@@ -115,8 +106,8 @@
 		<div th:replace="fragments :: footer"></div>
 
 		<script type="text/javascript">
-			$(document).ready(function() {
-				$("#btnCancelar").on("click", function() {
+			$(document).ready(function () {
+				$("#btnCancelar").on("click", function () {
 					window.location = "[[@{/}]]";
 				});
 			});
@@ -127,29 +118,29 @@
 				userId = $("#idHidden").val();
 				csrf = $("input[name='_csrf']").val();
 				data = {
-					idUsuario : userId,
-					email : userEmail,
-					_csrf : csrf
+					idUsuario: userId,
+					email: userEmail,
+					_csrf: csrf
 				};
 				$.post(
-						url,
-						data,
-						function(response) {
-							if (response == "ok") {
-								form.submit();
-							} else if (response == "duplicado") {
-								showModalDialog("Atención",
-										"Ya hay un usuario dado de alta con el siguiente email: "
-												+ userEmail);
-							} else {
-								showModalDialog("Error",
-										"Fallo en el servidor desconocido.");
-							}
-
-						}).fail(
-						function() {
+					url,
+					data,
+					function (response) {
+						if (response == "ok") {
+							form.submit();
+						} else if (response == "duplicado") {
+							showModalDialog("Atención",
+								"Ya hay un usuario dado de alta con el siguiente email: "
+								+ userEmail);
+						} else {
 							showModalDialog("Error",
-									"No se pudo conectar con el servidor.");
+								"Fallo en el servidor desconocido.");
+						}
+
+					}).fail(
+						function () {
+							showModalDialog("Error",
+								"No se pudo conectar con el servidor.");
 						});
 				return false;
 			}
@@ -158,6 +149,16 @@
 				$("#modalTitle").text(title);
 				$("#modalBody").text(message);
 				$("#modalDialog").modal();
+			}
+
+			function checkPasswordMatch(confirmPwd) {
+				console.log("chqueando pwd")
+				if (confirmPwd.value != $("#inputPwd").val()) {
+					confirmPwd
+						.setCustomValidity("Las contraseñas no son iguales");
+				} else {
+					confirmPwd.setCustomValidity("");
+				}
 			}
 		</script>
 		<script type="text/javascript" th:src="@{/js/common_form.js}"></script>

@@ -7,9 +7,13 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.web.multipart.MultipartFile;
 
 public class FileLoadUtil {
+	
+	private static final Logger LOGGER = LoggerFactory.getLogger(FileLoadUtil.class);
 
 	public static void saveFile(String dirSubida, String nombreArchivo, MultipartFile multipartFile)
 			throws IOException {
@@ -39,13 +43,13 @@ public class FileLoadUtil {
 					try {
 						Files.delete(archivo);
 					} catch (IOException e) {
-						System.out.println("No se pudo eliminar el archivo: " + archivo);
+						LOGGER.error("No se pudo eliminar el archivo: " + archivo);
 					}
 
 				}
 			});
 		} catch (IOException e) {
-			System.out.println("No se pudo listar el directorio: " + dirPath);
+			LOGGER.error("No se pudo listar el directorio: " + dirPath);
 		}
 	}
 
