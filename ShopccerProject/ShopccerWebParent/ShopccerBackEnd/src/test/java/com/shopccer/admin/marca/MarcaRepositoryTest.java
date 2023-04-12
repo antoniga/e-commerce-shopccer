@@ -2,6 +2,8 @@ package com.shopccer.admin.marca;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
+import java.util.List;
+
 import org.junit.jupiter.api.MethodOrderer.OrderAnnotation;
 import org.junit.jupiter.api.Order;
 import org.junit.jupiter.api.Test;
@@ -27,12 +29,32 @@ public class MarcaRepositoryTest {
 	@Test
 	@Order(1)
 	public void testCreateMarca() {
-		Marca marca = new Marca("Adidas", "", true);
+		Marca marca = new Marca("Nike", "nike.png", true);
 		
 		marcaRepository.save(marca);
 		
 		assertThat(marca.getIdMarca()).isPositive();
 		
+	}
+	
+	@Test
+	@Order(2)
+	public void testListAllMarcas() {
+		
+		List<Marca> listMarcas = (List<Marca>) marcaRepository.findAll();
+		
+		listMarcas.forEach(m -> System.out.println(m.getNombre()));
+		
+		assertThat(listMarcas).hasSize(2);
+		
+	}
+	
+	@Test
+	@Order(3)
+	public void testGetMarcaById(){
+		Marca marca = marcaRepository.findById(1).get();
+		
+		assertThat(marca.getNombre()).isEqualTo("Adidas");
 	}
 
 }

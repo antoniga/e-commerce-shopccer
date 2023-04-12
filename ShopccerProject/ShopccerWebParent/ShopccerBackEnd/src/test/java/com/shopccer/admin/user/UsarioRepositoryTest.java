@@ -63,9 +63,9 @@ public class UsarioRepositoryTest {
 	@Order(3)
 	public void testGetUserById() {
 
-		Usuario usuarioId = usuarioRepository.findById(1).get();
+		Usuario usuarioId = usuarioRepository.findById(2).get();
 
-		assertThat(usuarioId.getNombre()).isEqualTo("Antonio");
+		assertThat(usuarioId.getNombre()).isEqualTo("Ana Maria");
 	}
 	
 	@Test

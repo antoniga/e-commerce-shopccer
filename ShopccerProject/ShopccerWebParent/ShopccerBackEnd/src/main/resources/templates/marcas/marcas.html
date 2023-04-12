@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head th:replace="fragments :: pageHead('Marcas- Shopccer Admin')"></head>
+
+<body>
+	<div class="container-fluid">
+		<div th:replace="navigation :: menu"></div>
+		<div>
+			<h2>Gestión de marcas</h2>
+		</div>
+
+		<!-- <div th:if="${msg != null}" class="alert alert-success alert-dismissible fade show text-center" role="alert">
+			[[${msg}]]
+			<button type="button" class="close" data-dismiss="alert" aria-label="Close">
+				<span aria-hidden="true">&times;</span>
+			</button>
+		</div> -->
+
+		<div class="row justify-content-between">
+			<div class="col-lg-5 col-md-12 mt-1 mb-1">
+				<a class="fas fa-circle-plus fa-2x icon-shopccer" th:href="@{/marcas/nuevo}" style="text-decoration: none" title="Crear nueva marca"></a>
+			</div>
+			<div class="col-lg-7 col-md-12 d-lg-flex ">
+				<form th:action="@{/marcas/pagina/1}" class="form-inline mt-1 mb-1 ml-auto">
+					<input type="hidden" name="campoOrden" th:value="${campoOrden}">
+					<input type="hidden" name="dirOrden" th:value="${dirOrden}">
+					<input type="search" name="palabraClave" placeholder="Busca por id, email, nombre, apellido" th:value="${palabraClave}" class="form-control" size="40%" required/>
+					&nbsp;&nbsp;
+					<button type="submit" class="btn btn-info mt-2 mt-sm-0"><i class="fas fa-search"></i></button>
+					&nbsp;&nbsp;
+					<button type="button" class="btn btn-secondary mt-2 mt-sm-0" onclick="limpiarFiltro()"/><i class="fas fa-eraser"></i></button>
+				</form>
+			</div>
+		</div>
+
+		<div class="full-details">
+			<table class="table table-bordered table-hover table-responsive-xl">
+				<thead class="thead-dark">
+					<tr>
+						<th>ID</th>
+						<th>Foto</th>
+						<th>Nombre marca</th>
+						<th>Activa</th>
+						<th></th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr th:each="marca : ${listaMarcas}">
+						<td>[[${marca.idMarca}]]</td>
+						<td></td>
+						<td>[[${marca.nombre}]]</td>
+						<td><a th:if="${marca.activo} == true" class="fa-solid fa-square-check fa-2x icon-green" style="text-decoration: none" th:href="@{'/marcas/' + ${marca.idMarca} + '/activo/false'}" title="Desactiva usuario"></a>
+							<a th:if="${marca.activo} != true" class="fa-solid fa-square fa-2x icon-silver" style="text-decoration: none" th:href="@{'/marcas/' + ${marca.idMarca} + '/activo/true'}" title="Activa usuario"></a>
+						</td>
+						<td><a class="fa-solid fa-edit fa-2x icon-green" style="text-decoration: none" th:href="@{'/marcas/edit/'+${marca.idMarca}}" title="Editar marca"></a> &nbsp;
+							<a class="fa-solid fa-trash fa-2x icon-dark link-delete" style="text-decoration: none" th:href="@{'/marcas/delete/'+${marca.idMarca}}" th:marcaId="${marca.idMarca}" title="Eliminar marca"></a>
+						</td>
+					</tr>
+				</tbody>
+			</table>
+		</div>
+
+
+	<div th:replace="fragments :: footer"></div>
+
+	<script type="text/javascript">
+		$(document).ready(function() {
+			$(".link-delete").on("click",function(e) {
+				e.preventDefault();
+				userId = $(this).attr("userId");
+				$("#btnSi").attr("href", $(this).attr("href"));
+				$("#confirmText").text("¿Seguro que desea eliminar el usuario con id: "+ userId + " ?");
+				$("#confirmDelete").modal();
+			})
+		});
+
+		function limpiarFiltro(){
+			window.location ="[[@{/usuarios}]]";
+		}
+	</script>
+</body>
+
+</html>
