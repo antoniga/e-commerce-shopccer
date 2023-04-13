@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head th:replace="fragments :: pageHead(${tituloPagina})"></head>
+
+<body>
+	<div class="container-fluid">
+		<div th:replace="navigation :: menu"></div>
+		<div>
+			<h2>Gestión de marcas | [[${tituloPagina}]]</h2>
+		</div>
+		<form th:action="@{/marcas/save}" method="post" style="max-width: 700px; margin: 0 auto;"
+			enctype="multipart/form-data" th:object="${marca}">
+			<input type="hidden" th:field="*{idMarca}" id="idHidden" name="">
+			<div class="border p-3">
+				<div class="form-group row">
+					<div class="col-sm-12">
+						<label class="form-label" for="nombreMarca">Nombre marca:</label> <input type="text"
+							class="form-control" id="nombreMarca" placeholder="Introduce un nombre" th:field="*{nombre}"
+							required minlength="3" maxlength="128">
+					</div>
+				</div>
+				<div class="form-group row">
+					<div class="col-sm-12">
+						<label class="form-label" for="inputActivo">Activa:</label> <input type="checkbox"
+							th:field="*{activo}">
+					</div>
+				</div>
+				<div class="form-group row">
+					<div class="col-sm-12">
+						<label class="form-label" >Foto:</label> <input type="hidden"
+							th:field="*{foto}"> <input type="file" id="fileImg" name="marcaImg"
+							accept="image/png, image/jpeg">
+						<img id="thumbnail"class="img-fluid" alt="Vista previa foto" th:src="@{/images/default-marca.png}">
+					</div>
+				</div>
+
+				<div class="text-center m-3">
+					<input type="submit" value="Guardar" class="btn btn-primary" id="btnSubmit" /> <input type="button"
+						value="Cancelar" class="btn btn-secondary" id="btnCancelar" />
+				</div>
+			</div>
+		</form>
+
+		<div class="modal fade text-center" id="modalDialog">
+			<div class="modal-dialog">
+				<div class="modal-content">
+					<div class="modal-header">
+						<h4 class="modal-title" id="modalTitle"></h4>
+						<button type="button" class="close" data-dismiss="modal">&times;</button>
+					</div>
+					<div class="modal-body">
+						<span id="modalBody"></span>
+					</div>
+					<div class="modal-footer">
+						<button type="button" class="btn btn-danger" data-dismiss="modal">Cerrar</button>
+					</div>
+				</div>
+			</div>
+		</div>
+
+
+		<div th:replace="fragments :: footer"></div>
+
+		<script type="text/javascript">
+			$(document).ready(function () {
+				$("#btnCancelar").on("click", function () {
+					window.location = "[[@{/}]]";
+				});
+			});
+			function showModalDialog(title, message) {
+				$("#modalTitle").text(title);
+				$("#modalBody").text(message);
+				$("#modalDialog").modal();
+			}
+		</script>
+		<script type="text/javascript" th:src="@{/js/common_form.js}"></script>
+</body>
+
+</html>

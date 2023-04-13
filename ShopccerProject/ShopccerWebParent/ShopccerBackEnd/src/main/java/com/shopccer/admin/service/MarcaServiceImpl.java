@@ -20,4 +20,9 @@ public class MarcaServiceImpl implements MarcaService {
 		return (List<Marca>) marcaRepository.findAll();
 	}
 
+	@Override
+	public Marca save(Marca marca) {
+		return marcaRepository.save(marca);
+	}
+
 }
