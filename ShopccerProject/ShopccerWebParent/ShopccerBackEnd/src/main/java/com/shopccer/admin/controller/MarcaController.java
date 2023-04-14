@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.shopccer.admin.service.MarcaService;
 import com.shopccer.admin.utils.FileLoadUtil;
@@ -42,7 +43,7 @@ public class MarcaController {
 	}
 	
 	@PostMapping("/marcas/save")
-	public String saveMarca(Marca marca,@RequestParam("marcaImg") MultipartFile multipartFile) throws IOException {
+	public String saveMarca(Marca marca,@RequestParam("marcaImg") MultipartFile multipartFile,  RedirectAttributes redirectAttributes) throws IOException {
 		
 		String nombreArchivo = StringUtils.cleanPath(multipartFile.getOriginalFilename());
 		marca.setFoto(nombreArchivo);
@@ -51,6 +52,8 @@ public class MarcaController {
 
 		String dirSubida = "../fotos-marcas/" + savedMarca.getIdMarca();
 		FileLoadUtil.saveFile(dirSubida, nombreArchivo, multipartFile);
+		
+		redirectAttributes.addFlashAttribute("msg","La marca ha sido añadida correctamente");
 		
 		return "redirect:/marcas";
 	}

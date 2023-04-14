@@ -45,7 +45,7 @@ public class MarcaRepositoryTest {
 		
 		listMarcas.forEach(m -> System.out.println(m.getNombre()));
 		
-		assertThat(listMarcas).hasSize(2);
+		assertThat(listMarcas).hasSize(4);
 		
 	}
 	
