@@ -8,6 +8,7 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
+import jakarta.persistence.Transient;
 
 @Entity
 @Table(name = "marcas")
@@ -97,8 +98,11 @@ public class Marca {
 	@Override
 	public String toString() {
 		return "Marca [idMarca=" + idMarca + ", nombre=" + nombre + ", foto=" + foto + ", activo=" + activo + "]";
-	} 
-	
-	
+	}
+
+	@Transient
+	public String getPathFoto() {
+		return "/fotos-marcas/" + this.idMarca + "/" + this.foto;
+	}
 
 }

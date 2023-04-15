@@ -48,7 +48,7 @@
 				<tbody>
 					<tr th:each="marca : ${listaMarcas}">
 						<td>[[${marca.idMarca}]]</td>
-						<td></td>
+						<td><img th:src="@{${marca.pathFoto}}" alt="" style="width:100px;" class="img-fluid"></td>
 						<td>[[${marca.nombre}]]</td>
 						<td><a th:if="${marca.activo} == true" class="fa-solid fa-square-check fa-2x icon-green" style="text-decoration: none" th:href="@{'/marcas/' + ${marca.idMarca} + '/activo/false'}" title="Desactiva usuario"></a>
 							<a th:if="${marca.activo} != true" class="fa-solid fa-square fa-2x icon-silver" style="text-decoration: none" th:href="@{'/marcas/' + ${marca.idMarca} + '/activo/true'}" title="Activa usuario"></a>
