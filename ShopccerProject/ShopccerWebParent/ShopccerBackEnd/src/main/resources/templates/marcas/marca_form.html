@@ -22,16 +22,15 @@
 				</div>
 				<div class="form-group row">
 					<div class="col-sm-12">
-						<label class="form-label">Activa:</label> <input type="checkbox"
-							th:field="*{activo}">
+						<label class="form-label">Activa:</label> <input type="checkbox" th:field="*{activo}">
 					</div>
 				</div>
 				<div class="form-group row">
 					<div class="col-sm-12">
-						<label class="form-label" >Foto:</label> <input type="hidden"
-							th:field="*{foto}"> <input type="file" id="fileImg" name="marcaImg"
-							accept="image/png, image/jpeg">
-						<img id="thumbnail"class="img-fluid" alt="Vista previa foto" th:src="@{/images/default-marca.png}">
+						<label class="form-label">Foto:</label>
+						<input type="hidden" th:field="*{foto}">
+						<input type="file" id="fileImg" name="marcaImg" accept="image/png, image/jpeg" th:required="${marca.pathFoto==null}">
+						<img id="thumbnail" class="img-fluid" alt="Vista previa foto" th:src="@{${marca.pathFoto}}">
 					</div>
 				</div>
 

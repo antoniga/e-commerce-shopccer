@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.shopccer.admin.exception.MarcaNotFoundException;
 import com.shopccer.admin.repository.MarcaRepository;
 import com.shopccer.common.entity.Marca;
 
@@ -23,6 +24,12 @@ public class MarcaServiceImpl implements MarcaService {
 	@Override
 	public Marca save(Marca marca) {
 		return marcaRepository.save(marca);
+	}
+
+	@Override
+	public Marca findById(Integer id) throws MarcaNotFoundException {
+		return marcaRepository.findById(id).orElseThrow(()->
+			new MarcaNotFoundException("No existe ninguna marca con ese id: "+ id));
 	}
 
 }

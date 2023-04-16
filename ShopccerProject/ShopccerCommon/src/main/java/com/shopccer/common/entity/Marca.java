@@ -21,7 +21,7 @@ public class Marca {
 	@Column(length = 128, nullable = false, unique = true)
 	private String nombre;
 
-	@Column(length = 128, nullable = false)
+	@Column(length = 128)
 	private String foto;
 
 	private Boolean activo;
@@ -102,6 +102,9 @@ public class Marca {
 
 	@Transient
 	public String getPathFoto() {
+		
+		if(this.idMarca == null || foto == null) return"/images/default-marca.png";
+		
 		return "/fotos-marcas/" + this.idMarca + "/" + this.foto;
 	}
 
