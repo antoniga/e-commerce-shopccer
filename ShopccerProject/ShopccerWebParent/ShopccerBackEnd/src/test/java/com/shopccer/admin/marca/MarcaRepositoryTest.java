@@ -56,5 +56,14 @@ public class MarcaRepositoryTest {
 		
 		assertThat(marca.getNombre()).isEqualTo("Adidas");
 	}
+	
+	@Test
+	@Order(4)
+	public void testGetByNombre() {
+		
+		Marca marca = marcaRepository.findByNombre("Nike");
+		System.out.println("------> " + marca.getNombre() + " <------");
+		assertThat(("Nike").equals(marca.getNombre()));
+	}
 
 }
