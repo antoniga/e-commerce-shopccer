@@ -10,7 +10,7 @@
 			<h2>Gestión de marcas | [[${tituloPagina}]]</h2>
 		</div>
 		<form th:action="@{/marcas/save}" method="post" style="max-width: 700px; margin: 0 auto;"
-			enctype="multipart/form-data" th:object="${marca}">
+			enctype="multipart/form-data" th:object="${marca}" onsubmit="return checkNombreUnique(this);">
 			<input type="hidden" th:field="*{idMarca}" id="idHidden" name="">
 			<div class="border p-3">
 				<div class="form-group row">
@@ -67,6 +67,37 @@
 					window.location = "[[@{/}]]";
 				});
 			});
+
+
+
+			function checkNombreUnique(form) {
+
+				url = "[[@{/marcas/checknombre}]]";
+				nombreMarca = $("#nombreMarca").val();
+				marcaId = $("#idHidden").val();
+				csrf = $("input[name='_csrf']").val();
+
+				data = {
+					idMarca : marcaId,
+					nombre : nombreMarca,
+					_csrf : csrf
+				};
+				
+				$.post(url,data,function(response){
+					if(response == 'ok'){
+						form.submit();
+					} else if (response == 'duplicado'){
+						showModalDialog('Atención.','Ya hay una marca con el nombre: '+nombreMarca);
+					} else{
+						showModalDialog('Error.','Fallo en el servidor desconocido.');
+					}
+				}).fail(function(){
+					showModalDialog('Error.','No se pudo conectasr con el servidor.');
+				});
+
+				return false;
+
+			}
 			function showModalDialog(title, message) {
 				$("#modalTitle").text(title);
 				$("#modalBody").text(message);

@@ -16,4 +16,6 @@ public interface MarcaService {
 	
 	public Marca findById(Integer id) throws MarcaNotFoundException;
 
+	public Boolean isNombreUnique(Integer id, String nombre);
+
 }

@@ -11,13 +11,13 @@ import com.shopccer.common.entity.Marca;
 
 @Service
 public class MarcaServiceImpl implements MarcaService {
-	
+
 	@Autowired
 	private MarcaRepository marcaRepository;
 
 	@Override
 	public List<Marca> listAll() {
-		
+
 		return (List<Marca>) marcaRepository.findAll();
 	}
 
@@ -28,8 +28,37 @@ public class MarcaServiceImpl implements MarcaService {
 
 	@Override
 	public Marca findById(Integer id) throws MarcaNotFoundException {
-		return marcaRepository.findById(id).orElseThrow(()->
-			new MarcaNotFoundException("No existe ninguna marca con ese id: "+ id));
+		return marcaRepository.findById(id)
+				.orElseThrow(() -> new MarcaNotFoundException("No existe ninguna marca con ese id: " + id));
+	}
+
+	@Override
+	public Boolean isNombreUnique(Integer id, String nombre) {
+
+		/** Buscamos la marca por el nombre */
+		Marca marcaNombre = marcaRepository.findByNombre(nombre);
+
+		/** Si no existe, es null, por lo que el nombre es unico en bd */
+		if (marcaNombre == null)
+			return true;
+
+		/**
+		 * Si existe el nombre, miramos si se trata de nueva marca o edicion comprobando
+		 * si el id es null -> nueva marca
+		 */
+		boolean isNuevaMarca = (id == null);
+
+		/** Si es nueva marca */
+		if (isNuevaMarca) {
+			/** Y ya existe ese nombre, false */
+			if (marcaNombre != null)
+				return false;
+
+		} else {
+			if (marcaNombre.getIdMarca() != id)
+				return false;
+		}
+		return true;
 	}
 
 }
