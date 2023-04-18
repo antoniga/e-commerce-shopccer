@@ -19,5 +19,7 @@ public interface MarcaService {
 	public Boolean isNombreUnique(Integer id, String nombre);
 	
 	public void deleteById(Integer id) throws MarcaNotFoundException;
+	
+	public void updateMarcaActiva(Integer id, Boolean activo);
 
 }

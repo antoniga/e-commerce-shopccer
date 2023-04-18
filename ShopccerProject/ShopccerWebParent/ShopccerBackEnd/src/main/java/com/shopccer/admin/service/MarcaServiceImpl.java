@@ -9,7 +9,10 @@ import com.shopccer.admin.exception.MarcaNotFoundException;
 import com.shopccer.admin.repository.MarcaRepository;
 import com.shopccer.common.entity.Marca;
 
+import jakarta.transaction.Transactional;
+
 @Service
+@Transactional
 public class MarcaServiceImpl implements MarcaService {
 
 	@Autowired
@@ -69,6 +72,13 @@ public class MarcaServiceImpl implements MarcaService {
 			throw new MarcaNotFoundException("No existe ninguna marca con ese id: " + id);
 		}
 
+	}
+
+	@Override
+	public void updateMarcaActiva(Integer id, Boolean activo) {
+		
+		marcaRepository.updateMarcaActiva(id, activo);
+		
 	}
 
 }

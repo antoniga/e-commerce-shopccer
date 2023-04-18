@@ -65,5 +65,19 @@ public class MarcaRepositoryTest {
 		System.out.println("------> " + marca.getNombre() + " <------");
 		assertThat(("Nike").equals(marca.getNombre()));
 	}
+	
+	@Test
+	@Order(5)
+	public void testDesactivaMarca() {
+		
+		marcaRepository.updateMarcaActiva(1, false);
+	}
+	
+	@Test
+	@Order(6)
+	public void testActivaMarca() {
+		
+		marcaRepository.updateMarcaActiva(1, true);
+	}
 
 }

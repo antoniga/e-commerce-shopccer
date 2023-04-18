@@ -106,5 +106,19 @@ public class MarcaController {
 		return "redirect:/marcas";
 	}
 	
+	@GetMapping("/marcas/{idMarca}/activo/{bool}")
+	public String updateMarcaActivo(@PathVariable(name = "idMarca") Integer idMarca,
+			@PathVariable(name = "bool") Boolean activo, RedirectAttributes redirectAttributes) {
+
+		marcaService.updateMarcaActiva(idMarca, activo);
+		String msgActivo = activo ? "activado" : "desactivado";
+		String msg = "La marca con id: " + idMarca + " ha sido " + msgActivo;
+
+		redirectAttributes.addFlashAttribute("msg", msg);
+
+		return "redirect:/marcas";
+	}	
+	
+	
 
 }
