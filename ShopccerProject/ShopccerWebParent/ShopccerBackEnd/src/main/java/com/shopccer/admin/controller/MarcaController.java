@@ -91,5 +91,20 @@ public class MarcaController {
 		}
 
 	}
+	
+	@GetMapping("/marcas/delete/{idMarca}")
+	public String deleteMarca(@PathVariable(name = "idMarca") Integer idMarca, Model model,
+			RedirectAttributes redirectAttributes) {
+
+		try {
+			marcaService.deleteById(idMarca);
+			redirectAttributes.addFlashAttribute("msg", "La marca con id: " + idMarca + " ha sido eliminada.");
+		} catch (MarcaNotFoundException e) {
+			redirectAttributes.addFlashAttribute("msg", e.getMessage());
+		}
+		
+		return "redirect:/marcas";
+	}
+	
 
 }

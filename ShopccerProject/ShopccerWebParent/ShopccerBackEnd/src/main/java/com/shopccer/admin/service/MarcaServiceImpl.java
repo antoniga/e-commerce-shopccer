@@ -61,4 +61,14 @@ public class MarcaServiceImpl implements MarcaService {
 		return true;
 	}
 
+	@Override
+	public void deleteById(Integer id) throws MarcaNotFoundException {
+		if (marcaRepository.findById(id).isPresent()) {
+			marcaRepository.deleteById(id);
+		} else {
+			throw new MarcaNotFoundException("No existe ninguna marca con ese id: " + id);
+		}
+
+	}
+
 }

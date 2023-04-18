@@ -85,22 +85,7 @@
 			</div>
 		</form>
 
-		<div class="modal fade text-center" id="modalDialog">
-			<div class="modal-dialog">
-				<div class="modal-content">
-					<div class="modal-header">
-						<h4 class="modal-title" id="modalTitle"></h4>
-						<button type="button" class="close" data-dismiss="modal">&times;</button>
-					</div>
-					<div class="modal-body">
-						<span id="modalBody"></span>
-					</div>
-					<div class="modal-footer">
-						<button type="button" class="btn btn-danger" data-dismiss="modal">Cerrar</button>
-					</div>
-				</div>
-			</div>
-		</div>
+		<div th:replace="modal_fragments :: modal_dialog"></div>
 
 
 		<div th:replace="fragments :: footer"></div>
@@ -129,28 +114,22 @@
 						if (response == "ok") {
 							form.submit();
 						} else if (response == "duplicado") {
-							showModalDialog("Atención",
+							showModalDialog("Atención.",
 								"Ya hay un usuario dado de alta con el siguiente email: "
 								+ userEmail);
 						} else {
-							showModalDialog("Error",
+							showModalDialog("Error.",
 								"Fallo en el servidor desconocido.");
 						}
 
 					}).fail(
 						function () {
-							showModalDialog("Error",
+							showModalDialog("Error.",
 								"No se pudo conectar con el servidor.");
 						});
 				return false;
 			}
-
-			function showModalDialog(title, message) {
-				$("#modalTitle").text(title);
-				$("#modalBody").text(message);
-				$("#modalDialog").modal();
-			}
-
+			
 			function checkPasswordMatch(confirmPwd) {
 				console.log("chqueando pwd")
 				if (confirmPwd.value != $("#inputPwd").val()) {
