@@ -39,15 +39,15 @@
 				<thead class="thead-dark">
 					<tr>
 						<th class="hideable-column">
-							<th th:replace="fragments :: columnLink ('idUsuario', 'ID Usuario','tag')" ></th>
+							<th th:replace="fragments :: columnLink ('usuarios', 'idUsuario', 'ID Usuario','tag')" ></th>
 						</th>
 						<th>Foto</th>
-						<th th:replace="fragments :: columnLink ('email', 'Email','none')"></th>
-						<th th:replace="fragments :: columnLink ('nombre', 'Nombre','none')"></th>
+						<th th:replace="fragments :: columnLink ('usuarios','email', 'Email','none')"></th>
+						<th th:replace="fragments :: columnLink ('usuarios','nombre', 'Nombre','none')"></th>
 						<th class="hideable-column">
-							<th th:replace="fragments :: columnLink ('apellidos', 'Apellidos','tag')"></th>
+							<th th:replace="fragments :: columnLink ('usuarios','apellidos', 'Apellidos','tag')"></th>
 						</th>
-						<th th:replace="fragments :: columnLink ('activo', 'Activo','none')"></th>
+						<th th:replace="fragments :: columnLink ('usuarios','activo', 'Activo','none')"></th>
 						<th>Rol</th>
 						<th></th>
 					</tr>
@@ -102,11 +102,11 @@
 		<div th:if="${paginasTotales > 1}">
 			<nav aria-label="Page navigation example">
 				<ul class="pagination justify-content-center">
-					<li th:class="${paginaActual > 1 ? 'page-item':'page-item disabled'}"><a th:replace="fragments :: pageLink(1,'<<')"> </a></li>
-					<li th:class="${paginaActual > 1 ? 'page-item':'page-item disabled'}"><a th:replace="fragments :: pageLink(${paginaActual -1},'<')"> </a></li>
-					<li th:class="${paginaActual != i  ? 'page-item':'page-item active'}" th:each="i : ${#numbers.sequence(1,paginasTotales)}"><a th:replace="fragments :: pageLink(${i},${i})"> </a></li>
-					<li th:class="${paginaActual < paginasTotales ? 'page-item':'page-item disabled'}"><a th:replace="fragments :: pageLink(${paginaActual +1},'>')"> </a></li>
-					<li th:class="${paginaActual < paginasTotales ? 'page-item':'page-item disabled'}"><a th:replace="fragments :: pageLink(${paginasTotales},'>>')"> </a></li>
+					<li th:class="${paginaActual > 1 ? 'page-item':'page-item disabled'}"><a th:replace="fragments :: pageLink('usuarios', 1,'<<')"> </a></li>
+					<li th:class="${paginaActual > 1 ? 'page-item':'page-item disabled'}"><a th:replace="fragments :: pageLink('usuarios', ${paginaActual -1},'<')"> </a></li>
+					<li th:class="${paginaActual != i  ? 'page-item':'page-item active'}" th:each="i : ${#numbers.sequence(1,paginasTotales)}"><a th:replace="fragments :: pageLink('usuarios', ${i},${i})"> </a></li>
+					<li th:class="${paginaActual < paginasTotales ? 'page-item':'page-item disabled'}"><a th:replace="fragments :: pageLink('usuarios', ${paginaActual +1},'>')"> </a></li>
+					<li th:class="${paginaActual < paginasTotales ? 'page-item':'page-item disabled'}"><a th:replace="fragments :: pageLink('usuarios', ${paginasTotales},'>>')"> </a></li>
 				</ul>
 			</nav>
 		</div>

@@ -3,6 +3,10 @@ package com.shopccer.admin.service;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import com.shopccer.admin.exception.MarcaNotFoundException;
@@ -14,6 +18,8 @@ import jakarta.transaction.Transactional;
 @Service
 @Transactional
 public class MarcaServiceImpl implements MarcaService {
+	
+	public static final Integer MARCAS_POR_PAG = 4;
 
 	@Autowired
 	private MarcaRepository marcaRepository;
@@ -79,6 +85,23 @@ public class MarcaServiceImpl implements MarcaService {
 		
 		marcaRepository.updateMarcaActiva(id, activo);
 		
+	}
+
+	@Override
+	public Page<Marca> listByPage(Integer numeroPagina, String campoOrden, String dirOrden, String palabraClave) {
+		
+		Sort sort = Sort.by(campoOrden);
+
+		sort = ("asc").equals(dirOrden) ? sort.ascending() : sort.descending();
+		
+		Pageable pageable = PageRequest.of(numeroPagina - 1, MARCAS_POR_PAG, sort);
+		
+		if (palabraClave != null) {
+
+			return marcaRepository.findAll(palabraClave, pageable);
+		}
+		
+		return marcaRepository.findAll(pageable);
 	}
 
 }

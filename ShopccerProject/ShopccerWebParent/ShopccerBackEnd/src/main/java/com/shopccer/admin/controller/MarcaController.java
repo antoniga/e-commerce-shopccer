@@ -4,6 +4,8 @@ import java.io.IOException;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.util.StringUtils;
@@ -16,6 +18,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.shopccer.admin.exception.MarcaNotFoundException;
 import com.shopccer.admin.service.MarcaService;
+import com.shopccer.admin.service.MarcaServiceImpl;
 import com.shopccer.admin.utils.FileLoadUtil;
 import com.shopccer.common.entity.Marca;
 
@@ -28,11 +31,39 @@ public class MarcaController {
 	@GetMapping("/marcas")
 	public String listFirstPage(Model model) {
 
-		List<Marca> listaMarcas = marcaService.listAll();
-
-		model.addAttribute("listaMarcas", listaMarcas);
-
+		return listByPage(1, model, "idMarca", "asc", null);
+	}
+	
+	@GetMapping("/marcas/pagina/{numeroPagina}")
+	public String listByPage(@PathVariable(name="numeroPagina") Integer numeroPagina, Model model,
+			@Param("campoOrden") String campoOrden, @Param("dirOrden") String dirOrden, 
+			@Param("palabraClave") String palabraClave) {
+		
+		Page<Marca> pagina = marcaService.listByPage(numeroPagina, campoOrden, dirOrden, palabraClave);
+		List<Marca> listaMarcas = pagina.getContent();
+		
+		long startCount = (numeroPagina -1) * MarcaServiceImpl.MARCAS_POR_PAG + 1;
+		long endCount = startCount + MarcaServiceImpl.MARCAS_POR_PAG - 1;
+		
+		if (endCount > pagina.getTotalElements()) {
+			endCount = pagina.getTotalElements();
+		}
+		
+		String dirOrdenContrario = ("asc").equals(dirOrden) ? "desc" : "asc";
+		
+		model.addAttribute("listaMarcas",listaMarcas);
+		model.addAttribute("paginaActual",numeroPagina);
+		model.addAttribute("paginasTotales",pagina.getTotalPages());
+		model.addAttribute("startCount",startCount);
+		model.addAttribute("endCount",endCount);
+		model.addAttribute("marcasTotales",pagina.getTotalElements());
+		model.addAttribute("campoOrden",campoOrden);
+		model.addAttribute("dirOrden",dirOrden);
+		model.addAttribute("dirOrdenContrario",dirOrdenContrario);
+		model.addAttribute("palabraClave",palabraClave);
+		
 		return "marcas/marcas";
+		
 	}
 
 	@GetMapping("/marcas/nuevo")
@@ -70,7 +101,7 @@ public class MarcaController {
 
 		redirectAttributes.addFlashAttribute("msg", "La marca ha sido añadida correctamente");
 
-		return "redirect:/marcas";
+		return getRedirectUrlToAffectedMarca(marca);
 	}
 
 	@GetMapping("/marcas/edit/{idMarca}")
@@ -119,6 +150,11 @@ public class MarcaController {
 		return "redirect:/marcas";
 	}	
 	
+	
+	private String getRedirectUrlToAffectedMarca(Marca marca) {
+		String nombre = marca.getNombre();
+		return "redirect:/marcas/pagina/1?campoOrden=idMarca&dirOrden=asc&palabraClave=" + nombre;
+	}
 	
 
 }

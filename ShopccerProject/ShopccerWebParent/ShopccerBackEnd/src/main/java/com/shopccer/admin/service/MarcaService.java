@@ -2,6 +2,7 @@ package com.shopccer.admin.service;
 
 import java.util.List;
 
+import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Service;
 
 import com.shopccer.admin.exception.MarcaNotFoundException;
@@ -21,5 +22,7 @@ public interface MarcaService {
 	public void deleteById(Integer id) throws MarcaNotFoundException;
 	
 	public void updateMarcaActiva(Integer id, Boolean activo);
+	
+	public Page<Marca> listByPage(Integer numeroPagina, String campoOrden, String dirOrden, String palabraClave);
 
 }
