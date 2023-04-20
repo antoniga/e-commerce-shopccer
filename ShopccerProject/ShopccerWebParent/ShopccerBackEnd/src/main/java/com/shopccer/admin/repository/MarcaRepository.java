@@ -11,13 +11,13 @@ import com.shopccer.common.entity.Marca;
 
 public interface MarcaRepository extends CrudRepository<Marca, Integer>, PagingAndSortingRepository<Marca, Integer>{
 	
-	public Marca findByNombre(String nombre);
+	Marca findByNombre(String nombre);
 	
 	@Query("UPDATE Marca m SET m.activo = ?2 WHERE m.idMarca = ?1")
 	@Modifying
-	public void updateMarcaActiva(Integer id, Boolean activo);
+	void updateMarcaActiva(Integer id, Boolean activo);
 	
 	@Query("SELECT m FROM Marca m WHERE CONCAT(m.idMarca,' ',m.nombre) LIKE %?1%")
-	public Page<Marca> findAll(String palabraClave, Pageable pageable);
+	Page<Marca> findAll(String palabraClave, Pageable pageable);
 	
 }
