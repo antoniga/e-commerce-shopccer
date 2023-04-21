@@ -1,7 +1,8 @@
-package com.shopccer.admin.service;
+package com.shopccer.admin.service.impl;
 
 import com.shopccer.admin.exception.SuperficieNotFoundException;
 import com.shopccer.admin.repository.SuperficieRepository;
+import com.shopccer.admin.service.SuperficieService;
 import com.shopccer.common.entity.Superficie;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -11,7 +12,7 @@ import org.springframework.data.domain.Sort;
 
 import java.util.List;
 
-public class SuperficieServiceImpl implements SuperficieService{
+public class SuperficieServiceImpl implements SuperficieService {
 
     public static final Integer SUP_POR_PAG = 4;
 

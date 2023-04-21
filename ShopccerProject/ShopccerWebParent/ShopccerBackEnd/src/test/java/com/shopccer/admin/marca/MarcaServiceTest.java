@@ -2,7 +2,7 @@ package com.shopccer.admin.marca;
 
 import com.shopccer.admin.repository.MarcaRepository;
 import com.shopccer.admin.service.MarcaService;
-import com.shopccer.admin.service.MarcaServiceImpl;
+import com.shopccer.admin.service.impl.MarcaServiceImpl;
 import com.shopccer.common.entity.Marca;
 import org.junit.jupiter.api.Order;
 import org.junit.jupiter.api.Test;

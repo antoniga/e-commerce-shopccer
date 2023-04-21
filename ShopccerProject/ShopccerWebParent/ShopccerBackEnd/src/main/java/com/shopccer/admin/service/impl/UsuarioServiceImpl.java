@@ -1,7 +1,8 @@
-package com.shopccer.admin.service;
+package com.shopccer.admin.service.impl;
 
 import java.util.List;
 
+import com.shopccer.admin.service.UsuarioService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;

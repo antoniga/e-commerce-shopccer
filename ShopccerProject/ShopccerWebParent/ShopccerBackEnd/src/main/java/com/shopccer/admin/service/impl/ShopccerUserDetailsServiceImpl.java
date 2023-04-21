@@ -1,4 +1,4 @@
-package com.shopccer.admin.service;
+package com.shopccer.admin.service.impl;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;

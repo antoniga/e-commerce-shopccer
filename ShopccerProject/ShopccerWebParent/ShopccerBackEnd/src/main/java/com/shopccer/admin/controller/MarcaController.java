@@ -18,7 +18,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.shopccer.admin.exception.MarcaNotFoundException;
 import com.shopccer.admin.service.MarcaService;
-import com.shopccer.admin.service.MarcaServiceImpl;
+import com.shopccer.admin.service.impl.MarcaServiceImpl;
 import com.shopccer.admin.utils.FileLoadUtil;
 import com.shopccer.common.entity.Marca;
 

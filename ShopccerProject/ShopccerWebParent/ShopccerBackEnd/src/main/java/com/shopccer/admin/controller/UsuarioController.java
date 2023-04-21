@@ -19,7 +19,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import com.shopccer.admin.exception.UsuarioNotFoundException;
 import com.shopccer.admin.service.RolService;
 import com.shopccer.admin.service.UsuarioService;
-import com.shopccer.admin.service.UsuarioServiceImpl;
+import com.shopccer.admin.service.impl.UsuarioServiceImpl;
 import com.shopccer.admin.utils.FileLoadUtil;
 import com.shopccer.common.entity.Rol;
 import com.shopccer.common.entity.Usuario;
