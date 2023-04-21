@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head th:replace="fragments :: pageHead(${tituloPagina})"></head>
+
+<body>
+	<div class="container-fluid">
+		<div th:replace="navigation :: menu"></div>
+		<div>
+			<h2>Gestión de superficies | [[${tituloPagina}]]</h2>
+		</div>
+		<form th:action="@{/superficies/save}" method="post" style="max-width: 700px; margin: 0 auto;"
+			enctype="multipart/form-data" th:object="${superficie}" onsubmit="return checkNombreUnique(this);">
+			<input type="hidden" th:field="*{idSuperficie}" id="idHidden" name="">
+			<div class="border p-3">
+				<div class="form-group row">
+					<div class="col-sm-12">
+						<label class="form-label" for="nombreSuperficie">Nombre superficie:</label> <input type="text"
+							class="form-control" id="nombreSuperficie" placeholder="Introduce un nombre" th:field="*{nombre}"
+							required minlength="3" maxlength="128">
+					</div>
+				</div>
+				<div class="form-group row">
+					<div class="col-sm-12">
+						<label class="form-label">Activa:</label> <input type="checkbox" th:field="*{activo}">
+					</div>
+				</div>
+				<div class="form-group row">
+					<div class="col-sm-12">
+						<label class="form-label">Foto:</label>
+						<input type="hidden" th:field="*{foto}">
+						<input type="file" id="fileImg" name="superficieImg" accept="image/png, image/jpeg" th:required="${superficie.pathFoto==null}">
+						<img id="thumbnail" class="img-fluid" alt="Vista previa foto" th:src="@{${superficie.pathFoto}}">
+					</div>
+				</div>
+
+				<div class="text-center m-3">
+					<input type="submit" value="Guardar" class="btn btn-primary" id="btnSubmit" /> <input type="button"
+						value="Cancelar" class="btn btn-secondary" id="btnCancelar" />
+				</div>
+			</div>
+		</form>
+
+		<div th:replace="modal_fragments :: modal_dialog"></div>
+
+
+		<div th:replace="fragments :: footer"></div>
+
+		<script type="text/javascript">
+			$(document).ready(function () {
+				$("#btnCancelar").on("click", function () {
+					window.location = "[[@{/}]]";
+				});
+			});
+
+
+
+			function checkNombreUnique(form) {
+
+				url = "[[@{/superficies/checknombre}]]";
+				nombreSuperficie = $("#nombreSuperficie").val();
+				superficieId = $("#idHidden").val();
+				csrf = $("input[name='_csrf']").val();
+
+				data = {
+					idSuperficie : superficieId,
+					nombre : nombreSuperficie,
+					_csrf : csrf
+				};
+
+				$.post(url,data,function(response){
+					if(response == 'ok'){
+						form.submit();
+					} else if (response == 'duplicado'){
+						showModalDialog('Atención.','Ya hay una superficie con el nombre: '+nombreSuperficie);
+					} else{
+						showModalDialog('Error.','Fallo en el servidor desconocido.');
+					}
+				}).fail(function(){
+					showModalDialog('Error.','No se pudo conectasr con el servidor.');
+				});
+
+				return false;
+
+			}
+
+		</script>
+		<script type="text/javascript" th:src="@{/js/common_form.js}"></script>
+</body>
+
+</html>

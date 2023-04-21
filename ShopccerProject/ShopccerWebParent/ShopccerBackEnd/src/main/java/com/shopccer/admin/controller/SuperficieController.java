@@ -52,7 +52,7 @@ public class SuperficieController {
 
         String dirOrdenContrario = ("asc").equals(dirOrden) ? "desc" : "asc";
 
-        model.addAttribute("listSuperficies",listSuperficies);
+        model.addAttribute("listaSuperficies",listSuperficies);
         model.addAttribute("paginaActual", numeroPagina);
         model.addAttribute("paginasTotales",pagina.getTotalPages());
         model.addAttribute("startCount",startCount);
@@ -74,7 +74,7 @@ public class SuperficieController {
         model.addAttribute("superficie", superficie);
         model.addAttribute("tituloPagina","Crear nueva superficie");
 
-        return "supercicies/superficie_form";
+        return "superficies/superficie_form";
     }
 
     @PostMapping("/superficies/save")
@@ -115,7 +115,7 @@ public class SuperficieController {
             model.addAttribute("superficie", superficie);
             model.addAttribute("tituloPagina","Editar superficie (Id: "+idSuperficie+") ");
 
-            return "superficies/superficies_form";
+            return "superficies/superficie_form";
         } catch (SuperficieNotFoundException e){
 
             redirectAttributes.addFlashAttribute("msg", e.getMessage());
@@ -148,7 +148,7 @@ public class SuperficieController {
 
         redirectAttributes.addFlashAttribute("msg", msg);
 
-        return "redirect:/supercicies";
+        return "redirect:/superficies";
     }
     private String getRedirectUrlToAffectedSuperficie(Superficie superficie) {
 

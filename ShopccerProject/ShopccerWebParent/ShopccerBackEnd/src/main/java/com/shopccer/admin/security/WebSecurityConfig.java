@@ -48,6 +48,7 @@ public class WebSecurityConfig{
 		http.authorizeHttpRequests()
 			.requestMatchers("/usuarios/**","/config/**").hasAuthority("Super-Admin")
 			.requestMatchers("/marcas/**").hasAnyAuthority("Super-Admin","Admin")
+			.requestMatchers("/superficies/**").hasAnyAuthority("Super-Admin","Admin")
 			.anyRequest().authenticated().and()
 			.formLogin().loginPage("/login").usernameParameter("email").permitAll().and()
 			.logout().permitAll().and()

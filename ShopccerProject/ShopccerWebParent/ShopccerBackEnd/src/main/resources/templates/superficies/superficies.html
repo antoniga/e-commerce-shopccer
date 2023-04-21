@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head th:replace="fragments :: pageHead('Superficies- Shopccer Admin')"></head>
+
+<body>
+	<div class="container-fluid">
+		<div th:replace="navigation :: menu"></div>
+		<div>
+			<h2>Gestión de superficies</h2>
+		</div>
+
+		<div th:if="${msg != null}" class="alert alert-success alert-dismissible fade show text-center" role="alert">
+			[[${msg}]]
+			<button type="button" class="close" data-dismiss="alert" aria-label="Close">
+				<span aria-hidden="true">&times;</span>
+			</button>
+		</div>
+
+		<div class="row justify-content-between">
+			<div class="col-lg-5 col-md-12 mt-1 mb-1">
+				<a class="fas fa-circle-plus fa-2x icon-shopccer" th:href="@{/superficies/nuevo}" style="text-decoration: none" title="Crear nueva superficie"></a>
+			</div>
+			<div class="col-lg-7 col-md-12 d-lg-flex ">
+				<form th:action="@{/superficies/pagina/1}" class="form-inline mt-1 mb-1 ml-auto">
+					<input type="hidden" name="campoOrden" th:value="${campoOrden}">
+					<input type="hidden" name="dirOrden" th:value="${dirOrden}">
+					<input type="search" name="palabraClave" placeholder="Busca por id, nombre" th:value="${palabraClave}" class="form-control" size="40%" required/>
+					&nbsp;&nbsp;
+					<button type="submit" class="btn btn-info mt-2 mt-sm-0"><i class="fas fa-search"></i></button>
+					&nbsp;&nbsp;
+					<button type="button" class="btn btn-secondary mt-2 mt-sm-0" onclick="limpiarFiltro()"/><i class="fas fa-eraser"></i></button>
+				</form>
+			</div>
+		</div>
+
+		<div class="full-details">
+			<table class="table table-bordered table-hover table-responsive-md">
+				<thead class="thead-dark">
+					<tr>
+						<th th:replace="fragments :: columnLink ('superficies', 'idSuperficie', 'ID Superficie','none')" ></th>
+						<th>Foto</th>
+						<th th:replace="fragments :: columnLink ('superficies','nombre', 'Nombre Superficie','none')"></th>
+						<th th:replace="fragments :: columnLink ('superficies','activo', 'Activo','none')"></th>
+						<th></th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr th:each="superficie : ${listaSuperficies}">
+						<td>[[${superficie.idSuperficie}]]</td>
+						<td><img th:src="@{${superficie.pathFoto}}" alt="" style="width:100px;" class="img-fluid"></td>
+						<td>[[${superficie.nombre}]]</td>
+						<td>
+							<a th:if="${superficie.activo} == true" class="fa-solid fa-square-check fa-2x icon-green" style="text-decoration: none" th:href="@{'/superficies/' + ${superficie.idSuperficie} + '/activo/false'}" title="Desactiva superficie"></a>
+							<a th:if="${superficie.activo} != true" class="fa-solid fa-square fa-2x icon-silver" style="text-decoration: none" th:href="@{'/superficies/' + ${superficie.idSuperficie} + '/activo/true'}" title="Activa superficie"></a>
+						</td>
+						<td>
+							<a class="fa-solid fa-edit fa-2x icon-green" style="text-decoration: none" th:href="@{'/superficies/edit/'+${superficie.idSuperficie}}" title="Editar superficie"></a> &nbsp;
+							<a class="fa-solid fa-trash fa-2x icon-dark link-delete" style="text-decoration: none" th:href="@{'/superficies/delete/'+${superficie.idSuperficie}}" th:superficieId="${superficie.idSuperficie}" title="Eliminar superficie"></a>
+						</td>
+					</tr>
+				</tbody>
+			</table>
+		</div>
+
+		<div class="less-details">
+			<div class="row m-1" th:each="superficie : ${listaSuperficies}">
+				<div class="col-4">
+					<i th:if="${superficie.foto} == null" class="fa-solid fa-image-portrait fa-3x icon-silver"></i> <img th:if="${superficie.foto} != null" th:src="@{${superficie.pathFoto}}"
+						alt="" style="width: 100px;">
+				</div>
+				<div class="col-8">
+					<div>[[${superficie.nombre}]]</div>
+					<div class="mt-2">
+						<a th:if="${superficie.activo} == true" class="fa-solid fa-square-check fa-2x icon-green" style="text-decoration: none" th:href="@{'/superficies/' + ${superficie.idSuperficie} + '/activo/false'}" title="Desactiva superficie"></a>
+						<a th:if="${superficie.activo} != true" class="fa-solid fa-square fa-2x icon-silver" style="text-decoration: none" th:href="@{'/superficies/' + ${superficie.idSuperficie} + '/activo/true'}" title="Activa superficie"></a>
+						&nbsp;&nbsp;
+						<a class="fa-solid fa-edit fa-2x icon-green" style="text-decoration: none" th:href="@{'/superficies/edit/'+${superficie.idSuperficie}}" title="Editar superficie"></a> &nbsp;
+						<a class="fa-solid fa-trash fa-2x icon-dark link-delete" style="text-decoration: none" th:href="@{'/superficies/delete/'+${superficie.idSuperficie}}" th:superficieId="${superficie.idSuperficie}" title="Eliminar superficie"></a>
+					</div>
+				</div>
+				<div>&nbsp;</div>
+			</div>
+		</div>	<div class= "text-center m-1" th:if="${superficiesTotales > 0}">
+			<span>Mostrando las superficies de la [[${startCount}]] a la [[${endCount}]] de [[${superficiesTotales}]] </span>
+		</div>
+		<div class="text-center m-1" th:unless="${superficiesTotales > 0}">
+			<span>No se encontraron superficies </span>
+		</div>
+
+		<div th:if="${paginasTotales > 1}">
+			<nav aria-label="Page navigation example">
+				<ul class="pagination justify-content-center">
+					<li th:class="${paginaActual > 1 ? 'page-item':'page-item disabled'}"><a th:replace="fragments :: pageLink('superficies', 1,'<<')"> </a></li>
+					<li th:class="${paginaActual > 1 ? 'page-item':'page-item disabled'}"><a th:replace="fragments :: pageLink('superficies', ${paginaActual -1},'<')"> </a></li>
+					<li th:class="${paginaActual != i  ? 'page-item':'page-item active'}" th:each="i : ${#numbers.sequence(1,paginasTotales)}"><a th:replace="fragments :: pageLink('superficies', ${i},${i})"> </a></li>
+					<li th:class="${paginaActual < paginasTotales ? 'page-item':'page-item disabled'}"><a th:replace="fragments :: pageLink('superficies', ${paginaActual +1},'>')"> </a></li>
+					<li th:class="${paginaActual < paginasTotales ? 'page-item':'page-item disabled'}"><a th:replace="fragments :: pageLink('superficies', ${paginasTotales},'>>')"> </a></li>
+				</ul>
+			</nav>
+		</div>
+
+		<div th:replace="modal_fragments :: modal_delete"></div>
+
+	</div>
+
+
+	<div th:replace="fragments :: footer"></div>
+
+	<script type="text/javascript">
+		$(document).ready(function() {
+			$(".link-delete").on("click",function(e) {
+				e.preventDefault();
+				superficieId = $(this).attr("superficieId");
+				$("#btnSi").attr("href", $(this).attr("href"));
+				$("#confirmText").text("¿Seguro que desea eliminar la superficie con id: "+ superficieId + " ?");
+				$("#confirmDelete").modal();
+			})
+		});
+
+		function limpiarFiltro(){
+			window.location ="[[@{/superficies}]]";
+		}
+	</script>
+</body>
+
+</html>
