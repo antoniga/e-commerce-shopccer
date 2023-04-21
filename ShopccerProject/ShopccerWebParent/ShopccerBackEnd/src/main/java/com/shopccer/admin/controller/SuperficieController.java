@@ -30,7 +30,8 @@ public class SuperficieController {
     
     @GetMapping("/superficies")
     public String listFirstPage(Model model){
-        return "";
+
+        return listByPage(1, model, "idSuperficie", "asc", null);
     }
     
     @GetMapping("/superficies/pagina/{numeroPagina}")
