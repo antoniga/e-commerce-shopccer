@@ -48,7 +48,7 @@
 				<tbody>
 					<tr th:each="superficie : ${listaSuperficies}">
 						<td>[[${superficie.idSuperficie}]]</td>
-						<td><img th:src="@{${superficie.pathFoto}}" alt="" style="width:100px;" class="img-fluid"></td>
+						<td><img th:src="@{${superficie.pathFoto}}" alt="" style="width:200px;" class="img-fluid"></td>
 						<td>[[${superficie.nombre}]]</td>
 						<td>
 							<a th:if="${superficie.activo} == true" class="fa-solid fa-square-check fa-2x icon-green" style="text-decoration: none" th:href="@{'/superficies/' + ${superficie.idSuperficie} + '/activo/false'}" title="Desactiva superficie"></a>
