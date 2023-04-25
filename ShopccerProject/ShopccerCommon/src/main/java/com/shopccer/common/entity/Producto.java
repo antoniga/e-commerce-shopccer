@@ -15,6 +15,8 @@ public class Producto {
     private String nombre;
     @Column(length = 4096)
     private String descripcion;
+    private double numero;
+    private String color;
     @Column(name="fecha_creacion")
     private Date cratedTime;
     @Column(name="fecha_actualizacion")
@@ -22,10 +24,10 @@ public class Producto {
     private Boolean activo;
     @Column(name="en_stock")
     private Boolean inStock;
-    private float coste;
-    private float precio;
+    private double coste;
+    private double precio;
     @Column(name="pocentaje_descuento")
-    private float porcentajeDescuento;
+    private double porcentajeDescuento;
     @ManyToOne
     @JoinColumn(name="idMarca")
     private Marca marca;
@@ -36,9 +38,12 @@ public class Producto {
     public Producto() {
     }
 
-    public Producto(String nombre, String descripcion, Date cratedTime, Date updatedTime, Boolean activo, Boolean inStock, float coste, float precio, float porcentajeDescuento, Marca marca, Superficie superficie) {
+    public Producto(Integer idProducto, String nombre, String descripcion, double numero, String color, Date cratedTime, Date updatedTime, Boolean activo, Boolean inStock, double coste, double precio, double porcentajeDescuento, Marca marca, Superficie superficie) {
+        this.idProducto = idProducto;
         this.nombre = nombre;
         this.descripcion = descripcion;
+        this.numero = numero;
+        this.color = color;
         this.cratedTime = cratedTime;
         this.updatedTime = updatedTime;
         this.activo = activo;
@@ -50,10 +55,11 @@ public class Producto {
         this.superficie = superficie;
     }
 
-    public Producto(Integer idProducto, String nombre, String descripcion, Date cratedTime, Date updatedTime, Boolean activo, Boolean inStock, float coste, float precio, float porcentajeDescuento, Marca marca, Superficie superficie) {
-        this.idProducto = idProducto;
+    public Producto(String nombre, String descripcion, double numero, String color, Date cratedTime, Date updatedTime, Boolean activo, Boolean inStock, double coste, double precio, double porcentajeDescuento, Marca marca, Superficie superficie) {
         this.nombre = nombre;
         this.descripcion = descripcion;
+        this.numero = numero;
+        this.color = color;
         this.cratedTime = cratedTime;
         this.updatedTime = updatedTime;
         this.activo = activo;
@@ -64,6 +70,8 @@ public class Producto {
         this.marca = marca;
         this.superficie = superficie;
     }
+
+
 
     public Integer getIdProducto() {
         return idProducto;
@@ -121,27 +129,27 @@ public class Producto {
         this.inStock = inStock;
     }
 
-    public float getCoste() {
+    public double getCoste() {
         return coste;
     }
 
-    public void setCoste(float coste) {
+    public void setCoste(double coste) {
         this.coste = coste;
     }
 
-    public float getPrecio() {
+    public double getPrecio() {
         return precio;
     }
 
-    public void setPrecio(float precio) {
+    public void setPrecio(double precio) {
         this.precio = precio;
     }
 
-    public float getPorcentajeDescuento() {
+    public double getPorcentajeDescuento() {
         return porcentajeDescuento;
     }
 
-    public void setPorcentajeDescuento(float porcentajeDescuento) {
+    public void setPorcentajeDescuento(double porcentajeDescuento) {
         this.porcentajeDescuento = porcentajeDescuento;
     }
 
@@ -165,12 +173,12 @@ public class Producto {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (!(o instanceof Producto producto)) return false;
-        return Float.compare(producto.coste, coste) == 0 && Float.compare(producto.precio, precio) == 0 && Float.compare(producto.porcentajeDescuento, porcentajeDescuento) == 0 && Objects.equals(idProducto, producto.idProducto) && Objects.equals(nombre, producto.nombre) && Objects.equals(descripcion, producto.descripcion) && Objects.equals(cratedTime, producto.cratedTime) && Objects.equals(updatedTime, producto.updatedTime) && Objects.equals(activo, producto.activo) && Objects.equals(inStock, producto.inStock) && Objects.equals(marca, producto.marca) && Objects.equals(superficie, producto.superficie);
+        return Double.compare(producto.numero, numero) == 0 && Double.compare(producto.coste, coste) == 0 && Double.compare(producto.precio, precio) == 0 && Double.compare(producto.porcentajeDescuento, porcentajeDescuento) == 0 && Objects.equals(idProducto, producto.idProducto) && Objects.equals(nombre, producto.nombre) && Objects.equals(descripcion, producto.descripcion) && Objects.equals(color, producto.color) && Objects.equals(cratedTime, producto.cratedTime) && Objects.equals(updatedTime, producto.updatedTime) && Objects.equals(activo, producto.activo) && Objects.equals(inStock, producto.inStock) && Objects.equals(marca, producto.marca) && Objects.equals(superficie, producto.superficie);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(idProducto, nombre, descripcion, cratedTime, updatedTime, activo, inStock, coste, precio, porcentajeDescuento, marca, superficie);
+        return Objects.hash(idProducto, nombre, descripcion, numero, color, cratedTime, updatedTime, activo, inStock, coste, precio, porcentajeDescuento, marca, superficie);
     }
 
     @Override
