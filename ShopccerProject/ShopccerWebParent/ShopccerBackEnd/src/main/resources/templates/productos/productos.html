@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head th:replace="fragments :: pageHead('Productos- Shopccer Admin')"></head>
+
+<body>
+	<div class="container-fluid">
+		<div th:replace="navigation :: menu"></div>
+		<div>
+			<h2>Gestión de productos</h2>
+		</div>
+
+		<div th:if="${msg != null}" class="alert alert-success alert-dismissible fade show text-center" role="alert">
+			[[${msg}]]
+			<button type="button" class="close" data-dismiss="alert" aria-label="Close">
+				<span aria-hidden="true">&times;</span>
+			</button>
+		</div>
+
+		<div class="row justify-content-between">
+			<div class="col-lg-5 col-md-12 mt-1 mb-1">
+				<a class="fas fa-circle-plus fa-2x icon-shopccer" th:href="@{/productos/nuevo}" style="text-decoration: none" title="Crear nuevo producto"></a>
+			</div>
+			<div class="col-lg-7 col-md-12 d-lg-flex ">
+				<form th:action="@{/productos/pagina/1}" class="form-inline mt-1 mb-1 ml-auto">
+					<input type="hidden" name="campoOrden" th:value="${campoOrden}">
+					<input type="hidden" name="dirOrden" th:value="${dirOrden}">
+					<input type="search" name="palabraClave" placeholder="Busca por id, nombre" th:value="${palabraClave}" class="form-control" size="40%" required/>
+					&nbsp;&nbsp;
+					<button type="submit" class="btn btn-info mt-2 mt-sm-0"><i class="fas fa-search"></i></button>
+					&nbsp;&nbsp;
+					<button type="button" class="btn btn-secondary mt-2 mt-sm-0" onclick="limpiarFiltro()"/><i class="fas fa-eraser"></i></button>
+				</form>
+			</div>
+		</div>
+
+		<div class="full-details">
+			<table class="table table-bordered table-hover table-responsive-md">
+				<thead class="thead-dark">
+					<tr>
+						<th th:replace="fragments :: columnLink ('productos', 'idProducto', 'ID Producto','none')" ></th>
+						<th>Foto principal</th>
+						<th th:replace="fragments :: columnLink ('productos','nombre', 'Nombre Producto','none')"></th>
+						<th>Marca</th>
+						<th>Superficie</th>
+						<th th:replace="fragments :: columnLink ('productos','activo', 'Activo','none')"></th>
+						<th></th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr th:each="producto : ${listaProductos}">
+						<td>[[${producto.idProducto}]]</td>
+						<td></td>
+						<td>[[${producto.nombre}]]</td>
+						<td>[[${producto.marca.nombre}]]</td>
+						<td>[[${producto.superficie.nombre}]]</td>
+						<td><a th:if="${producto.activo} == true" class="fa-solid fa-square-check fa-2x icon-green" style="text-decoration: none" th:href="@{'/productos/' + ${producto.idProducto} + '/activo/false'}" title="Desactiva producto"></a>
+							<a th:if="${producto.activo} != true" class="fa-solid fa-square fa-2x icon-silver" style="text-decoration: none" th:href="@{'/productos/' + ${producto.idProducto} + '/activo/true'}" title="Activa producto"></a>
+						</td>
+						<td><a class="fa-solid fa-edit fa-2x icon-green" style="text-decoration: none" th:href="@{'/productos/edit/'+${producto.idProducto}}" title="Editar producto"></a> &nbsp;
+							<a class="fa-solid fa-trash fa-2x icon-dark link-delete" style="text-decoration: none" th:href="@{'/productosdelete/'+${producto.idProducto}}" th:productoId="${producto.idProducto}" title="Eliminar producto"></a>
+						</td>
+					</tr>
+				</tbody>
+			</table>
+		</div>
+
+		<div class="less-details">
+
+		</div>
+
+		<div th:replace="modal_fragments :: modal_delete"></div>
+
+	</div>
+
+
+	<div th:replace="fragments :: footer"></div>
+
+	<script type="text/javascript">
+		$(document).ready(function() {
+			$(".link-delete").on("click",function(e) {
+				e.preventDefault();
+				productoId = $(this).attr("productoId");
+				$("#btnSi").attr("href", $(this).attr("href"));
+				$("#confirmText").text("¿Seguro que desea eliminar el prodcuto con id: "+ productoId + " ?");
+				$("#confirmDelete").modal();
+			})
+		});
+
+		function limpiarFiltro(){
+			window.location ="[[@{/productos}]]";
+		}
+	</script>
+</body>
+
+</html>
