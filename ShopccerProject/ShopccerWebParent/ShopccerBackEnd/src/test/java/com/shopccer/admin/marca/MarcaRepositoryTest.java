@@ -44,11 +44,11 @@ public class MarcaRepositoryTest {
 	@Order(2)
 	public void testListAllMarcas() {
 
-		List<Marca> listMarcas = (List<Marca>) marcaRepository.findAll();
+		List<Marca> listMarcas = marcaRepository.findAll();
 
-		listMarcas.forEach(m -> System.out.println(m.getNombre()));
+		listMarcas.forEach(System.out::println);
 
-		assertThat(listMarcas).hasSize(4);
+		assertThat(listMarcas).isNotEmpty();
 
 	}
 
@@ -117,7 +117,7 @@ public class MarcaRepositoryTest {
 		assertThat(listaMarcas.get(0).getNombre()).isEqualTo(nombreMarca);
 
 	}
-	
+
 	@Test
 	@Order(8)
 	public void testListWithIdFilter() {

@@ -57,7 +57,9 @@
 						<td><a th:if="${producto.activo} == true" class="fa-solid fa-square-check fa-2x icon-green" style="text-decoration: none" th:href="@{'/productos/' + ${producto.idProducto} + '/activo/false'}" title="Desactiva producto"></a>
 							<a th:if="${producto.activo} != true" class="fa-solid fa-square fa-2x icon-silver" style="text-decoration: none" th:href="@{'/productos/' + ${producto.idProducto} + '/activo/true'}" title="Activa producto"></a>
 						</td>
-						<td><a class="fa-solid fa-edit fa-2x icon-green" style="text-decoration: none" th:href="@{'/productos/edit/'+${producto.idProducto}}" title="Editar producto"></a> &nbsp;
+						<td>
+							<a class="fa-solid fa-file-lines fa-2x icon-shopccer" style="text-decoration: none" th:href="@{'/productos/deatil/'+${producto.idProducto}}" title="Detalles producto"></a> &nbsp;
+							<a class="fa-solid fa-edit fa-2x icon-green" style="text-decoration: none" th:href="@{'/productos/edit/'+${producto.idProducto}}" title="Editar producto"></a> &nbsp;
 							<a class="fa-solid fa-trash fa-2x icon-dark link-delete" style="text-decoration: none" th:href="@{'/productosdelete/'+${producto.idProducto}}" th:productoId="${producto.idProducto}" title="Eliminar producto"></a>
 						</td>
 					</tr>

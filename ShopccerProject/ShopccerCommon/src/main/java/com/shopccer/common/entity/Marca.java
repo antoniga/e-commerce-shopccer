@@ -30,6 +30,11 @@ public class Marca {
 		super();
 	}
 
+	public Marca(Integer idMarca, String nombre) {
+		this.idMarca = idMarca;
+		this.nombre = nombre;
+	}
+
 	public Marca(String nombre, String foto, Boolean activo) {
 		super();
 		this.nombre = nombre;
