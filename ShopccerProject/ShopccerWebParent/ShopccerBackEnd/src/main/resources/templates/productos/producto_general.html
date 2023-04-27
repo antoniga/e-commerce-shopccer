@@ -11,6 +11,55 @@
 				<input type="text" class="form-control" id="nombreProducto" placeholder="Introduce un nombre" th:field="*{nombre}" required minlength="3"maxlength="256">
 			</div>
 		</div>
+		<div class="form-group row">
+			<div class="col-sm-12">
+				<label class="form-label" for="colorProducto">Color producto:</label>
+				<input type="text" class="form-control" id="colorProducto" placeholder="Introduce un color" th:field="*{color}" required minlength="3"maxlength="256">
+			</div>
+		</div>
+		<div class="form-group row">
+			<div class="col-sm-12">
+				<label class="form-label" for="marcaProducto">Marca:</label>
+				<select class="form-control" id="marcaProducto" th:field="*{marca}" required>
+					<th:block th:each="marca : ${listaMarcas}">
+						<option th:value="${marca.idMarca}">[[${marca.nombre}]]</option>
+					</th:block>
+				</select>
+			</div>
+		</div>
+		<div class="form-group row">
+			<div class="col-sm-12">
+				<label class="form-label" for="superficieProducto">Tipo de taco:</label>
+				<select class="form-control" id="superficieProducto" th:field="*{superficie}" required>
+					<th:block th:each="superficie : ${listaSuperficies}">
+						<option th:value="${superficie.idSuperficie}">[[${superficie.nombre}]]</option>
+					</th:block>
+				</select>
+			</div>
+		</div>
+		<div class="form-group row">
+			<div class="col-sm-12">
+				<label class="form-label">Activo:</label> <input type="checkbox" th:field="*{activo}">
+			</div>
+		</div>
+		<div class="form-group row">
+			<div class="col-sm-12">
+				<label class="form-label" for="costeProducto">Coste producto:</label>
+				<input type="number" class="form-control" id="costeProducto"  th:field="*{coste}">
+			</div>
+		</div>
+		<div class="form-group row">
+			<div class="col-sm-12">
+				<label class="form-label" for="precioProducto">Precio producto:</label>
+				<input type="number" class="form-control" id="precioProducto"  th:field="*{precio}">
+			</div>
+		</div>
+		<div class="form-group row">
+			<div class="col-sm-12">
+				<label class="form-label" for="porcentajeDescuento">Descuento del producto:</label>
+				<input type="number" class="form-control" id="porcentajeDescuento"  th:field="*{porcentajeDescuento}">
+			</div>
+		</div>
 	</div>
 
 </body>
