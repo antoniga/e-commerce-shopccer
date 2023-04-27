@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head th:replace="fragments :: pageHead(${tituloPagina})"></head>
+
+<body>
+	<div class="container-fluid">
+		<div th:replace="navigation :: menu"></div>
+		<div>
+			<h2>Gestión de productos | [[${tituloPagina}]]</h2>
+		</div>
+		<form th:action="@{/productos/save}" method="post" style="max-width: 700px; margin: 0 auto;" th:object="${producto}" >
+			<input type="hidden" th:field="*{idProducto}" id="idHidden" name="">
+			<div class="border p-3">
+
+				<div>
+					<!-- Nav tabs -->
+					<ul class="nav nav-tabs" id="myTab" role="tablist">
+						<li class="nav-item">
+							<a class="nav-link active" data-toggle="tab" href="#general" role="tab">Datos generales</a>
+						</li>
+						<li class="nav-item">
+							<a class="nav-link" data-toggle="tab" href="#stock" role="tab">Tallas y stock</a>
+						</li>
+						<li class="nav-item">
+							<a class="nav-link" data-toggle="tab" href="#descripcion" role="tab">Descripción del producto</a>
+						</li>
+						<li class="nav-item">
+							<a class="nav-link" data-toggle="tab" href="#fotos" role="tab">Fotos</a>
+						</li>
+					</ul>
+
+					<!-- Tab panes -->
+					<div class="tab-content">
+						<div class="tab-pane active p-3" id="general" role="tabpanel">
+							<div th:replace="productos/producto_general :: contenido"></div>
+						</div>
+						<div class="tab-pane" id="stock" role="tabpanel">Tallas y stock</div>
+						<div class="tab-pane" id="descripcion" role="tabpanel">Descripción</div>
+						<div class="tab-pane" id="fotos" role="tabpanel">Fotos</div>
+					</div>
+
+				</div>
+
+				<!--
+				<div class="form-group row">
+
+					<div class="text-center m-3">
+						<input type="submit" value="Guardar" class="btn btn-primary" id="btnSubmit" /> <input type="button"
+							value="Cancelar" class="btn btn-secondary" id="btnCancelar" />
+					</div>
+				</div>
+				-->
+			</div>
+		</form>
+
+		<div th:replace="modal_fragments :: modal_dialog"></div>
+
+
+		<div th:replace="fragments :: footer"></div>
+
+		<script type="text/javascript">
+			$(document).ready(function () {
+				$("#btnCancelar").on("click", function () {
+					window.location = "[[@{/}]]";
+				});
+			});
+		</script>
+		<script type="text/javascript" th:src="@{/js/common_form.js}"></script>
+</body>
+
+</html>

@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+
+<body>
+	<!-- Plantilla para escribir codigo reusable por thymeleaf en nuestras vistas -->
+	<div th:fragment="contenido" th:remove="tag">
+		<div class="form-group row">
+			<div class="col-sm-12">
+				<label class="form-label" for="nombreProducto">Nombre producto:</label>
+				<input type="text" class="form-control" id="nombreProducto" placeholder="Introduce un nombre" th:field="*{nombre}" required minlength="3"maxlength="256">
+			</div>
+		</div>
+	</div>
+
+</body>
+
+</html>
