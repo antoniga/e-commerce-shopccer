@@ -46,14 +46,8 @@
 		</div>
 		<div class="form-group row">
 			<div class="col-sm-12">
-				<label class="form-label" for="costeProducto">Coste producto:</label>
-				<input type="number" class="form-control" id="costeProducto"  th:field="*{coste}">
-			</div>
-		</div>
-		<div class="form-group row">
-			<div class="col-sm-12">
 				<label class="form-label" for="precioProducto">Precio producto:</label>
-				<input type="number" class="form-control" id="precioProducto"  th:field="*{precio}">
+				<input type="number" step="0.01" class="form-control" id="precioProducto"  th:field="*{precio}">
 			</div>
 		</div>
 		<div class="form-group row">
@@ -80,9 +74,11 @@
 			</th:block>-->
 
 			<th:block th:each="entry : ${producto.tallaStock.entrySet()}" class="form-group row">
-				<label for="tallaStock[[[${entry.key}]]]">Stock talla [[${entry.key}]]:</label>
-				<input type="number" id="tallaStock[[[${entry.key}]]]" name="tallaStock[[[${entry.key}]]]" th:field="*{tallaStock[__${entry.key}__]}" />
-				<br>
+				<div class="col-sm-12">
+					<label class="form-label" for="tallaStock[[[${entry.key}]]]">Stock talla [[${entry.key}]]:</label>
+					<input class="form-control" type="number" id="tallaStock[[[${entry.key}]]]" name="tallaStock[[[${entry.key}]]]" th:field="*{tallaStock[__${entry.key}__]}" />
+					<br>
+				</div>
 			</th:block>
 		</div>
 

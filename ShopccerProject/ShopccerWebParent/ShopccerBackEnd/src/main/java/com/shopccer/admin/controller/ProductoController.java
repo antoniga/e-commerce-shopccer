@@ -14,6 +14,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.util.HashMap;
 import java.util.List;
@@ -70,10 +71,19 @@ public class ProductoController {
     }
 
     @PostMapping("/productos/save")
-    public String saveProducto(Producto producto){
+    public String saveProducto(Producto producto, RedirectAttributes redirectAttributes){
 
+        Integer stockTotal = producto.getTallaStock().values().stream().mapToInt(Integer::intValue).sum();
 
-        System.out.println(producto);
+        if(stockTotal > 0){
+            producto.setInStock(true);
+        }else {
+            producto.setInStock(false);
+        }
+
+        productoService.save(producto);
+
+        redirectAttributes.addFlashAttribute("msg", "El producto ha sido añadido correctamente");
 
         return "redirect:/productos";
     }

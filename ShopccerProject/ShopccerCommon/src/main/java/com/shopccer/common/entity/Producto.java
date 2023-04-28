@@ -30,7 +30,6 @@ public class Producto {
     private Boolean activo;
     @Column(name="en_stock")
     private Boolean inStock;
-    private double coste;
     private double precio;
     @Column(name="pocentaje_descuento")
     private double porcentajeDescuento;
@@ -44,7 +43,7 @@ public class Producto {
     public Producto() {
     }
 
-    public Producto(String nombre, String descripcion, Map<Integer, Integer> tallaStock, String color, String fotoPrincipal, List<String> fotosDetalles, Date createdTime, Date updatedTime, Boolean activo, Boolean inStock, double coste, double precio, double porcentajeDescuento, Marca marca, Superficie superficie) {
+    public Producto(String nombre, String descripcion, Map<Integer, Integer> tallaStock, String color, String fotoPrincipal, List<String> fotosDetalles, Date createdTime, Date updatedTime, Boolean activo, Boolean inStock, double precio, double porcentajeDescuento, Marca marca, Superficie superficie) {
         this.nombre = nombre;
         this.descripcion = descripcion;
         this.tallaStock = tallaStock;
@@ -55,14 +54,13 @@ public class Producto {
         this.updatedTime = updatedTime;
         this.activo = activo;
         this.inStock = inStock;
-        this.coste = coste;
         this.precio = precio;
         this.porcentajeDescuento = porcentajeDescuento;
         this.marca = marca;
         this.superficie = superficie;
     }
 
-    public Producto(Integer idProducto, String nombre, String descripcion, Map<Integer, Integer> tallaStock, String color, String fotoPrincipal, List<String> fotosDetalles, Date createdTime, Date updatedTime, Boolean activo, Boolean inStock, double coste, double precio, double porcentajeDescuento, Marca marca, Superficie superficie) {
+    public Producto(Integer idProducto, String nombre, String descripcion, Map<Integer, Integer> tallaStock, String color, String fotoPrincipal, List<String> fotosDetalles, Date createdTime, Date updatedTime, Boolean activo, Boolean inStock, double precio, double porcentajeDescuento, Marca marca, Superficie superficie) {
         this.idProducto = idProducto;
         this.nombre = nombre;
         this.descripcion = descripcion;
@@ -74,7 +72,6 @@ public class Producto {
         this.updatedTime = updatedTime;
         this.activo = activo;
         this.inStock = inStock;
-        this.coste = coste;
         this.precio = precio;
         this.porcentajeDescuento = porcentajeDescuento;
         this.marca = marca;
@@ -135,14 +132,6 @@ public class Producto {
 
     public void setInStock(Boolean inStock) {
         this.inStock = inStock;
-    }
-
-    public double getCoste() {
-        return coste;
-    }
-
-    public void setCoste(double coste) {
-        this.coste = coste;
     }
 
     public double getPrecio() {
@@ -217,12 +206,12 @@ public class Producto {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (!(o instanceof Producto producto)) return false;
-        return Double.compare(producto.coste, coste) == 0 && Double.compare(producto.precio, precio) == 0 && Double.compare(producto.porcentajeDescuento, porcentajeDescuento) == 0 && Objects.equals(idProducto, producto.idProducto) && Objects.equals(nombre, producto.nombre) && Objects.equals(descripcion, producto.descripcion) && Objects.equals(tallaStock, producto.tallaStock) && Objects.equals(color, producto.color) && Objects.equals(fotoPrincipal, producto.fotoPrincipal) && Objects.equals(fotosDetalles, producto.fotosDetalles) && Objects.equals(createdTime, producto.createdTime) && Objects.equals(updatedTime, producto.updatedTime) && Objects.equals(activo, producto.activo) && Objects.equals(inStock, producto.inStock) && Objects.equals(marca, producto.marca) && Objects.equals(superficie, producto.superficie);
+        return Double.compare(producto.precio, precio) == 0 && Double.compare(producto.porcentajeDescuento, porcentajeDescuento) == 0 && Objects.equals(idProducto, producto.idProducto) && Objects.equals(nombre, producto.nombre) && Objects.equals(descripcion, producto.descripcion) && Objects.equals(tallaStock, producto.tallaStock) && Objects.equals(color, producto.color) && Objects.equals(fotoPrincipal, producto.fotoPrincipal) && Objects.equals(fotosDetalles, producto.fotosDetalles) && Objects.equals(createdTime, producto.createdTime) && Objects.equals(updatedTime, producto.updatedTime) && Objects.equals(activo, producto.activo) && Objects.equals(inStock, producto.inStock) && Objects.equals(marca, producto.marca) && Objects.equals(superficie, producto.superficie);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(idProducto, nombre, descripcion, tallaStock, color, fotoPrincipal, fotosDetalles, createdTime, updatedTime, activo, inStock, coste, precio, porcentajeDescuento, marca, superficie);
+        return Objects.hash(idProducto, nombre, descripcion, tallaStock, color, fotoPrincipal, fotosDetalles, createdTime, updatedTime, activo, inStock, precio, porcentajeDescuento, marca, superficie);
     }
 
     @Override
@@ -239,7 +228,6 @@ public class Producto {
                 ", updatedTime=" + updatedTime +
                 ", activo=" + activo +
                 ", inStock=" + inStock +
-                ", coste=" + coste +
                 ", precio=" + precio +
                 ", porcentajeDescuento=" + porcentajeDescuento +
                 ", marca=" + marca +
