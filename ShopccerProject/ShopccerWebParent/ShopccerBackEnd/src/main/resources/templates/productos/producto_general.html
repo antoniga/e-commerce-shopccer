@@ -4,6 +4,8 @@
 
 <body>
 	<!-- Plantilla para escribir codigo reusable por thymeleaf en nuestras vistas -->
+
+	<!-- Datos generales -->
 	<div th:fragment="contenido" th:remove="tag">
 		<div class="form-group row">
 			<div class="col-sm-12">
@@ -61,6 +63,39 @@
 			</div>
 		</div>
 	</div>
+	<!-- Datos generales -->
+	<!-- Tallas y stock-->
+	<div th:fragment="stock" th:remove="tag">
+		<div>
+			<!--<th:block th:each="entry : ${producto.tallaStock.entrySet()}" class="form-group row">
+				<tr>
+					<td>
+						<label th:text="${entry.key}"></label>
+						<input type="hidden" th:field="*{tallaStock[__${entry.key}__]}" th:value="${entry.value}" />
+					</td>
+					<td>
+						<input type="number" th:field="*{tallaStock[__${entry.key}__]}" th:value="${entry.value}" />
+					</td>
+				</tr>
+			</th:block>-->
+
+			<th:block th:each="entry : ${producto.tallaStock.entrySet()}" class="form-group row">
+				<label for="tallaStock[[[${entry.key}]]]">Stock talla [[${entry.key}]]:</label>
+				<input type="number" id="tallaStock[[[${entry.key}]]]" name="tallaStock[[[${entry.key}]]]" th:field="*{tallaStock[__${entry.key}__]}" />
+				<br>
+			</th:block>
+		</div>
+
+	</div>
+	<!-- Tallas y stock-->
+	<!-- Descripcion-->
+	<div th:fragment="descripcion" th:remove="tag">
+		<div>
+			<label>Descripción:</label><br>
+			<textarea class="form-control" th:field="*{descripcion}" rows="5" required></textarea>
+		</div>
+	</div>
+	<!-- Descripcion-->
 
 </body>
 

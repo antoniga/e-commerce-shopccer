@@ -1,5 +1,7 @@
 package com.shopccer.admin.controller;
 
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 import com.shopccer.admin.service.MarcaService;
 import com.shopccer.admin.service.ProductoService;
 import com.shopccer.admin.service.SuperficieService;
@@ -10,8 +12,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @Controller
 public class ProductoController {
@@ -44,10 +50,31 @@ public class ProductoController {
         producto.setActivo(true);
         producto.setInStock(true);
 
+        Map<Integer,Integer> tallaStock = new HashMap<>();
+        tallaStock.put(36,0);
+        tallaStock.put(37,0);
+        tallaStock.put(38,0);
+        tallaStock.put(39,0);
+        tallaStock.put(40,0);
+        tallaStock.put(41,0);
+        tallaStock.put(42,0);
+        tallaStock.put(43,0);
+        tallaStock.put(44,0);
+        producto.setTallaStock(tallaStock);
+
         model.addAttribute("producto", producto);
         model.addAttribute("listaMarcas", listaMarcas);
         model.addAttribute("listaSuperficies", listaSuperficies);
         model.addAttribute("tituloPagina", "Crear nuevo producto");
         return "productos/producto_form";
+    }
+
+    @PostMapping("/productos/save")
+    public String saveProducto(Producto producto){
+
+
+        System.out.println(producto);
+
+        return "redirect:/productos";
     }
 }

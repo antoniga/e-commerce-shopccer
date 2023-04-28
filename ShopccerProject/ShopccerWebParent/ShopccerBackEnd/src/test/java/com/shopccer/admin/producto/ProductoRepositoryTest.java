@@ -46,7 +46,7 @@ public class ProductoRepositoryTest {
         producto.setMarca(adidas);
         producto.setSuperficie(naturalSeco);
         producto.setPrecio(89.99);
-        producto.setCratedTime(new Date());
+        producto.setCreatedTime(new Date());
         producto.setUpdatedTime(new Date());
 
         Producto savedProducto = productoRepository.save(producto);
@@ -70,7 +70,7 @@ public class ProductoRepositoryTest {
         producto.setMarca(mizuno);
         producto.setSuperficie(naturalSeco);
         producto.setPrecio(109.99);
-        producto.setCratedTime(new Date());
+        producto.setCreatedTime(new Date());
         producto.setUpdatedTime(new Date());
 
         Producto savedProducto = productoRepository.save(producto);
@@ -144,7 +144,7 @@ public class ProductoRepositoryTest {
         producto.setMarca(puma);
         producto.setSuperficie(multitaco);
         producto.setPrecio(129.99);
-        producto.setCratedTime(new Date());
+        producto.setCreatedTime(new Date());
         producto.setUpdatedTime(new Date());
 
         Map<Integer, Integer> tallaStock = new HashMap<>();
@@ -166,5 +166,16 @@ public class ProductoRepositoryTest {
 
 
         assertThat(producto.getIdProducto()).isPositive();
+    }
+
+    @Test
+    @Order(8)
+    public void testGetValueFromMap(){
+
+        Optional<Producto> pumaUltra = productoRepository.findById(3);
+
+        Integer stockNumero40 = pumaUltra.get().getTallaStock().get(40);
+
+        System.out.println("Hay "+stockNumero40+" botas del número 40 en el almacen.");
     }
 }

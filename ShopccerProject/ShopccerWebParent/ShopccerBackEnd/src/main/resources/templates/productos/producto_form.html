@@ -1,6 +1,5 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
-
 <head th:replace="fragments :: pageHead(${tituloPagina})"></head>
 
 <body>
@@ -35,9 +34,13 @@
 						<div class="tab-pane active p-3" id="general" role="tabpanel">
 							<div th:replace="productos/producto_general :: contenido"></div>
 						</div>
-						<div class="tab-pane" id="stock" role="tabpanel">Tallas y stock</div>
-						<div class="tab-pane" id="descripcion" role="tabpanel">Descripción</div>
-						<div class="tab-pane" id="fotos" role="tabpanel">Fotos</div>
+						<div class="tab-pane p-3" id="stock" role="tabpanel">
+							<div th:replace="productos/producto_general :: stock"></div>
+						</div>
+						<div class="tab-pane p-3" id="descripcion" role="tabpanel">
+							<div th:replace="productos/producto_general :: descripcion"></div>
+						</div>
+						<div class="tab-pane p-3" id="fotos" role="tabpanel">Fotos</div>
 					</div>
 
 					<div class="text-center m-3">
@@ -46,18 +49,9 @@
 					</div>
 
 				</div>
-
-				<!--
-				<div class="form-group row">
-
-					<div class="text-center m-3">
-						<input type="submit" value="Guardar" class="btn btn-primary" id="btnSubmit" /> <input type="button"
-							value="Cancelar" class="btn btn-secondary" id="btnCancelar" />
-					</div>
-				</div>
-				-->
 			</div>
 		</form>
+	</div>
 
 		<div th:replace="modal_fragments :: modal_dialog"></div>
 

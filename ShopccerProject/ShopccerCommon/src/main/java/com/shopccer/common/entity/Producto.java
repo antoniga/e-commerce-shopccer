@@ -24,7 +24,7 @@ public class Producto {
     @Column(length = 128)
     private List<String> fotosDetalles;
     @Column(name="fecha_creacion")
-    private Date cratedTime;
+    private Date createdTime;
     @Column(name="fecha_actualizacion")
     private Date updatedTime;
     private Boolean activo;
@@ -44,14 +44,14 @@ public class Producto {
     public Producto() {
     }
 
-    public Producto(String nombre, String descripcion, Map<Integer, Integer> tallaStock, String color, String fotoPrincipal, List<String> fotosDetalles, Date cratedTime, Date updatedTime, Boolean activo, Boolean inStock, double coste, double precio, double porcentajeDescuento, Marca marca, Superficie superficie) {
+    public Producto(String nombre, String descripcion, Map<Integer, Integer> tallaStock, String color, String fotoPrincipal, List<String> fotosDetalles, Date createdTime, Date updatedTime, Boolean activo, Boolean inStock, double coste, double precio, double porcentajeDescuento, Marca marca, Superficie superficie) {
         this.nombre = nombre;
         this.descripcion = descripcion;
         this.tallaStock = tallaStock;
         this.color = color;
         this.fotoPrincipal = fotoPrincipal;
         this.fotosDetalles = fotosDetalles;
-        this.cratedTime = cratedTime;
+        this.createdTime = createdTime;
         this.updatedTime = updatedTime;
         this.activo = activo;
         this.inStock = inStock;
@@ -62,7 +62,7 @@ public class Producto {
         this.superficie = superficie;
     }
 
-    public Producto(Integer idProducto, String nombre, String descripcion, Map<Integer, Integer> tallaStock, String color, String fotoPrincipal, List<String> fotosDetalles, Date cratedTime, Date updatedTime, Boolean activo, Boolean inStock, double coste, double precio, double porcentajeDescuento, Marca marca, Superficie superficie) {
+    public Producto(Integer idProducto, String nombre, String descripcion, Map<Integer, Integer> tallaStock, String color, String fotoPrincipal, List<String> fotosDetalles, Date createdTime, Date updatedTime, Boolean activo, Boolean inStock, double coste, double precio, double porcentajeDescuento, Marca marca, Superficie superficie) {
         this.idProducto = idProducto;
         this.nombre = nombre;
         this.descripcion = descripcion;
@@ -70,7 +70,7 @@ public class Producto {
         this.color = color;
         this.fotoPrincipal = fotoPrincipal;
         this.fotosDetalles = fotosDetalles;
-        this.cratedTime = cratedTime;
+        this.createdTime = createdTime;
         this.updatedTime = updatedTime;
         this.activo = activo;
         this.inStock = inStock;
@@ -105,12 +105,12 @@ public class Producto {
         this.descripcion = descripcion;
     }
 
-    public Date getCratedTime() {
-        return cratedTime;
+    public Date getCreatedTime() {
+        return createdTime;
     }
 
-    public void setCratedTime(Date cratedTime) {
-        this.cratedTime = cratedTime;
+    public void setCreatedTime(Date createdTime) {
+        this.createdTime = createdTime;
     }
 
     public Date getUpdatedTime() {
@@ -181,6 +181,10 @@ public class Producto {
         return tallaStock;
     }
 
+    public Integer getValue(Integer key){
+        return this.tallaStock.get(key);
+    }
+
     public void setTallaStock(Map<Integer, Integer> tallaStock) {
         this.tallaStock = tallaStock;
     }
@@ -213,12 +217,12 @@ public class Producto {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (!(o instanceof Producto producto)) return false;
-        return Double.compare(producto.coste, coste) == 0 && Double.compare(producto.precio, precio) == 0 && Double.compare(producto.porcentajeDescuento, porcentajeDescuento) == 0 && Objects.equals(idProducto, producto.idProducto) && Objects.equals(nombre, producto.nombre) && Objects.equals(descripcion, producto.descripcion) && Objects.equals(tallaStock, producto.tallaStock) && Objects.equals(color, producto.color) && Objects.equals(fotoPrincipal, producto.fotoPrincipal) && Objects.equals(fotosDetalles, producto.fotosDetalles) && Objects.equals(cratedTime, producto.cratedTime) && Objects.equals(updatedTime, producto.updatedTime) && Objects.equals(activo, producto.activo) && Objects.equals(inStock, producto.inStock) && Objects.equals(marca, producto.marca) && Objects.equals(superficie, producto.superficie);
+        return Double.compare(producto.coste, coste) == 0 && Double.compare(producto.precio, precio) == 0 && Double.compare(producto.porcentajeDescuento, porcentajeDescuento) == 0 && Objects.equals(idProducto, producto.idProducto) && Objects.equals(nombre, producto.nombre) && Objects.equals(descripcion, producto.descripcion) && Objects.equals(tallaStock, producto.tallaStock) && Objects.equals(color, producto.color) && Objects.equals(fotoPrincipal, producto.fotoPrincipal) && Objects.equals(fotosDetalles, producto.fotosDetalles) && Objects.equals(createdTime, producto.createdTime) && Objects.equals(updatedTime, producto.updatedTime) && Objects.equals(activo, producto.activo) && Objects.equals(inStock, producto.inStock) && Objects.equals(marca, producto.marca) && Objects.equals(superficie, producto.superficie);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(idProducto, nombre, descripcion, tallaStock, color, fotoPrincipal, fotosDetalles, cratedTime, updatedTime, activo, inStock, coste, precio, porcentajeDescuento, marca, superficie);
+        return Objects.hash(idProducto, nombre, descripcion, tallaStock, color, fotoPrincipal, fotosDetalles, createdTime, updatedTime, activo, inStock, coste, precio, porcentajeDescuento, marca, superficie);
     }
 
     @Override
@@ -231,7 +235,7 @@ public class Producto {
                 ", color='" + color + '\'' +
                 ", fotoPrincipal='" + fotoPrincipal + '\'' +
                 ", fotosDetalles=" + fotosDetalles +
-                ", cratedTime=" + cratedTime +
+                ", createdTime=" + createdTime +
                 ", updatedTime=" + updatedTime +
                 ", activo=" + activo +
                 ", inStock=" + inStock +

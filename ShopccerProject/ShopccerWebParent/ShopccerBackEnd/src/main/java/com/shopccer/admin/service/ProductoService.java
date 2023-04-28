@@ -9,4 +9,6 @@ import java.util.List;
 public interface ProductoService {
 
     List<Producto> listAll();
+
+    Producto save(Producto producto);
 }
