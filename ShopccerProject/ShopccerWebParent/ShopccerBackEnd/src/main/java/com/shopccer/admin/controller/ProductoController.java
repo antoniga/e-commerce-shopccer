@@ -1,7 +1,7 @@
 package com.shopccer.admin.controller;
 
-import com.google.gson.Gson;
-import com.google.gson.reflect.TypeToken;
+
+import com.shopccer.admin.exception.ProductoNotFoundException;
 import com.shopccer.admin.service.MarcaService;
 import com.shopccer.admin.service.ProductoService;
 import com.shopccer.admin.service.SuperficieService;
@@ -12,8 +12,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.util.HashMap;
@@ -43,7 +43,7 @@ public class ProductoController {
     }
 
     @GetMapping("/productos/nuevo")
-    public String addMarca(Model model) {
+    public String addProducto(Model model) {
         List<Marca> listaMarcas = marcaService.listAll();
         List<Superficie> listaSuperficies = superficieService.listAll();
 
@@ -84,6 +84,33 @@ public class ProductoController {
         productoService.save(producto);
 
         redirectAttributes.addFlashAttribute("msg", "El producto ha sido añadido correctamente");
+
+        return "redirect:/productos";
+    }
+
+    @GetMapping("/productos/delete/{idProducto}")
+    public String deleteProducto(@PathVariable(name = "idProducto") Integer idProducto, Model model,
+                              RedirectAttributes redirectAttributes) {
+
+        try {
+            productoService.deleteById(idProducto);
+            redirectAttributes.addFlashAttribute("msg", "El producto con id: " + idProducto + " ha sido eliminada.");
+        } catch (ProductoNotFoundException e) {
+            redirectAttributes.addFlashAttribute("msg", e.getMessage());
+        }
+
+        return "redirect:/productos";
+    }
+
+    @GetMapping("/productos/{idProducto}/activo/{bool}")
+    public String updateProductoActivo(@PathVariable(name = "idProducto") Integer idProducto,
+                                    @PathVariable(name = "bool") Boolean activo, RedirectAttributes redirectAttributes) {
+
+        productoService.updateProductoActivo(idProducto, activo);
+        String msgActivo = activo ? "activado" : "desactivado";
+        String msg = "El producto con id: " + idProducto + " ha sido " + msgActivo;
+
+        redirectAttributes.addFlashAttribute("msg", msg);
 
         return "redirect:/productos";
     }

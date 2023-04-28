@@ -60,7 +60,7 @@
 						<td>
 							<a class="fa-solid fa-file-lines fa-2x icon-shopccer" style="text-decoration: none" th:href="@{'/productos/deatil/'+${producto.idProducto}}" title="Detalles producto"></a> &nbsp;
 							<a class="fa-solid fa-edit fa-2x icon-green" style="text-decoration: none" th:href="@{'/productos/edit/'+${producto.idProducto}}" title="Editar producto"></a> &nbsp;
-							<a class="fa-solid fa-trash fa-2x icon-dark link-delete" style="text-decoration: none" th:href="@{'/productosdelete/'+${producto.idProducto}}" th:productoId="${producto.idProducto}" title="Eliminar producto"></a>
+							<a class="fa-solid fa-trash fa-2x icon-dark link-delete" style="text-decoration: none" th:href="@{'/productos/delete/'+${producto.idProducto}}" th:productoId="${producto.idProducto}" title="Eliminar producto"></a>
 						</td>
 					</tr>
 				</tbody>

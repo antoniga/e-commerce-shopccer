@@ -8,7 +8,8 @@
 		<div>
 			<h2>Gestión de productos | [[${tituloPagina}]]</h2>
 		</div>
-		<form th:action="@{/productos/save}" method="post" style="max-width: 700px; margin: 0 auto;" th:object="${producto}" >
+		<form th:action="@{/productos/save}" method="post" style="max-width: 700px; margin: 0 auto;"
+			  enctype="multipart/form-data" th:object="${producto}" onsubmit="return checkNombreUnique(this);" >
 			<input type="hidden" th:field="*{idProducto}" id="idHidden" name="">
 			<div class="border p-3">
 
@@ -64,6 +65,35 @@
 					window.location = "[[@{/}]]";
 				});
 			});
+
+			function checkNombreUnique(form) {
+
+				url = "[[@{/productos/checknombre}]]";
+				nombreProducto = $("#nombreProducto").val();
+				productoId = $("#idHidden").val();
+				csrf = $("input[name='_csrf']").val();
+
+				data = {
+					idProducto : productoId,
+					nombre : nombreProducto,
+					_csrf : csrf
+				};
+
+				$.post(url,data,function(response){
+					if(response == 'ok'){
+						form.submit();
+					} else if (response == 'duplicado'){
+						showModalDialog('Atención.','Ya hay un producto con el nombre: '+nombreProducto);
+					} else{
+						showModalDialog('Error.','Fallo en el servidor desconocido.');
+					}
+				}).fail(function(){
+					showModalDialog('Error.','No se pudo conectasr con el servidor.');
+				});
+
+				return false;
+
+			}
 		</script>
 		<script type="text/javascript" th:src="@{/js/common_form.js}"></script>
 </body>

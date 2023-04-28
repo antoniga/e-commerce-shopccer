@@ -1,5 +1,7 @@
 package com.shopccer.admin.service;
 
+
+import com.shopccer.admin.exception.ProductoNotFoundException;
 import com.shopccer.common.entity.Producto;
 import org.springframework.stereotype.Service;
 
@@ -11,4 +13,12 @@ public interface ProductoService {
     List<Producto> listAll();
 
     Producto save(Producto producto);
+
+    Producto findById(Integer id) throws ProductoNotFoundException;
+
+    Boolean isNombreUnique(Integer id, String nombre);
+
+    void deleteById(Integer id) throws ProductoNotFoundException;
+
+    void updateProductoActivo(Integer id, Boolean activo);
 }

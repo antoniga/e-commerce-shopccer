@@ -12,7 +12,8 @@ import com.shopccer.common.entity.Marca;
 public interface MarcaService {
 	
 	public List<Marca> listAll();
-	
+
+
 	public Marca save(Marca marca);
 	
 	public Marca findById(Integer id) throws MarcaNotFoundException;
