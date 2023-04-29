@@ -49,6 +49,7 @@
 				</thead>
 				<tbody>
 					<tr th:each="producto : ${listaProductos}">
+						<input type="hidden" name="idProducto" th:value="*{producto.idProducto}">
 						<td>[[${producto.idProducto}]]</td>
 						<td></td>
 						<td>[[${producto.nombre}]]</td>
@@ -58,10 +59,34 @@
 							<a th:if="${producto.activo} != true" class="fa-solid fa-square fa-2x icon-silver" style="text-decoration: none" th:href="@{'/productos/' + ${producto.idProducto} + '/activo/true'}" title="Activa producto"></a>
 						</td>
 						<td>
-							<a class="fa-solid fa-file-lines fa-2x icon-shopccer" style="text-decoration: none" th:href="@{'/productos/deatil/'+${producto.idProducto}}" title="Detalles producto"></a> &nbsp;
+							<!-- Button trigger modal -->
+							<button type="button" class="fa-solid fa-file-lines fa-2x icon-shopccer" style="border: none; background-color: transparent" data-toggle="modal"th:data-target="'#detallesModal'+${producto.idProducto}"></button>&nbsp;
 							<a class="fa-solid fa-edit fa-2x icon-green" style="text-decoration: none" th:href="@{'/productos/edit/'+${producto.idProducto}}" title="Editar producto"></a> &nbsp;
 							<a class="fa-solid fa-trash fa-2x icon-dark link-delete" style="text-decoration: none" th:href="@{'/productos/delete/'+${producto.idProducto}}" th:productoId="${producto.idProducto}" title="Eliminar producto"></a>
 						</td>
+
+						<!-- Modal detalles -->
+						<div class="modal fade" th:id="'detallesModal'+${producto.idProducto}" tabindex="-1" role="dialog" >
+							<div class="modal-dialog" role="document">
+								<div class="modal-content">
+									<div class="modal-header">
+										<h5 class="modal-title" th:id="'detallesModal'+${producto.idProducto}+'Label'">Detalles del producto</h5>
+										<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+											<span aria-hidden="true">&times;</span>
+										</button>
+									</div>
+									<div class="modal-body">
+										<p>Descripción:</p>
+										<p th:text="${producto.descripcion}"></p>
+										<p>Stock:</p>
+										<p th:text="${producto.tallaStock}"></p>
+									</div>
+									<div class="modal-footer">
+										<button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+									</div>
+								</div>
+							</div>
+						</div>
 					</tr>
 				</tbody>
 			</table>
