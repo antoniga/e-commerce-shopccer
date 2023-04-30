@@ -18,7 +18,7 @@ public class Producto {
     @ElementCollection
     private Map<Integer,Integer> tallaStock;
     private String color;
-    @Column(length = 128)
+    @Column(length = 128, name="foto_principal", nullable = false)
     private String fotoPrincipal;
     @ElementCollection
     @Column(length = 128)
@@ -233,5 +233,13 @@ public class Producto {
                 ", marca=" + marca +
                 ", superficie=" + superficie +
                 '}';
+    }
+
+    @Transient
+    public String getPathFotoPrincipal() {
+
+        if(this.idProducto == null || fotoPrincipal == null) return"/images/default-producto.png";
+
+        return "/fotos-productos/" + this.idProducto + "/" + this.fotoPrincipal;
     }
 }

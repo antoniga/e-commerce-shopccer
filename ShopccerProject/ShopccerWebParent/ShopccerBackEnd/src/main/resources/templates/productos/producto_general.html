@@ -92,6 +92,21 @@
 		</div>
 	</div>
 	<!-- Descripcion-->
+	<!-- Fotos-->
+	<div th:fragment="fotos" th:remove="tag">
+		<div class="row">
+			<div class="col border m-3 p-2">
+				<div><label>Imagen principal:</label></div>
+				<div class="m-2">
+					<img id="thumbnail" th:src="@{${producto.pathFotoPrincipal}}" alt="Foto principal" class="img-fluid">
+				</div>
+				<div>
+					<input type="file" id="fileImg" name="prodctoImgPrincipal" accept="image/png, image/jpeg"  required>
+				</div>
+			</div>
+		</div>
+	</div>
+	<!-- Fotos-->
 
 </body>
 

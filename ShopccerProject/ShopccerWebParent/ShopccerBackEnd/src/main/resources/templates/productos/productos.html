@@ -51,7 +51,7 @@
 					<tr th:each="producto : ${listaProductos}">
 						<input type="hidden" name="idProducto" th:value="*{producto.idProducto}">
 						<td>[[${producto.idProducto}]]</td>
-						<td></td>
+						<td><img th:src="@{${producto.pathFotoPrincipal}}" alt="" style="width:100px;" class="img-fluid"></td>
 						<td>[[${producto.nombre}]]</td>
 						<td>[[${producto.marca.nombre}]]</td>
 						<td>[[${producto.superficie.nombre}]]</td>

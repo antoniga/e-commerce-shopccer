@@ -178,4 +178,25 @@ public class ProductoRepositoryTest {
 
         System.out.println("Hay "+stockNumero40+" botas del número 40 en el almacen.");
     }
+
+    @Test
+    @Order(9)
+    public void testSaveProductWithImages(){
+
+        Producto copaMundial = productoRepository.findById(1).get();
+
+        copaMundial.setFotoPrincipal("copa-mundial.png");
+
+        List<String> fotosDetalles = new ArrayList<>();
+        fotosDetalles.add("copa-mundial-detalle-1.png");
+        fotosDetalles.add("copa-mundial-detalle-2.png");
+        fotosDetalles.add("copa-mundial-detalle-3.png");
+
+        copaMundial.setFotosDetalles(fotosDetalles);
+
+        productoRepository.save(copaMundial);
+
+        System.out.println(copaMundial.getFotosDetalles().size());
+        assertThat(productoRepository.findById(1).get().getFotoPrincipal()).contains("mundial");
+    }
 }

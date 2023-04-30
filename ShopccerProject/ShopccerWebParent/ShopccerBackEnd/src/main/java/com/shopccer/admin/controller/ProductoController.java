@@ -5,17 +5,22 @@ import com.shopccer.admin.exception.ProductoNotFoundException;
 import com.shopccer.admin.service.MarcaService;
 import com.shopccer.admin.service.ProductoService;
 import com.shopccer.admin.service.SuperficieService;
+import com.shopccer.admin.utils.FileLoadUtil;
 import com.shopccer.common.entity.Marca;
 import com.shopccer.common.entity.Producto;
 import com.shopccer.common.entity.Superficie;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import java.io.IOException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -71,7 +76,7 @@ public class ProductoController {
     }
 
     @PostMapping("/productos/save")
-    public String saveProducto(Producto producto, RedirectAttributes redirectAttributes){
+    public String saveProducto(Producto producto, @RequestParam("prodctoImgPrincipal") MultipartFile multipartFile, RedirectAttributes redirectAttributes) throws IOException {
 
         Integer stockTotal = producto.getTallaStock().values().stream().mapToInt(Integer::intValue).sum();
 
@@ -81,7 +86,27 @@ public class ProductoController {
             producto.setInStock(false);
         }
 
-        productoService.save(producto);
+        if(!multipartFile.isEmpty()) {
+
+
+            String nombreArchivo = StringUtils.cleanPath(multipartFile.getOriginalFilename());
+            producto.setFotoPrincipal(nombreArchivo);
+
+            Producto savedProducto = productoService.save(producto);
+
+            String dirSubida = "../fotos-productos/" + savedProducto.getIdProducto();
+            FileLoadUtil.cleanDir(dirSubida);
+            FileLoadUtil.saveFile(dirSubida, nombreArchivo, multipartFile);
+        } else {
+
+            if(producto.getFotoPrincipal().isEmpty()) {
+                producto.setFotoPrincipal(null);
+            }
+
+            productoService.save(producto);
+        }
+
+
 
         redirectAttributes.addFlashAttribute("msg", "El producto ha sido añadido correctamente");
 
