@@ -64,9 +64,49 @@
 		<script type="text/javascript">
 			$(document).ready(function () {
 				$("#btnCancelar").on("click", function () {
-					window.location = "[[@{/}]]";
+					window.location = "[[@{/productos}]]";
 				});
+
+				$("#fotoDetalle1").change(function() {
+					fileSize = this.files[0].size;
+
+					if (fileSize > 1048576) {//1MB
+						this.setCustomValidity("Debes seleccionar una imagen de una tamaño menor a 1MB");
+						this.reportValidity();
+					} else {
+						showExtraThumbnailImage(this);
+					}
+
+				})
 			});
+
+			function showExtraThumbnailImage(fileInput) {
+				var file = fileInput.files[0];
+				var reader = new FileReader();
+				reader.onload = function(e) {
+					$("#extraThumbnail1").attr("src", e.target.result);
+				};
+				reader.readAsDataURL(file);
+
+				addExtraImageSection();
+			}
+
+			function addExtraImageSection(){
+				html = `
+				<div class="row">
+					<div class="col border m-3 p-2">
+						<div><label>Imagen detalle #2:</label></div>
+						<div class="m-2">
+							<img id="extraThumbnail2" th:src="@{/images/default-producto.png}" alt="Foto detalle #2" class="img-fluid">
+						</div>
+						<div>
+							<input type="file" id="fotoDetalle2" name="fotoDetalle2" accept="image/png, image/jpeg">
+						</div>
+					</div>
+				</div>
+				`;
+				$("#divImagenes").append(html);
+			}
 
 			function checkNombreUnique(form) {
 
