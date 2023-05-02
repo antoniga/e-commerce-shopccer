@@ -21,7 +21,7 @@ public class Marca {
 
 	private Boolean activo;
 
-	@OneToMany(mappedBy = "marca", cascade = CascadeType.ALL, orphanRemoval = true)
+	@OneToMany(mappedBy = "marca", cascade = CascadeType.ALL)
 	private List<Producto> productos;
 
 	public Marca() {

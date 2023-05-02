@@ -18,7 +18,7 @@ public class Superficie {
 
     private Boolean activo;
 
-    @OneToMany(mappedBy = "superficie", cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(mappedBy = "superficie", cascade = CascadeType.ALL)
     private List<Producto> productos;
 
     public Superficie() {
