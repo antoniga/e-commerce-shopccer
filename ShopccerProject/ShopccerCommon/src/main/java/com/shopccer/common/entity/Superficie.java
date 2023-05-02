@@ -2,6 +2,7 @@ package com.shopccer.common.entity;
 
 import jakarta.persistence.*;
 
+import java.util.List;
 import java.util.Objects;
 
 @Entity
@@ -17,6 +18,9 @@ public class Superficie {
 
     private Boolean activo;
 
+    @OneToMany(mappedBy = "superficie", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Producto> productos;
+
     public Superficie() {
     }
 
@@ -31,6 +35,21 @@ public class Superficie {
         this.nombre = nombre;
         this.foto = foto;
         this.activo = activo;
+    }
+
+    public Superficie(Integer idSuperficie, String nombre, String foto, Boolean activo, List<Producto> productos) {
+        this.idSuperficie = idSuperficie;
+        this.nombre = nombre;
+        this.foto = foto;
+        this.activo = activo;
+        this.productos = productos;
+    }
+
+    public Superficie(String nombre, String foto, Boolean activo, List<Producto> productos) {
+        this.nombre = nombre;
+        this.foto = foto;
+        this.activo = activo;
+        this.productos = productos;
     }
 
     public Integer getIdSuperficie() {
@@ -65,16 +84,25 @@ public class Superficie {
         this.activo = activo;
     }
 
+    public List<Producto> getProductos() {
+        return productos;
+    }
+
+    public void setProductos(List<Producto> productos) {
+        this.productos = productos;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
-        if (!(o instanceof Superficie that)) return false;
-        return Objects.equals(idSuperficie, that.idSuperficie) && Objects.equals(nombre, that.nombre) && Objects.equals(foto, that.foto) && Objects.equals(activo, that.activo);
+        if (o == null || getClass() != o.getClass()) return false;
+        Superficie that = (Superficie) o;
+        return Objects.equals(idSuperficie, that.idSuperficie) && Objects.equals(nombre, that.nombre) && Objects.equals(foto, that.foto) && Objects.equals(activo, that.activo) && Objects.equals(productos, that.productos);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(idSuperficie, nombre, foto, activo);
+        return Objects.hash(idSuperficie, nombre, foto, activo, productos);
     }
 
     @Override
@@ -84,6 +112,7 @@ public class Superficie {
                 ", nombre='" + nombre + '\'' +
                 ", foto='" + foto + '\'' +
                 ", activo=" + activo +
+                ", productos=" + productos +
                 '}';
     }
 

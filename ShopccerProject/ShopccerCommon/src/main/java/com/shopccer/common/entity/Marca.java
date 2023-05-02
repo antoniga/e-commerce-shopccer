@@ -1,14 +1,9 @@
 package com.shopccer.common.entity;
 
+import java.util.List;
 import java.util.Objects;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
-import jakarta.persistence.Transient;
+import jakarta.persistence.*;
 
 @Entity
 @Table(name = "marcas")
@@ -25,6 +20,9 @@ public class Marca {
 	private String foto;
 
 	private Boolean activo;
+
+	@OneToMany(mappedBy = "marca", cascade = CascadeType.ALL, orphanRemoval = true)
+	private List<Producto> productos;
 
 	public Marca() {
 		super();
@@ -48,6 +46,21 @@ public class Marca {
 		this.nombre = nombre;
 		this.foto = foto;
 		this.activo = activo;
+	}
+
+	public Marca(String nombre, String foto, Boolean activo, List<Producto> productos) {
+		this.nombre = nombre;
+		this.foto = foto;
+		this.activo = activo;
+		this.productos = productos;
+	}
+
+	public Marca(Integer idMarca, String nombre, String foto, Boolean activo, List<Producto> productos) {
+		this.idMarca = idMarca;
+		this.nombre = nombre;
+		this.foto = foto;
+		this.activo = activo;
+		this.productos = productos;
 	}
 
 	public Integer getIdMarca() {
@@ -82,27 +95,36 @@ public class Marca {
 		this.activo = activo;
 	}
 
-	@Override
-	public int hashCode() {
-		return Objects.hash(activo, foto, idMarca, nombre);
+	public List<Producto> getProductos() {
+		return productos;
 	}
 
-	@Override
-	public boolean equals(Object obj) {
-		if (this == obj)
-			return true;
-		if (obj == null)
-			return false;
-		if (getClass() != obj.getClass())
-			return false;
-		Marca other = (Marca) obj;
-		return Objects.equals(activo, other.activo) && Objects.equals(foto, other.foto)
-				&& Objects.equals(idMarca, other.idMarca) && Objects.equals(nombre, other.nombre);
+	public void setProductos(List<Producto> productos) {
+		this.productos = productos;
 	}
 
 	@Override
 	public String toString() {
-		return "Marca [idMarca=" + idMarca + ", nombre=" + nombre + ", foto=" + foto + ", activo=" + activo + "]";
+		return "Marca{" +
+				"idMarca=" + idMarca +
+				", nombre='" + nombre + '\'' +
+				", foto='" + foto + '\'' +
+				", activo=" + activo +
+				", productos=" + productos +
+				'}';
+	}
+
+	@Override
+	public boolean equals(Object o) {
+		if (this == o) return true;
+		if (o == null || getClass() != o.getClass()) return false;
+		Marca marca = (Marca) o;
+		return Objects.equals(idMarca, marca.idMarca) && Objects.equals(nombre, marca.nombre) && Objects.equals(foto, marca.foto) && Objects.equals(activo, marca.activo) && Objects.equals(productos, marca.productos);
+	}
+
+	@Override
+	public int hashCode() {
+		return Objects.hash(idMarca, nombre, foto, activo, productos);
 	}
 
 	@Transient

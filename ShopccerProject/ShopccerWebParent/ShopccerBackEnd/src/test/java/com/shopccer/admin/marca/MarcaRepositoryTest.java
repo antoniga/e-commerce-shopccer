@@ -4,6 +4,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 import java.util.List;
 
+import com.shopccer.common.entity.Producto;
 import org.junit.jupiter.api.MethodOrderer.OrderAnnotation;
 import org.junit.jupiter.api.Order;
 import org.junit.jupiter.api.Test;
@@ -135,6 +136,17 @@ public class MarcaRepositoryTest {
 
 		assertThat(listaMarcas.get(0).getNombre()).isEqualTo(nombreMarca);
 
+	}
+
+	@Test
+	@Order(9)
+	public void testListProductosMarcas(){
+
+		List<Producto> productosNike = marcaRepository.findByNombre("Nike").getProductos();
+
+		productosNike.forEach(producto -> System.out.println(producto.getNombre()));
+
+		assertThat(productosNike.size()).isGreaterThan(0);
 	}
 
 }
