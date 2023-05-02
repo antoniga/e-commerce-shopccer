@@ -113,7 +113,7 @@
 				e.preventDefault();
 				superficieId = $(this).attr("superficieId");
 				$("#btnSi").attr("href", $(this).attr("href"));
-				$("#confirmText").text("¿Seguro que desea eliminar la superficie con id: "+ superficieId + " ?");
+				$("#confirmText").text("¿Seguro que desea eliminar la superficie con id: "+ superficieId + " ? Se eliminarán todos su productos asociados.");
 				$("#confirmDelete").modal();
 			})
 		});

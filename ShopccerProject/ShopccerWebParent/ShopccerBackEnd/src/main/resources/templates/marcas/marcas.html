@@ -111,7 +111,7 @@
 				e.preventDefault();
 				marcaId = $(this).attr("marcaId");
 				$("#btnSi").attr("href", $(this).attr("href"));
-				$("#confirmText").text("¿Seguro que desea eliminar la marca con id: "+ marcaId + " ?");
+				$("#confirmText").text("¿Seguro que desea eliminar la marca con id: "+ marcaId + " ? Se eliminarán todos su productos asociados.");
 				$("#confirmDelete").modal();
 			})
 		});
