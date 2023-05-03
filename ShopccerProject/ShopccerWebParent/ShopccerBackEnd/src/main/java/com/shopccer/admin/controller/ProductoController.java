@@ -76,7 +76,7 @@ public class ProductoController {
     }
 
     @PostMapping("/productos/save")
-    public String saveProducto(Producto producto, @RequestParam("prodctoImgPrincipal") MultipartFile multipartFile, RedirectAttributes redirectAttributes) throws IOException {
+    public String saveProducto(Producto producto, @RequestParam("productoImgPrincipal") MultipartFile multipartFile, RedirectAttributes redirectAttributes) throws IOException {
 
         Integer stockTotal = producto.getTallaStock().values().stream().mapToInt(Integer::intValue).sum();
 

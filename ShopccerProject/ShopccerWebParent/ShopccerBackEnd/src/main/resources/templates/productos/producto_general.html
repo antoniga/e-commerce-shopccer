@@ -105,19 +105,19 @@
 						<img id="thumbnail" th:src="@{${producto.pathFotoPrincipal}}" alt="Foto principal" class="img-fluid">
 					</div>
 					<div>
-						<input type="file" id="fileImg" name="prodctoImgPrincipal" accept="image/png, image/jpeg"  required>
+						<input type="file" id="fileImg" name="productoImgPrincipal" accept="image/png, image/jpeg"  required>
 					</div>
 				</div>
 			</div>
 		<!-- Fotos detalle-->
 			<div class="row">
-				<div class="col border m-3 p-2">
-					<div><label>Imagen detalle #1:</label></div>
+				<div class="col border m-3 p-2" id="divExtraImage0">
+					<div id="extraImageHeader0"><label>Imagen detalle #1:</label></div>
 					<div class="m-2">
-						<img id="extraThumbnail1" th:src="@{/images/default-producto.png}" alt="Foto detalle #1" class="img-fluid">
+						<img id="extraThumbnail0" th:src="@{/images/default-producto.png}" alt="Foto detalle #1" class="img-fluid">
 					</div>
 					<div>
-						<input type="file" id="fotoDetalle1" name="fotoDetalle1" accept="image/png, image/jpeg">
+						<input type="file" name="fotoDetalle" accept="image/png, image/jpeg">
 					</div>
 				</div>
 			</div>
