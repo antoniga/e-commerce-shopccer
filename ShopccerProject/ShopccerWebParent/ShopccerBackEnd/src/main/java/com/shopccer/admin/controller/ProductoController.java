@@ -21,6 +21,7 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -76,7 +77,9 @@ public class ProductoController {
     }
 
     @PostMapping("/productos/save")
-    public String saveProducto(Producto producto, @RequestParam("productoImgPrincipal") MultipartFile multipartFile, RedirectAttributes redirectAttributes) throws IOException {
+    public String saveProducto(Producto producto, @RequestParam("productoImgPrincipal") MultipartFile multipartFile,
+                               @RequestParam("fotoDetalle") MultipartFile [] fotosDetalle,
+                               RedirectAttributes redirectAttributes) throws IOException {
 
         Integer stockTotal = producto.getTallaStock().values().stream().mapToInt(Integer::intValue).sum();
 
@@ -86,31 +89,63 @@ public class ProductoController {
             producto.setInStock(false);
         }
 
-        if(!multipartFile.isEmpty()) {
+        setNombreFotoPrincipal(multipartFile, producto);
+        setNombreFotosDetalle(fotosDetalle, producto);
+
+        Producto savedProducto = productoService.save(producto);
+
+        saveUploadedImages(multipartFile, fotosDetalle, savedProducto);
 
 
-            String nombreArchivo = StringUtils.cleanPath(multipartFile.getOriginalFilename());
-            producto.setFotoPrincipal(nombreArchivo);
 
-            Producto savedProducto = productoService.save(producto);
-
-            String dirSubida = "../fotos-productos/" + savedProducto.getIdProducto();
-            FileLoadUtil.cleanDir(dirSubida);
-            FileLoadUtil.saveFile(dirSubida, nombreArchivo, multipartFile);
-        } else {
-
-            if(producto.getFotoPrincipal().isEmpty()) {
-                producto.setFotoPrincipal(null);
-            }
-
-            productoService.save(producto);
-        }
-
+        productoService.save(producto);
 
 
         redirectAttributes.addFlashAttribute("msg", "El producto ha sido añadido correctamente");
 
         return "redirect:/productos";
+    }
+
+    private void saveUploadedImages(MultipartFile multipartFile, MultipartFile [] fotosDetalle, Producto savedProducto) throws IOException {
+
+        if(!multipartFile.isEmpty()) {
+            String nombreArchivo = StringUtils.cleanPath(multipartFile.getOriginalFilename());
+            String dirSubida = "../fotos-productos/" + savedProducto.getIdProducto();
+            FileLoadUtil.cleanDir(dirSubida);
+            FileLoadUtil.saveFile(dirSubida, nombreArchivo, multipartFile);
+        }
+
+        if(fotosDetalle.length > 0) {
+            String dirSubidaDetalle = "../fotos-productos/" + savedProducto.getIdProducto() + "/detalles";
+
+            for (MultipartFile multipartFileDetalle : fotosDetalle) {
+                if (multipartFileDetalle.isEmpty()) continue;
+                String nombreArchivoDetalle = StringUtils.cleanPath(multipartFileDetalle.getOriginalFilename());
+                FileLoadUtil.saveFile(dirSubidaDetalle, nombreArchivoDetalle, multipartFileDetalle);
+            }
+        }
+    }
+
+    private void setNombreFotosDetalle(MultipartFile [] fotosDetalle, Producto producto){
+        if(fotosDetalle.length > 0) {
+            List<String> listaFotosDetalle = new ArrayList<>();
+            for (MultipartFile multipartFile : fotosDetalle) {
+                if (!multipartFile.isEmpty()) {
+                    String nombreArchivo = StringUtils.cleanPath(multipartFile.getOriginalFilename());
+                    listaFotosDetalle.add(nombreArchivo);
+                }
+            }
+            producto.setFotosDetalles(listaFotosDetalle);
+        }
+    }
+
+    private void setNombreFotoPrincipal(MultipartFile multipartFile, Producto producto){
+
+        if(!multipartFile.isEmpty()) {
+            String nombreArchivo = StringUtils.cleanPath(multipartFile.getOriginalFilename());
+            producto.setFotoPrincipal(nombreArchivo);
+        }
+
     }
 
     @GetMapping("/productos/delete/{idProducto}")
@@ -119,6 +154,12 @@ public class ProductoController {
 
         try {
             productoService.deleteById(idProducto);
+            String productoDirFotosDetalle = "../fotos-productos/" + idProducto + "/detalles";
+            String productoDirFotos = "../fotos-productos/" + idProducto;
+
+            FileLoadUtil.cleanDir(productoDirFotosDetalle);
+            FileLoadUtil.cleanDir(productoDirFotos);
+
             redirectAttributes.addFlashAttribute("msg", "El producto con id: " + idProducto + " ha sido eliminada.");
         } catch (ProductoNotFoundException e) {
             redirectAttributes.addFlashAttribute("msg", e.getMessage());
