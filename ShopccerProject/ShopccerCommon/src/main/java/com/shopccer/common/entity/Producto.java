@@ -230,8 +230,8 @@ public class Producto {
                 ", inStock=" + inStock +
                 ", precio=" + precio +
                 ", porcentajeDescuento=" + porcentajeDescuento +
-                ", marca=" + marca +
-                ", superficie=" + superficie +
+                ", marca=" + marca.getNombre() +
+                ", superficie=" + superficie.getNombre() +
                 '}';
     }
 

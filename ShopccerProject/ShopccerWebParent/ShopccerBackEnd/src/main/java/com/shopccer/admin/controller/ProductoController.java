@@ -148,6 +148,30 @@ public class ProductoController {
 
     }
 
+    @GetMapping("productos/edit/{idProducto}")
+    public String editProducto(@PathVariable(name = "idProducto") Integer idProducto, Model model,
+                               RedirectAttributes redirectAttributes){
+
+        try {
+            Producto producto = productoService.findById(idProducto);
+            List<Marca> listaMarcas = marcaService.listAll();
+            List<Superficie> listaSuperficies = superficieService.listAll();
+
+            model.addAttribute("producto",producto);
+            model.addAttribute("listaMarcas", listaMarcas);
+            model.addAttribute("listaSuperficies", listaSuperficies);
+            model.addAttribute("tituloPagina", "Editar producto (Id: "+ idProducto+") ");
+
+            return "productos/producto_form" ;
+        } catch (ProductoNotFoundException e) {
+
+            redirectAttributes.addFlashAttribute("msg",e.getMessage());
+            return "redirect:/productos";
+        }
+
+
+    }
+
     @GetMapping("/productos/delete/{idProducto}")
     public String deleteProducto(@PathVariable(name = "idProducto") Integer idProducto, Model model,
                               RedirectAttributes redirectAttributes) {
