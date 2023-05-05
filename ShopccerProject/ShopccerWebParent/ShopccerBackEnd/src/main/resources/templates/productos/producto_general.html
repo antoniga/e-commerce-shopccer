@@ -100,24 +100,47 @@
 			<!-- Foto principal-->
 			<div class="row">
 				<div class="col border m-3 p-2">
-					<div><label>Imagen principal:</label></div>
+					<div><label>Imagen principal: [[${producto.fotoPrincipal}]]</label></div>
 					<div class="m-2">
 						<img id="thumbnail" th:src="@{${producto.pathFotoPrincipal}}" alt="Foto principal" class="img-fluid">
 					</div>
 					<div>
-						<input type="file" id="fileImg" name="productoImgPrincipal" accept="image/png, image/jpeg"  required>
+						<input type="file" id="fileImg" name="productoImgPrincipal" accept="image/png, image/jpeg, image/webp"  th:required="${producto.fotoPrincipal == null}">
 					</div>
 				</div>
+				<input type="hidden" th:field="*{fotoPrincipal}" />
 			</div>
+
+			<!-- Fotos detalles si estamos en edición y el producto ya tiene-->
+			<th:block th:each="detalles, status : *{fotosDetalles}">
+				<div class="row">
+					<div class="col border m-3 p-2" th:id="'divExtraImage' + ${status.index}">
+						<div>
+							<label>Imagen detalle #[[${status.index + 1}]]: [[${detalles}]]</label>
+							<a class="btn fas fa-times-circle fa-2x icon-dark float-right"
+							   title="Elimina la imagen " name="linkRemoveFotoDetalle"></a>
+						</div>
+						<div class="m-2">
+							<img th:id ="'extraThumbnail' + ${status.index}" th:src="@{${producto.getPathFotosDetalle(detalles)}}" th:alt="'Foto detalle #' + ${status.index + 1}" class="img-fluid">
+						</div>
+						<div>
+							<input type="file" name="fotoDetalle" accept="image/png, image/jpeg, image/webp">
+						</div>
+						<input type="hidden" name="fotoDetallesIds" th:id="'imageId' + ${status.index}"/>
+						<input type="hidden" name="fotoDetallesNombre" th:id="'imageNombre' + ${status.index}"/>
+					</div>
+				</div>
+			</th:block>
+
 		<!-- Fotos detalle-->
 			<div class="row">
-				<div class="col border m-3 p-2" id="divExtraImage0">
-					<div id="extraImageHeader0"><label>Imagen detalle #1:</label></div>
+				<div class="col border m-3 p-2" th:id="'divExtraImage' + ${cantidadFotosDetallesExistentes}">
+					<div th:id="'extraImageHeader' + ${cantidadFotosDetallesExistentes} "><label>Imagen detalle #[[${cantidadFotosDetallesExistentes + 1}]]:</label></div>
 					<div class="m-2">
-						<img id="extraThumbnail0" th:src="@{/images/default-producto.png}" alt="Foto detalle #1" class="img-fluid">
+						<img th:id="'extraThumbnail' + ${cantidadFotosDetallesExistentes}" th:src="@{/images/default-producto.png}" th:alt="'Foto detalle #' + ${cantidadFotosDetallesExistentes}" class="img-fluid">
 					</div>
 					<div>
-						<input type="file" name="fotoDetalle" accept="image/png, image/jpeg">
+						<input type="file" name="fotoDetalle" accept="image/png, image/jpeg, image/webp">
 					</div>
 				</div>
 			</div>

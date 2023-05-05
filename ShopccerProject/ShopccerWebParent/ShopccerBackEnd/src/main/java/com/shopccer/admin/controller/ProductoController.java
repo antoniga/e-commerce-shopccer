@@ -72,6 +72,7 @@ public class ProductoController {
         model.addAttribute("producto", producto);
         model.addAttribute("listaMarcas", listaMarcas);
         model.addAttribute("listaSuperficies", listaSuperficies);
+        model.addAttribute("cantidadFotosDetallesExistentes", 0);
         model.addAttribute("tituloPagina", "Crear nuevo producto");
         return "productos/producto_form";
     }
@@ -157,9 +158,12 @@ public class ProductoController {
             List<Marca> listaMarcas = marcaService.listAll();
             List<Superficie> listaSuperficies = superficieService.listAll();
 
+            Integer cantidadFotosDetallesExistentes = producto.getFotosDetalles().size();
+
             model.addAttribute("producto",producto);
             model.addAttribute("listaMarcas", listaMarcas);
             model.addAttribute("listaSuperficies", listaSuperficies);
+            model.addAttribute("cantidadFotosDetallesExistentes", cantidadFotosDetallesExistentes);
             model.addAttribute("tituloPagina", "Editar producto (Id: "+ idProducto+") ");
 
             return "productos/producto_form" ;

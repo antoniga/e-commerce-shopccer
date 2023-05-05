@@ -242,4 +242,10 @@ public class Producto {
 
         return "/fotos-productos/" + this.idProducto + "/" + this.fotoPrincipal;
     }
+
+    @Transient
+    public String getPathFotosDetalle(String fotoDetalle) {
+
+        return "/fotos-productos/" + this.idProducto + "/detalles/"+fotoDetalle;
+    }
 }

@@ -78,6 +78,12 @@
 					});
 				});
 
+				$("a[name = 'linkRemoveFotoDetalle']").each(function(index){
+					$(this).click(function (){
+						removeExtraImage(index);
+					});
+				});
+
 
 			});
 
@@ -103,7 +109,7 @@
 							<img id="extraThumbnail${index}" src="${defaultImageThumbnailSrc}" alt="Foto detalle #${index + 1}" class="img-fluid">
 						</div>
 						<div>
-							<input type="file" name="fotoDetalle" accept="image/png, image/jpeg" onchange="showExtraThumbnailImage(this, ${index})">
+							<input type="file" name="fotoDetalle" accept="image/png, image/jpeg, image/webp" onchange="showExtraThumbnailImage(this, ${index})">
 						</div>
 					</div>
 				</div>
