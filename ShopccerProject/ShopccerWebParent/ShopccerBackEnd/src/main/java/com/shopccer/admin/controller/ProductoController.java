@@ -9,6 +9,8 @@ import com.shopccer.admin.utils.FileLoadUtil;
 import com.shopccer.common.entity.Marca;
 import com.shopccer.common.entity.Producto;
 import com.shopccer.common.entity.Superficie;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -21,6 +23,9 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -28,6 +33,8 @@ import java.util.Map;
 
 @Controller
 public class ProductoController {
+
+    private static final Logger LOGGER = LoggerFactory.getLogger(ProductoController.class);
 
     @Autowired
     private ProductoService productoService;
@@ -101,6 +108,8 @@ public class ProductoController {
 
         saveUploadedImages(multipartFile, fotosDetalle, savedProducto);
 
+        deleteFotosDetalleRemovedOnForm(producto);
+
 
 
         productoService.save(producto);
@@ -109,6 +118,30 @@ public class ProductoController {
         redirectAttributes.addFlashAttribute("msg", "El producto ha sido añadido correctamente");
 
         return "redirect:/productos";
+    }
+
+    private void deleteFotosDetalleRemovedOnForm(Producto producto) {
+
+        String dirFotosDetalle = "../fotos-productos/" + producto.getIdProducto() + "/detalles";
+        Path dirPath = Paths.get(dirFotosDetalle);
+
+        try {
+            Files.list(dirPath).forEach(file ->{
+                String filename = file.toFile().getName();
+
+                if(!producto.contieneFotoDetalle(filename)){
+                    try{
+                        Files.delete(file);
+                        LOGGER.info("Borrada foto detalle: " + filename);
+                    }catch (IOException e){
+                        LOGGER.error("No se puede eliminar la foto detalle : "+ filename);
+                    }
+                }
+            } );
+        }catch (IOException e){
+            LOGGER.error("No se puede listar el directorio: " + dirPath);
+        }
+
     }
 
     private void saveUploadedImages(MultipartFile multipartFile, MultipartFile [] fotosDetalle, Producto savedProducto) throws IOException {
