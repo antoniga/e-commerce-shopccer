@@ -76,11 +76,13 @@
 										</button>
 									</div>
 									<div class="modal-body">
-										<p><u>Descripción:</u></p>
-										<p th:text="${producto.descripcion}" class="ml-3"></p>
+										<p><u>Descripción:</u><span th:text="${producto.descripcion}" class="ml-3"></span></p>
+										<p><u>Color:</u><span th:text="${producto.color}" class="ml-3"></span></p>
+										<p><u>Precio:</u><span th:text="${producto.precio}" class="ml-3"></span>€</p>
+										<p><u>Descuento:</u><span th:text="${producto.porcentajeDescuento}" class="ml-3"></span>%</p>
 										<p><u>Cantidad en almacén:</u></p>
 										<th:block th:each="entry : ${producto.tallaStock.entrySet()}" class="text-center">
-											<p class="ml-3">[Talla : &nbsp;<span th:text = "${entry.key}"></span>&nbsp;&nbsp;---&nbsp;&nbsp;Stock: &nbsp;<span th:text = "${entry.value}"></span>]</p>
+											<span class="ml-3">[Talla : &nbsp;<span th:text = "${entry.key}"></span>&nbsp;&nbsp;---&nbsp;&nbsp;Stock: &nbsp;<span th:text = "${entry.value}"></span>]</span><br>
 										</th:block>
 									</div>
 									<div class="modal-footer">
