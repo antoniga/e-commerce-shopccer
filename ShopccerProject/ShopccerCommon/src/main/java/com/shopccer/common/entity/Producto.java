@@ -23,7 +23,7 @@ public class Producto {
     @ElementCollection
     @Column(length = 128)
     private List<String> fotosDetalles;
-    @Column(name="fecha_creacion")
+    @Column(name="fecha_creacion", updatable = false)
     private Date createdTime;
     @Column(name="fecha_actualizacion")
     private Date updatedTime;
@@ -247,5 +247,20 @@ public class Producto {
     public String getPathFotosDetalle(String fotoDetalle) {
 
         return "/fotos-productos/" + this.idProducto + "/detalles/"+fotoDetalle;
+    }
+
+    public Boolean contieneFotoDetalle(String nombreArchivo){
+
+        if(fotosDetalles != null){
+            Iterator<String> iterator = fotosDetalles.iterator();
+
+            while (iterator.hasNext()){
+                String foto = iterator.next();
+                if (foto.equals(nombreArchivo)){
+                    return true;
+                }
+            }
+        }
+        return false;
     }
 }

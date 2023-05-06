@@ -78,9 +78,12 @@ public class ProductoController {
     }
 
     @PostMapping("/productos/save")
-    public String saveProducto(Producto producto, @RequestParam("productoImgPrincipal") MultipartFile multipartFile,
+    public String saveProducto(Producto producto, RedirectAttributes redirectAttributes,
+                               @RequestParam("productoImgPrincipal") MultipartFile multipartFile,
                                @RequestParam("fotoDetalle") MultipartFile [] fotosDetalle,
-                               RedirectAttributes redirectAttributes) throws IOException {
+                               @RequestParam(name = "fotosDetallesNombre", required = false) String [] fotosDetallesNombre
+                               ) throws IOException {
+
 
         Integer stockTotal = producto.getTallaStock().values().stream().mapToInt(Integer::intValue).sum();
 
@@ -91,7 +94,8 @@ public class ProductoController {
         }
 
         setNombreFotoPrincipal(multipartFile, producto);
-        setNombreFotosDetalle(fotosDetalle, producto);
+        setExistingsFotosDetalle(fotosDetallesNombre, producto);
+        setNewFotosDetalle(fotosDetalle, producto);
 
         Producto savedProducto = productoService.save(producto);
 
@@ -127,17 +131,36 @@ public class ProductoController {
         }
     }
 
-    private void setNombreFotosDetalle(MultipartFile [] fotosDetalle, Producto producto){
+    private void setNewFotosDetalle(MultipartFile [] fotosDetalle, Producto producto){
         if(fotosDetalle.length > 0) {
-            List<String> listaFotosDetalle = new ArrayList<>();
+            List<String> listaFotosDetalleNueva = new ArrayList<>();
             for (MultipartFile multipartFile : fotosDetalle) {
                 if (!multipartFile.isEmpty()) {
                     String nombreArchivo = StringUtils.cleanPath(multipartFile.getOriginalFilename());
-                    listaFotosDetalle.add(nombreArchivo);
+                    if(!producto.contieneFotoDetalle(nombreArchivo)){
+                        listaFotosDetalleNueva.add(nombreArchivo);
+                    }
                 }
             }
-            producto.setFotosDetalles(listaFotosDetalle);
+            List<String> listaFotosDetalleExistentes = producto.getFotosDetalles();
+            if(listaFotosDetalleExistentes != null){
+                listaFotosDetalleExistentes.addAll(listaFotosDetalleNueva);
+                producto.setFotosDetalles(listaFotosDetalleExistentes);
+            }else{
+                producto.setFotosDetalles(listaFotosDetalleNueva);
+            }
         }
+    }
+
+    private void setExistingsFotosDetalle(String [] fotosDetallesNombre, Producto producto ){
+        if(fotosDetallesNombre == null || fotosDetallesNombre.length == 0) return;
+
+        List<String> fotosDetalle = new ArrayList<>();
+
+        for (String fd: fotosDetallesNombre) {
+           fotosDetalle.add(fd);
+        }
+        producto.setFotosDetalles(fotosDetalle);
     }
 
     private void setNombreFotoPrincipal(MultipartFile multipartFile, Producto producto){

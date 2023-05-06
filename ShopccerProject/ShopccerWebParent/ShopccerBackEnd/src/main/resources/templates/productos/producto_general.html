@@ -126,8 +126,7 @@
 						<div>
 							<input type="file" name="fotoDetalle" accept="image/png, image/jpeg, image/webp">
 						</div>
-						<input type="hidden" name="fotoDetallesIds" th:id="'imageId' + ${status.index}"/>
-						<input type="hidden" name="fotoDetallesNombre" th:id="'imageNombre' + ${status.index}"/>
+						<input type="hidden" name="fotosDetallesNombre" th:id="'imagenNombre' + ${status.index}" th:value="${detalles}"/>
 					</div>
 				</div>
 			</th:block>
