@@ -5,6 +5,7 @@ import com.shopccer.admin.exception.ProductoNotFoundException;
 import com.shopccer.admin.service.MarcaService;
 import com.shopccer.admin.service.ProductoService;
 import com.shopccer.admin.service.SuperficieService;
+import com.shopccer.admin.service.impl.ProductoServiceImpl;
 import com.shopccer.admin.utils.FileLoadUtil;
 import com.shopccer.common.entity.Marca;
 import com.shopccer.common.entity.Producto;
@@ -12,6 +13,8 @@ import com.shopccer.common.entity.Superficie;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.util.StringUtils;
@@ -48,11 +51,39 @@ public class ProductoController {
     @GetMapping("/productos")
     public String listFirstPage(Model model){
 
-        List<Producto> listaProductos = productoService.listAll();
+        return listByPage(1, model, "idProducto", "asc", null);
+    }
 
-        model.addAttribute("listaProductos", listaProductos);
+    @GetMapping("/productos/pagina/{numeroPagina}")
+    public String listByPage(@PathVariable(name="numeroPagina") Integer numeroPagina, Model model,
+                             @Param("campoOrden") String campoOrden, @Param("dirOrden") String dirOrden,
+                             @Param("palabraClave") String palabraClave) {
+
+        Page<Producto> pagina = productoService.listByPage(numeroPagina, campoOrden, dirOrden, palabraClave);
+        List<Producto> listaProductos = pagina.getContent();
+
+        long startCount = (numeroPagina -1) * ProductoServiceImpl.PROD_POR_PAG + 1;
+        long endCount = startCount + ProductoServiceImpl.PROD_POR_PAG - 1;
+
+        if (endCount > pagina.getTotalElements()) {
+            endCount = pagina.getTotalElements();
+        }
+
+        String dirOrdenContrario = ("asc").equals(dirOrden) ? "desc" : "asc";
+
+        model.addAttribute("listaProductos",listaProductos);
+        model.addAttribute("paginaActual",numeroPagina);
+        model.addAttribute("paginasTotales",pagina.getTotalPages());
+        model.addAttribute("startCount",startCount);
+        model.addAttribute("endCount",endCount);
+        model.addAttribute("productosTotales",pagina.getTotalElements());
+        model.addAttribute("campoOrden",campoOrden);
+        model.addAttribute("dirOrden",dirOrden);
+        model.addAttribute("dirOrdenContrario",dirOrdenContrario);
+        model.addAttribute("palabraClave",palabraClave);
 
         return "productos/productos";
+
     }
 
     @GetMapping("/productos/nuevo")

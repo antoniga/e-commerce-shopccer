@@ -7,6 +7,10 @@ import com.shopccer.admin.service.ProductoService;
 import com.shopccer.common.entity.Producto;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import java.util.Date;
@@ -14,6 +18,8 @@ import java.util.List;
 @Service
 @Transactional
 public class ProductoServiceImpl implements ProductoService {
+
+    public static final Integer PROD_POR_PAG = 4;
 
     @Autowired
     private ProductoRepository productoRepository;
@@ -86,5 +92,21 @@ public class ProductoServiceImpl implements ProductoService {
     public void updateProductoActivo(Integer id, Boolean activo) {
 
         productoRepository.updateProductoActivo(id, activo);
+    }
+
+    @Override
+    public Page<Producto> listByPage(Integer numeroPagina, String campoOrden, String dirOrden, String palabraClave) {
+        Sort sort = Sort.by(campoOrden);
+
+        sort = ("asc").equals(dirOrden) ? sort.ascending() : sort.descending();
+
+        Pageable pageable = PageRequest.of(numeroPagina - 1, PROD_POR_PAG, sort);
+
+        if (palabraClave != null) {
+
+            return productoRepository.findAll(palabraClave, pageable);
+        }
+
+        return productoRepository.findAll(pageable);
     }
 }

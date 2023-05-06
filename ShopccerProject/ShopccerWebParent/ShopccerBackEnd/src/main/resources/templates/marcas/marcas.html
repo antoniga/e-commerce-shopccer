@@ -79,7 +79,9 @@
 				</div>
 				<div>&nbsp;</div>
 			</div>
-		</div>	<div class= "text-center m-1" th:if="${marcasTotales > 0}">
+		</div>
+
+		<div class= "text-center m-1" th:if="${marcasTotales > 0}">
 			<span>Mostrando las marcas de la [[${startCount}]] a la [[${endCount}]] de [[${marcasTotales}]] </span>
 		</div>
 		<div class="text-center m-1" th:unless="${marcasTotales > 0}">

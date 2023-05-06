@@ -25,7 +25,7 @@
 				<form th:action="@{/productos/pagina/1}" class="form-inline mt-1 mb-1 ml-auto">
 					<input type="hidden" name="campoOrden" th:value="${campoOrden}">
 					<input type="hidden" name="dirOrden" th:value="${dirOrden}">
-					<input type="search" name="palabraClave" placeholder="Busca por id, nombre" th:value="${palabraClave}" class="form-control" size="40%" required/>
+					<input type="search" name="palabraClave" placeholder="Busca por id, nombre, descripción, marca o superficie" th:value="${palabraClave}" class="form-control" size="40%" required/>
 					&nbsp;&nbsp;
 					<button type="submit" class="btn btn-info mt-2 mt-sm-0"><i class="fas fa-search"></i></button>
 					&nbsp;&nbsp;
@@ -41,8 +41,8 @@
 						<th th:replace="fragments :: columnLink ('productos', 'idProducto', 'ID Producto','none')" ></th>
 						<th>Foto principal</th>
 						<th th:replace="fragments :: columnLink ('productos','nombre', 'Nombre Producto','none')"></th>
-						<th>Marca</th>
-						<th>Superficie</th>
+						<th th:replace="fragments :: columnLink ('productos','marca', 'Marca','none')"></th>
+						<th th:replace="fragments :: columnLink ('productos','superficie', 'Superficie','none')"></th>
 						<th th:replace="fragments :: columnLink ('productos','activo', 'Activo','none')"></th>
 						<th></th>
 					</tr>
@@ -98,6 +98,25 @@
 
 		<div class="less-details">
 
+		</div>
+
+		<div class= "text-center m-1" th:if="${productosTotales > 0}">
+			<span>Mostrando los productos del [[${startCount}]] al [[${endCount}]] de [[${productosTotales}]] </span>
+		</div>
+		<div class="text-center m-1" th:unless="${productosTotales > 0}">
+			<span>No se encontraron productos </span>
+		</div>
+
+		<div th:if="${paginasTotales > 1}">
+			<nav aria-label="Page navigation example">
+				<ul class="pagination justify-content-center">
+					<li th:class="${paginaActual > 1 ? 'page-item':'page-item disabled'}"><a th:replace="fragments :: pageLink('productos', 1,'<<')"> </a></li>
+					<li th:class="${paginaActual > 1 ? 'page-item':'page-item disabled'}"><a th:replace="fragments :: pageLink('productos', ${paginaActual -1},'<')"> </a></li>
+					<li th:class="${paginaActual != i  ? 'page-item':'page-item active'}" th:each="i : ${#numbers.sequence(1,paginasTotales)}"><a th:replace="fragments :: pageLink('productos', ${i},${i})"> </a></li>
+					<li th:class="${paginaActual < paginasTotales ? 'page-item':'page-item disabled'}"><a th:replace="fragments :: pageLink('productos', ${paginaActual +1},'>')"> </a></li>
+					<li th:class="${paginaActual < paginasTotales ? 'page-item':'page-item disabled'}"><a th:replace="fragments :: pageLink('productos', ${paginasTotales},'>>')"> </a></li>
+				</ul>
+			</nav>
 		</div>
 
 		<div th:replace="modal_fragments :: modal_delete"></div>
