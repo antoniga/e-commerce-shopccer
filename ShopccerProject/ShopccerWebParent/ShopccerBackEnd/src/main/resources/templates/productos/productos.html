@@ -18,10 +18,10 @@
 		</div>
 
 		<div class="row justify-content-between">
-			<div class="col-lg-5 col-md-12 mt-1 mb-1">
+			<div class="col-lg-2 col-md-12 mt-1 mb-1">
 				<a class="fa-solid fa-file-circle-plus fa-2x icon-shopccer" th:href="@{/productos/nuevo}" style="text-decoration: none" title="Crear nuevo producto"></a>
 			</div>
-			<div class="col-lg-7 col-md-12 d-lg-flex ">
+			<div class="col-lg-10 col-md-12 d-lg-flex ">
 				<form th:action="@{/productos/pagina/1}" class="form-inline mt-1 mb-1 ml-auto" id="searchForm">
 					<input type="hidden" name="campoOrden" th:value="${campoOrden}">
 					<input type="hidden" name="dirOrden" th:value="${dirOrden}">
