@@ -17,4 +17,7 @@ public interface ProductoRepository extends CrudRepository<Producto, Integer>, P
     void updateProductoActivo(Integer id, Boolean activo);
     @Query("SELECT p FROM Producto p WHERE CONCAT(p.idProducto,' ',p.nombre,' ',p.marca.nombre,' ',p.superficie.nombre) LIKE %?1% ")
     public Page<Producto> findAll(String palabraClave, Pageable pageable);
+
+    @Query("SELECT p FROM Producto p WHERE p.marca.idMarca = ?1")
+    public Page<Producto> findAllInMarcas(Integer idMarca, Pageable pageable);
 }

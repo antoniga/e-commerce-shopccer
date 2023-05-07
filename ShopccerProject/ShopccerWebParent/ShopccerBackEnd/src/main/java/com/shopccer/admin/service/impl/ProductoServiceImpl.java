@@ -95,16 +95,21 @@ public class ProductoServiceImpl implements ProductoService {
     }
 
     @Override
-    public Page<Producto> listByPage(Integer numeroPagina, String campoOrden, String dirOrden, String palabraClave) {
+    public Page<Producto> listByPage(Integer numeroPagina, String campoOrden, String dirOrden, String palabraClave, Integer marcaId) {
         Sort sort = Sort.by(campoOrden);
 
         sort = ("asc").equals(dirOrden) ? sort.ascending() : sort.descending();
 
         Pageable pageable = PageRequest.of(numeroPagina - 1, PROD_POR_PAG, sort);
 
-        if (palabraClave != null) {
+        if (palabraClave != null && !palabraClave.isEmpty()) {
 
             return productoRepository.findAll(palabraClave, pageable);
+        }
+
+        if(marcaId != null){
+
+            return productoRepository.findAllInMarcas(marcaId, pageable);
         }
 
         return productoRepository.findAll(pageable);

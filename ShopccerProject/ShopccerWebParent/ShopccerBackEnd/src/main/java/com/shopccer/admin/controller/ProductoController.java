@@ -51,16 +51,20 @@ public class ProductoController {
     @GetMapping("/productos")
     public String listFirstPage(Model model){
 
-        return listByPage(1, model, "idProducto", "asc", null);
+        return listByPage(1, model, "idProducto", "asc", null, null);
     }
 
     @GetMapping("/productos/pagina/{numeroPagina}")
     public String listByPage(@PathVariable(name="numeroPagina") Integer numeroPagina, Model model,
                              @Param("campoOrden") String campoOrden, @Param("dirOrden") String dirOrden,
-                             @Param("palabraClave") String palabraClave) {
+                             @Param("palabraClave") String palabraClave, @Param("marcaId") Integer marcaId) {
 
-        Page<Producto> pagina = productoService.listByPage(numeroPagina, campoOrden, dirOrden, palabraClave);
+        Page<Producto> pagina = productoService.listByPage(numeroPagina, campoOrden, dirOrden, palabraClave,marcaId);
         List<Producto> listaProductos = pagina.getContent();
+
+
+        List<Marca> listaMarcas = marcaService.listAll();
+        List<Superficie> listaSuperficies = superficieService.listAll();
 
         long startCount = (numeroPagina -1) * ProductoServiceImpl.PROD_POR_PAG + 1;
         long endCount = startCount + ProductoServiceImpl.PROD_POR_PAG - 1;
@@ -70,6 +74,10 @@ public class ProductoController {
         }
 
         String dirOrdenContrario = ("asc").equals(dirOrden) ? "desc" : "asc";
+
+        if(marcaId != null){
+            model.addAttribute("marcaId", marcaId);
+        }
 
         model.addAttribute("listaProductos",listaProductos);
         model.addAttribute("paginaActual",numeroPagina);
@@ -81,6 +89,8 @@ public class ProductoController {
         model.addAttribute("dirOrden",dirOrden);
         model.addAttribute("dirOrdenContrario",dirOrdenContrario);
         model.addAttribute("palabraClave",palabraClave);
+        model.addAttribute("listaMarcas",listaMarcas);
+        model.addAttribute("listaSuperficies",listaSuperficies);
 
         return "productos/productos";
 

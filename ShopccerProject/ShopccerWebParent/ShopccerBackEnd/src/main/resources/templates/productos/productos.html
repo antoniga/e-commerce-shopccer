@@ -22,9 +22,19 @@
 				<a class="fa-solid fa-file-circle-plus fa-2x icon-shopccer" th:href="@{/productos/nuevo}" style="text-decoration: none" title="Crear nuevo producto"></a>
 			</div>
 			<div class="col-lg-7 col-md-12 d-lg-flex ">
-				<form th:action="@{/productos/pagina/1}" class="form-inline mt-1 mb-1 ml-auto">
+				<form th:action="@{/productos/pagina/1}" class="form-inline mt-1 mb-1 ml-auto" id="searchForm">
 					<input type="hidden" name="campoOrden" th:value="${campoOrden}">
 					<input type="hidden" name="dirOrden" th:value="${dirOrden}">
+
+					Marca:&nbsp;
+					<select class="form-control" name="marcaId" id="dropdownMarca">
+						<option value="0">Todas las marcas</option>
+
+						<th:block th:each="m : ${listaMarcas}">
+							<option th:value="${m.idMarca}" th:selected="(${marcaId} == ${m.idMarca})">[[${m.nombre}]]</option>
+						</th:block>
+					</select>
+					&nbsp;
 					<input type="search" name="palabraClave" placeholder="Busca por id, nombre, descripción, marca o superficie" th:value="${palabraClave}" class="form-control" size="40%" required/>
 					&nbsp;&nbsp;
 					<button type="submit" class="btn btn-info mt-2 mt-sm-0"><i class="fas fa-search"></i></button>
@@ -134,7 +144,11 @@
 				$("#btnSi").attr("href", $(this).attr("href"));
 				$("#confirmText").text("¿Seguro que desea eliminar el prodcuto con id: "+ productoId + " ?");
 				$("#confirmDelete").modal();
-			})
+			});
+
+			$("#dropdownMarca").on("change",function (){
+				$("#searchForm").submit();
+			});
 		});
 
 		function limpiarFiltro(){
