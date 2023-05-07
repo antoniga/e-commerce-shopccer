@@ -23,5 +23,6 @@ public interface ProductoService {
 
     void updateProductoActivo(Integer id, Boolean activo);
 
-    Page<Producto> listByPage(Integer numeroPagina, String campoOrden, String dirOrden, String palabraClave, Integer marcaId);
+    Page<Producto> listByPage(Integer numeroPagina, String campoOrden, String dirOrden, String palabraClave,
+                              Integer marcaId, Integer superficieId);
 }

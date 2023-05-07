@@ -35,6 +35,15 @@
 						</th:block>
 					</select>
 					&nbsp;
+					Superficie:&nbsp;
+					<select class="form-control" name="superficieId" id="dropdownSuperficie">
+						<option value="0">Todas las superficies</option>
+
+						<th:block th:each="s : ${listaSuperficies}">
+							<option th:value="${s.idSuperficie}" th:selected="(${superficieId} == ${s.idSuperficie})">[[${s.nombre}]]</option>
+						</th:block>
+					</select>
+					&nbsp;
 					<input type="search" name="palabraClave" placeholder="Busca por id, nombre, descripción, marca o superficie" th:value="${palabraClave}" class="form-control" size="40%" required/>
 					&nbsp;&nbsp;
 					<button type="submit" class="btn btn-info mt-2 mt-sm-0"><i class="fas fa-search"></i></button>
@@ -147,6 +156,10 @@
 			});
 
 			$("#dropdownMarca").on("change",function (){
+				$("#searchForm").submit();
+			});
+
+			$("#dropdownSuperficie").on("change",function (){
 				$("#searchForm").submit();
 			});
 		});

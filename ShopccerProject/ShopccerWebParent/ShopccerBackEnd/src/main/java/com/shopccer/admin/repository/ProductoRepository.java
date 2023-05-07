@@ -20,4 +20,7 @@ public interface ProductoRepository extends CrudRepository<Producto, Integer>, P
 
     @Query("SELECT p FROM Producto p WHERE p.marca.idMarca = ?1")
     public Page<Producto> findAllInMarcas(Integer idMarca, Pageable pageable);
+
+    @Query("SELECT p FROM Producto p WHERE p.superficie.idSuperficie = ?1")
+    public Page<Producto> findAllInSuperficies(Integer idSuperficie, Pageable pageable);
 }

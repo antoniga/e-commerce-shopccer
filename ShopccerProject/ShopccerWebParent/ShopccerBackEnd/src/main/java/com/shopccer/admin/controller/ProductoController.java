@@ -51,15 +51,17 @@ public class ProductoController {
     @GetMapping("/productos")
     public String listFirstPage(Model model){
 
-        return listByPage(1, model, "idProducto", "asc", null, null);
+        return listByPage(1, model, "idProducto", "asc", null, null, null);
     }
 
     @GetMapping("/productos/pagina/{numeroPagina}")
     public String listByPage(@PathVariable(name="numeroPagina") Integer numeroPagina, Model model,
                              @Param("campoOrden") String campoOrden, @Param("dirOrden") String dirOrden,
-                             @Param("palabraClave") String palabraClave, @Param("marcaId") Integer marcaId) {
+                             @Param("palabraClave") String palabraClave, @Param("marcaId") Integer marcaId,
+                             @Param("superficieId") Integer superficieId) {
 
-        Page<Producto> pagina = productoService.listByPage(numeroPagina, campoOrden, dirOrden, palabraClave,marcaId);
+        System.out.println("------- Superficie seleccionada: " + superficieId);
+        Page<Producto> pagina = productoService.listByPage(numeroPagina, campoOrden, dirOrden, palabraClave,marcaId,superficieId);
         List<Producto> listaProductos = pagina.getContent();
 
 
@@ -77,6 +79,10 @@ public class ProductoController {
 
         if(marcaId != null){
             model.addAttribute("marcaId", marcaId);
+        }
+
+        if(superficieId != null){
+            model.addAttribute("superficieId", superficieId);
         }
 
         model.addAttribute("listaProductos",listaProductos);

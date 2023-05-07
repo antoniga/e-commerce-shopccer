@@ -95,7 +95,8 @@ public class ProductoServiceImpl implements ProductoService {
     }
 
     @Override
-    public Page<Producto> listByPage(Integer numeroPagina, String campoOrden, String dirOrden, String palabraClave, Integer marcaId) {
+    public Page<Producto> listByPage(Integer numeroPagina, String campoOrden, String dirOrden,
+                                     String palabraClave, Integer marcaId, Integer superficieId) {
         Sort sort = Sort.by(campoOrden);
 
         sort = ("asc").equals(dirOrden) ? sort.ascending() : sort.descending();
@@ -107,9 +108,14 @@ public class ProductoServiceImpl implements ProductoService {
             return productoRepository.findAll(palabraClave, pageable);
         }
 
-        if(marcaId != null){
+        if(marcaId != null && !marcaId.equals(0)){
 
             return productoRepository.findAllInMarcas(marcaId, pageable);
+        }
+
+        if(superficieId != null && !superficieId.equals(0)){
+
+            return productoRepository.findAllInSuperficies(superficieId, pageable);
         }
 
         return productoRepository.findAll(pageable);
