@@ -21,13 +21,13 @@
 			<div class="col-lg-2 col-md-12 mt-1 mb-1">
 				<a class="fa-solid fa-file-circle-plus fa-2x icon-shopccer" th:href="@{/productos/nuevo}" style="text-decoration: none" title="Crear nuevo producto"></a>
 			</div>
-			<div class="col-lg-10 col-md-12 d-lg-flex ">
+			<div class="col-lg-10 col-md-12 d-lg-flex">
 				<form th:action="@{/productos/pagina/1}" class="form-inline mt-1 mb-1 ml-auto" id="searchForm">
 					<input type="hidden" name="campoOrden" th:value="${campoOrden}">
 					<input type="hidden" name="dirOrden" th:value="${dirOrden}">
-
+					&nbsp;
 					Marca:&nbsp;
-					<select class="form-control" name="marcaId" id="dropdownMarca">
+					<select class="form-control mt-1 mb-1" name="marcaId" id="dropdownMarca" >
 						<option value="0">Todas las marcas</option>
 
 						<th:block th:each="m : ${listaMarcas}">
@@ -36,7 +36,7 @@
 					</select>
 					&nbsp;
 					Superficie:&nbsp;
-					<select class="form-control" name="superficieId" id="dropdownSuperficie">
+					<select class="form-control mt-1 mb-1" name="superficieId" id="dropdownSuperficie" >
 						<option value="0">Todas las superficies</option>
 
 						<th:block th:each="s : ${listaSuperficies}">
@@ -74,18 +74,19 @@
 						<td>[[${producto.nombre}]]</td>
 						<td>[[${producto.marca.nombre}]]</td>
 						<td>[[${producto.superficie.nombre}]]</td>
-						<td><a th:if="${producto.activo} == true" class="fa-solid fa-square-check fa-2x icon-green" style="text-decoration: none" th:href="@{'/productos/' + ${producto.idProducto} + '/activo/false'}" title="Desactiva producto"></a>
+						<td>
+							<a th:if="${producto.activo} == true" class="fa-solid fa-square-check fa-2x icon-green" style="text-decoration: none" th:href="@{'/productos/' + ${producto.idProducto} + '/activo/false'}" title="Desactiva producto"></a>
 							<a th:if="${producto.activo} != true" class="fa-solid fa-square fa-2x icon-silver" style="text-decoration: none" th:href="@{'/productos/' + ${producto.idProducto} + '/activo/true'}" title="Activa producto"></a>
 						</td>
 						<td>
 							<!-- Button trigger modal -->
-							<button type="button" class="fa-solid fa-file-lines fa-2x icon-shopccer" style="border: none; background-color: transparent" data-toggle="modal"th:data-target="'#detallesModal'+${producto.idProducto}"></button>&nbsp;
+							<button type="button" class="fa-solid fa-file-lines fa-2x icon-shopccer" style="border: none; background-color: transparent" data-toggle="modal" th:data-target="'#detallesFullModal'+${producto.idProducto}"></button>&nbsp;
 							<a class="fa-solid fa-edit fa-2x icon-green" style="text-decoration: none" th:href="@{'/productos/edit/'+${producto.idProducto}}" title="Editar producto"></a> &nbsp;
 							<a class="fa-solid fa-trash fa-2x icon-dark link-delete" style="text-decoration: none" th:href="@{'/productos/delete/'+${producto.idProducto}}" th:productoId="${producto.idProducto}" title="Eliminar producto"></a>
 						</td>
 
-						<!-- Modal detalles -->
-						<div class="modal fade" th:id="'detallesModal'+${producto.idProducto}" tabindex="-1" role="dialog">
+						<!-- Modal detalles full -->
+						<div class="modal fade" th:id="'detallesFullModal'+${producto.idProducto}" tabindex="-1" role="dialog">
 							<div class="modal-dialog" role="document">
 								<div class="modal-content">
 									<div class="modal-header">
@@ -116,8 +117,54 @@
 		</div>
 
 		<div class="less-details">
-
+			<div class="row m-1" th:each="producto : ${listaProductos}">
+				<div class="col-4">
+					<i th:if="${producto.fotoPrincipal} == null" class="fa-solid fa-image-portrait fa-3x icon-silver"></i>
+					<img th:if= "${producto.fotoPrincipal} != null" th:src="@{${producto.pathFotoPrincipal}}" alt="" style="width:100px;" class="img-fluid">
+				</div>
+				<div class="col-8">
+					<div>[[${producto.nombre}]]</div>
+					<div>[[${producto.marca.nombre}]]</div>
+					<div>[[${producto.superficie.nombre}]]</div>
+					<div class="mt-2">
+						<a th:if="${producto.activo} == true" class="fa-solid fa-square-check fa-2x icon-green" style="text-decoration: none" th:href="@{'/productos/' + ${producto.idProducto} + '/activo/false'}" title="Desactiva producto"></a>
+						<a th:if="${producto.activo} != true" class="fa-solid fa-square fa-2x icon-silver" style="text-decoration: none" th:href="@{'/productos/' + ${producto.idProducto} + '/activo/true'}" title="Activa producto"></a>
+						&nbsp;&nbsp;
+						<button type="button" class="fa-solid fa-file-lines fa-2x icon-shopccer" style="border: none; background-color: transparent" data-toggle="modal"th:data-target="'#detallesLessModal'+${producto.idProducto}"></button>&nbsp;
+						<a class="fa-solid fa-edit fa-2x icon-green" style="text-decoration: none" th:href="@{'/productos/edit/'+${producto.idProducto}}" title="Editar producto"></a> &nbsp;
+						<a class="fa-solid fa-trash fa-2x icon-dark link-delete" style="text-decoration: none" th:href="@{'/productos/delete/'+${producto.idProducto}}" th:productoId="${producto.idProducto}" title="Eliminar producto"></a>
+					</div>
+				</div>
+				<!-- Modal detalles less -->
+				<div class="modal fade" th:id="'detallesLessModal'+${producto.idProducto}" tabindex="-1" role="dialog">
+					<div class="modal-dialog" role="document">
+						<div class="modal-content">
+							<div class="modal-header">
+								<h5 class="modal-title" th:id="'detallesModal'+${producto.idProducto}+'Label'">Detalles del producto</h5>
+								<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+									<span aria-hidden="true">&times;</span>
+								</button>
+							</div>
+							<div class="modal-body">
+								<p><u>Descripción:</u><span th:text="${producto.descripcion}" class="ml-3"></span></p>
+								<p><u>Color:</u><span th:text="${producto.color}" class="ml-3"></span></p>
+								<p><u>Precio:</u><span th:text="${producto.precio}" class="ml-3"></span>€</p>
+								<p><u>Descuento:</u><span th:text="${producto.porcentajeDescuento}" class="ml-3"></span>%</p>
+								<p><u>Cantidad en almacén:</u></p>
+								<th:block th:each="entry : ${producto.tallaStock.entrySet()}" class="text-center">
+									<span class="ml-3">[Talla : &nbsp;<span th:text = "${entry.key}"></span>&nbsp;&nbsp;---&nbsp;&nbsp;Stock: &nbsp;<span th:text = "${entry.value}"></span>]</span><br>
+								</th:block>
+							</div>
+							<div class="modal-footer">
+								<button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
 		</div>
+
+
 
 		<div class= "text-center m-1" th:if="${productosTotales > 0}">
 			<span>Mostrando los productos del [[${startCount}]] al [[${endCount}]] de [[${productosTotales}]] </span>
