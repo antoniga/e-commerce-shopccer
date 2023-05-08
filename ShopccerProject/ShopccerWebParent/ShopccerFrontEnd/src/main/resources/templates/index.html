@@ -1,10 +1,15 @@
 <!DOCTYPE html>
-<html>
-<head>
-<meta charset="UTF-8">
-<title>Welcome to Shopccer</title>
-</head>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="fragments :: pageHead('Shopccer')"></head>
 <body>
-	<h1>Bienvenidos a SHOPCCER eCommerce !</h1>
+	<div class="container-fluid">
+		<div th:replace="navigation :: header_menu"></div>
+		<div>
+			<h2>Bienvenidos a SHOPCCER eCommerce !</h2>
+		</div>
+
+		<div th:replace="navigation :: footer_menu"></div>
+		<div th:replace="fragments :: footer"></div>
+	</div>
 </body>
 </html>
