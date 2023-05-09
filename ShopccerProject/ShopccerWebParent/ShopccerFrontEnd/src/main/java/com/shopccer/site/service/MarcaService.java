@@ -10,5 +10,7 @@ public interface MarcaService {
 
     List<Marca> findAllEnable();
 
+    Marca findByIdEnable(Integer idMarca);
+
 
 }

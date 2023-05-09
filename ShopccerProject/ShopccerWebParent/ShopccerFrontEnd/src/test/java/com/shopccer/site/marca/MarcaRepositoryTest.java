@@ -33,7 +33,15 @@ public class MarcaRepositoryTest {
         allEnabled.forEach(marca -> System.out.println("nombre ----> " + marca.getNombre()));
 
         assertThat(allEnabled.size()).isEqualTo(3);
+    }
+
+    @Test
+    @Order(2)
+    public void testMarcaIdEnabled() {
+
+        Marca byIdEnabled = marcaRepository.findByIdEnabled(1);
 
 
+        assertThat("Adidas").isEqualTo(byIdEnabled.getNombre());
     }
 }

@@ -9,7 +9,7 @@
 		</div>
 		<div class="row justify-content-center justify-content-between">
 			<div class="col" th:each="marca : ${listMarcas}">
-				<a th:href="@{'/marcas/' + ${marca.idMarca}}">
+				<a th:href="@{'/m/' + ${marca.idMarca}}">
 					<div class="d-flex align-items-center justify-content-center mb-4" style="height: 100px; width: 150px; max-width: 100%;">
 						<img class="img-fluid d-flex align-self-center" th:src="@{${marca.pathFoto}}" alt="">
 					</div>

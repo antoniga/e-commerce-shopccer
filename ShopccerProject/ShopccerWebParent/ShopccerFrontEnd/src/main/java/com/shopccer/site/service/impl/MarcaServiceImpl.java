@@ -19,4 +19,9 @@ public class MarcaServiceImpl implements MarcaService {
     public List<Marca> findAllEnable() {
         return marcaRepository.findAllEnabled();
     }
+
+    @Override
+    public Marca findByIdEnable(Integer idMarca) {
+        return marcaRepository.findByIdEnabled(idMarca);
+    }
 }
