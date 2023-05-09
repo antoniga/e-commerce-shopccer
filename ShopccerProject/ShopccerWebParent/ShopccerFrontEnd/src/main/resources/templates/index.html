@@ -5,8 +5,23 @@
 	<div class="container-fluid">
 		<div th:replace="navigation :: header_menu"></div>
 		<div>
-			<h2>Bienvenidos a SHOPCCER eCommerce !</h2>
+			<h2>Colecciones de botas por marca</h2>
 		</div>
+		<div class="row justify-content-center justify-content-between">
+			<div class="col" th:each="marca : ${listMarcas}">
+				<a th:href="@{'/marcas/' + ${marca.idMarca}}">
+					<div class="d-flex align-items-center justify-content-center mb-4" style="height: 100px; width: 150px; max-width: 100%;">
+						<img class="img-fluid d-flex align-self-center" th:src="@{${marca.pathFoto}}" alt="">
+					</div>
+					BOTAS DE FÚTBOL <span class="text-uppercase">[[${marca.nombre}]]</span>
+				</a>
+			</div>
+		</div>
+
+
+
+
+
 
 		<div th:replace="navigation :: footer_menu"></div>
 		<div th:replace="fragments :: footer"></div>
