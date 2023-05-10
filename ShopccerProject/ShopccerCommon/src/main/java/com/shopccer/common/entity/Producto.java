@@ -2,6 +2,7 @@ package com.shopccer.common.entity;
 
 import jakarta.persistence.*;
 
+import java.text.DecimalFormat;
 import java.util.*;
 
 @Entity
@@ -267,8 +268,11 @@ public class Producto {
     @Transient
     public Double getPrecioConDescuento(){
         if (porcentajeDescuento > 0){
-            return this.precio * ((100 - porcentajeDescuento) / 100);
+            double precioConDescuento = this.precio * ((100.0 - porcentajeDescuento) / 100.0);
+            return Math.round(precioConDescuento * 100.0) / 100.0;
         }
         return this.precio;
     }
+
+
 }

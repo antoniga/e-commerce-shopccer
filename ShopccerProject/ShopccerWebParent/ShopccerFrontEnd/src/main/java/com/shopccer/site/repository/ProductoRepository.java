@@ -10,10 +10,10 @@ import com.shopccer.common.entity.Producto;
 
 public interface ProductoRepository extends CrudRepository<Producto, Integer>, PagingAndSortingRepository<Producto, Integer>{
 	
-	@Query("SELECT p FROM Producto p WHERE p.activo = true AND p.marca.idMarca = ?1 ")
+	@Query("SELECT p FROM Producto p WHERE p.activo = true AND p.marca.idMarca = ?1 AND p.superficie.activo =true ORDER BY p.nombre ASC")
 	Page<Producto> listByMarca(Integer idMarca, Pageable pageable);
 
-	@Query("SELECT p FROM Producto p WHERE p.activo = true AND p.superficie.idSuperficie = ?1 ")
+	@Query("SELECT p FROM Producto p WHERE p.activo = true AND p.superficie.idSuperficie = ?1 AND p.marca.activo =true ORDER BY p.nombre ASC")
 	Page<Producto> listBySuperficie(Integer idSuperficie, Pageable pageable);
 
 }

@@ -9,6 +9,7 @@ import com.shopccer.site.service.MarcaService;
 import com.shopccer.site.service.ProductoService;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -47,6 +48,11 @@ public class ProductoController {
         
         Page<Producto> pagina = productoService.listByMarca(idMarca, numeroPagina);
         List<Producto> listaProductos = pagina.getContent();
+
+        List<Producto> listaFiltrada = listaProductos.stream()
+                .filter(p -> p.getSuperficie().getActivo())
+                .collect(Collectors.toList());
+
 
         long startCount = (numeroPagina -1) * ProductoServiceImpl.PRODUCTOS_POR_PAG + 1;
         long endCount = startCount + ProductoServiceImpl.PRODUCTOS_POR_PAG - 1;
