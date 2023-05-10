@@ -7,21 +7,18 @@
 		<div>
 			<h2>Colecciones de botas por marca</h2>
 		</div>
-		<div class="row justify-content-center justify-content-between">
-			<div class="col" th:each="marca : ${listMarcas}">
-				<a th:href="@{'/m/' + ${marca.idMarca}}">
-					<div class="d-flex align-items-center justify-content-center mb-4" style="height: 100px; width: 150px; max-width: 100%;">
-						<img class="img-fluid d-flex align-self-center" th:src="@{${marca.pathFoto}}" alt="">
-					</div>
-					BOTAS DE FÚTBOL <span class="text-uppercase">[[${marca.nombre}]]</span>
-				</a>
-			</div>
+
+		<div class="row text-center">
+			<th:block th:each="marca : ${listMarcas}">
+				<div class="col" th:if="${marca.activo == true}">
+					<a th:href="@{'/productos/marcas/' + ${marca.idMarca}}">
+						<img th:src="@{${marca.pathFoto}}" height="100" alt="">
+						<br><br>
+						<b class="text-uppercase">[[${marca.nombre}]]</b>
+					</a>
+				</div>
+			</th:block>
 		</div>
-
-
-
-
-
 
 		<div th:replace="navigation :: footer_menu"></div>
 		<div th:replace="fragments :: footer"></div>

@@ -7,10 +7,47 @@
 		<div>
 			<h2>Botas de fútbol <span class="">[[${tituloPagina}]]</span></h2>
 		</div>
+		
+		<div class="row text-center">
+			<th:block th:each="producto : ${listaProductos}">
+				<div class="col">
+					<div>
+						<img th:src="@{${producto.pathFotoPrincipal}}"  height="200"/>
+						<br><br>
+						<b>[[${producto.nombre}]]</b>
+					</div>
+					<div th:if = "${producto.porcentajeDescuento <= 0}">
+						<span>[[${producto.precio}]] €</span>
+					</div>
+					<div th:if = "${producto.porcentajeDescuento > 0}">
+						<span style="font-size: larger; color: darkred">[[${producto.precioConDescuento}]] €</span>
+						<del><span>[[${producto.precio}]] €</span></del>
+					</div>
+				</div>
+
+			</th:block>
+		</div>
 
 
 
+		<div class= "text-center m-1" th:if="${productosTotales > 0}">
+			<span>Mostrando los productos del [[${startCount}]] al [[${endCount}]] de [[${productosTotales}]] </span>
+		</div>
+		<div class="text-center m-1" th:unless="${productosTotales > 0}">
+			<span>No se encontraron productos </span>
+		</div>
 
+		<div th:if="${paginasTotales > 1}">
+			<nav aria-label="Page navigation example">
+				<ul class="pagination justify-content-center">
+					<li th:class="${paginaActual > 1 ? 'page-item':'page-item disabled'}"><a th:replace="fragments :: pageLink('productos/marcas/' + ${idMarca}, 1,'<<')"> </a></li>
+					<li th:class="${paginaActual > 1 ? 'page-item':'page-item disabled'}"><a th:replace="fragments :: pageLink('productos/marcas/' + ${idMarca}, ${paginaActual -1},'<')"> </a></li>
+					<li th:class="${paginaActual != i  ? 'page-item':'page-item active'}" th:each="i : ${#numbers.sequence(1,paginasTotales)}"><a th:replace="fragments :: pageLink('productos/marcas/' + ${idMarca}, ${i},${i})"> </a></li>
+					<li th:class="${paginaActual < paginasTotales ? 'page-item':'page-item disabled'}"><a th:replace="fragments :: pageLink('productos/marcas/' + ${idMarca}, ${paginaActual +1},'>')"> </a></li>
+					<li th:class="${paginaActual < paginasTotales ? 'page-item':'page-item disabled'}"><a th:replace="fragments :: pageLink('productos/marcas/' + ${idMarca}, ${paginasTotales},'>>')"> </a></li>
+				</ul>
+			</nav>
+		</div>
 
 
 		<div th:replace="navigation :: footer_menu"></div>

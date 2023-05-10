@@ -263,4 +263,12 @@ public class Producto {
         }
         return false;
     }
+
+    @Transient
+    public Double getPrecioConDescuento(){
+        if (porcentajeDescuento > 0){
+            return this.precio * ((100 - porcentajeDescuento) / 100);
+        }
+        return this.precio;
+    }
 }

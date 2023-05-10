@@ -21,6 +21,9 @@
         <p>Shopccer Copyright &copy; Shopccer Ltd.</p>
     </div>
 
+	<a th:fragment="pageLink(viewName,numPag, label)" class="page-link"
+	   th:href="@{'/'+${viewName}+'/pagina/'+${numPag}+'?campoOrden='+${campoOrden}+'&dirOrden='+${dirOrden} + ${palabraClave !=null ? '&palabraClave='+palabraClave : ''}}">[[${label}]]</a>
+
 
 </body>
 
