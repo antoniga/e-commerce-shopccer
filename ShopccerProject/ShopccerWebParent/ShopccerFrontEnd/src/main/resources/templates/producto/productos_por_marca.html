@@ -11,16 +11,19 @@
 		
 		<div class="row text-center">
 			<th:block th:each="producto : ${listaProductos}">
-				<div class="col">
+				<div class="col m-3">
 					<div>
-						<img th:src="@{${producto.pathFotoPrincipal}}"  height="200"/>
-						<br><br>
-						<b>[[${producto.nombre}]]</b>
+						<a th:href="@{'/productos/' + ${producto.idProducto}}">
+							<img th:src="@{${producto.pathFotoPrincipal}}"  height="200"/>
+							<br><br>
+							<b>[[${producto.nombre}]]</b>
+						</a>
 					</div>
 					<div th:if = "${producto.porcentajeDescuento <= 0}">
 						<span>[[${producto.precio}]] €</span>
 					</div>
 					<div th:if = "${producto.porcentajeDescuento > 0}">
+						<span class="p-1" style="color: darkred; border: solid thin darkred">-[[${producto.porcentajeDescuento}]] %</span>
 						<span style="font-size: larger; color: darkred">[[${producto.precioConDescuento}]] €</span>
 						<del><span>[[${producto.precio}]] €</span></del>
 					</div>

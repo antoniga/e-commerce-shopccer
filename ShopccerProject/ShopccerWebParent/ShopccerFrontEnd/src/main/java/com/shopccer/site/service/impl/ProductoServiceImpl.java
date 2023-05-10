@@ -1,5 +1,6 @@
 package com.shopccer.site.service.impl;
 
+import com.shopccer.site.exception.ProductoNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -35,6 +36,12 @@ public class ProductoServiceImpl implements ProductoService {
 		Pageable pageable = PageRequest.of(numeroPagina - 1, PRODUCTOS_POR_PAG);
 
 		return productoRepository.listBySuperficie(idSuperficie, pageable);
+	}
+
+	@Override
+	public Producto findById(Integer id) throws ProductoNotFoundException {
+		return productoRepository.findById(id)
+				.orElseThrow(() -> new ProductoNotFoundException("No existe un producto con ese id: "+id));
 	}
 
 }

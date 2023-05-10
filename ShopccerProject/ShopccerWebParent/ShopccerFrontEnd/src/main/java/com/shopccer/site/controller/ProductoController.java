@@ -1,6 +1,7 @@
 package com.shopccer.site.controller;
 
 import com.shopccer.common.entity.Superficie;
+import com.shopccer.site.exception.ProductoNotFoundException;
 import com.shopccer.site.service.SuperficieService;
 import com.shopccer.site.service.impl.ProductoServiceImpl;
 import com.shopccer.common.entity.Marca;
@@ -9,7 +10,6 @@ import com.shopccer.site.service.MarcaService;
 import com.shopccer.site.service.ProductoService;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -49,11 +49,6 @@ public class ProductoController {
         Page<Producto> pagina = productoService.listByMarca(idMarca, numeroPagina);
         List<Producto> listaProductos = pagina.getContent();
 
-        List<Producto> listaFiltrada = listaProductos.stream()
-                .filter(p -> p.getSuperficie().getActivo())
-                .collect(Collectors.toList());
-
-
         long startCount = (numeroPagina -1) * ProductoServiceImpl.PRODUCTOS_POR_PAG + 1;
         long endCount = startCount + ProductoServiceImpl.PRODUCTOS_POR_PAG - 1;
 
@@ -72,7 +67,7 @@ public class ProductoController {
 
 
 
-        return "productos_por_marca";
+        return "producto/productos_por_marca";
     }
 
     @GetMapping("/superficies/{idSuperficie}")
@@ -110,6 +105,20 @@ public class ProductoController {
 
 
 
-        return "productos_por_superficie";
+        return "producto/productos_por_superficie";
+    }
+
+    @GetMapping("/{idProducto}")
+    public String viewDetallesProducto(@PathVariable("idProducto") Integer idProducto, Model model){
+
+        try {
+            Producto producto = productoService.findById(idProducto);
+            model.addAttribute("producto", producto);
+            model.addAttribute("tituloPagina", producto.getNombre());
+
+            return "producto/producto_detalle";
+        } catch (ProductoNotFoundException e) {
+            return "error/404";
+        }
     }
 }
