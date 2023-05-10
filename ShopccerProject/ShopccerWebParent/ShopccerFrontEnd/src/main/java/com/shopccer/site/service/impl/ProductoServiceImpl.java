@@ -16,7 +16,7 @@ import jakarta.transaction.Transactional;
 @Transactional
 public class ProductoServiceImpl implements ProductoService {
 	
-	public static final Integer PRODUCTOS_POR_PAG = 10;
+	public static final Integer PRODUCTOS_POR_PAG = 8;
 	
 	@Autowired
 	private ProductoRepository productoRepository;
@@ -27,6 +27,14 @@ public class ProductoServiceImpl implements ProductoService {
 		Pageable pageable = PageRequest.of(numeroPagina - 1, PRODUCTOS_POR_PAG);
 		
 		return productoRepository.listByMarca(idMarca, pageable);
+	}
+
+	@Override
+	public Page<Producto> listBySuperficie(Integer idSuperficie, Integer numeroPagina) {
+
+		Pageable pageable = PageRequest.of(numeroPagina - 1, PRODUCTOS_POR_PAG);
+
+		return productoRepository.listBySuperficie(idSuperficie, pageable);
 	}
 
 }

@@ -13,4 +13,7 @@ public interface ProductoRepository extends CrudRepository<Producto, Integer>, P
 	@Query("SELECT p FROM Producto p WHERE p.activo = true AND p.marca.idMarca = ?1 ")
 	Page<Producto> listByMarca(Integer idMarca, Pageable pageable);
 
+	@Query("SELECT p FROM Producto p WHERE p.activo = true AND p.superficie.idSuperficie = ?1 ")
+	Page<Producto> listBySuperficie(Integer idSuperficie, Pageable pageable);
+
 }

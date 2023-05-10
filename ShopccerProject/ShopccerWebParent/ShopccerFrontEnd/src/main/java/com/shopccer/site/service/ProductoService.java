@@ -10,4 +10,6 @@ public interface ProductoService {
 	
 	Page<Producto> listByMarca(Integer idMarca, Integer numeroPagina);
 
+	Page<Producto> listBySuperficie(Integer idSuperficie, Integer numeroPagina);
+
 }
