@@ -16,8 +16,8 @@
 						<a class="hover-producto" th:href="@{'/productos/' + ${producto.idProducto}}" style="text-decoration: none">
 							<div style="position: relative; display: inline-block;">
 								<img th:src="@{${producto.pathFotoPrincipal}}"  height="200"  style="display: block;"/>
-								<div th:if = "${producto.porcentajeDescuento > 0}" class="p-1" style="position: absolute; bottom: 0; left: 0; background-color: white; border: 2px solid darkred;">
-									<span style="font-size: small; color: darkred">-[[${producto.porcentajeDescuento}]] %</span>
+								<div th:if = "${producto.porcentajeDescuento > 0}" class="p-1" style="position: absolute; bottom: 0; left: 0; background-color: darkred; border: 2px solid darkred;">
+									<span style="font-size: small; color: white">- [[${producto.porcentajeDescuento}]] %</span>
 								</div>
 							</div>
 							<br><br>
