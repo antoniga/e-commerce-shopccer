@@ -44,4 +44,11 @@ public class ProductoServiceImpl implements ProductoService {
 				.orElseThrow(() -> new ProductoNotFoundException("No existe un producto con ese id: "+id));
 	}
 
+	@Override
+	public Page<Producto> searchBypalabraClave(String palabraClave, Integer numeroPagina) {
+
+		Pageable pageable = PageRequest.of(numeroPagina - 1, PRODUCTOS_POR_PAG);
+		return productoRepository.searchBypalabraClave(palabraClave, pageable);
+	}
+
 }

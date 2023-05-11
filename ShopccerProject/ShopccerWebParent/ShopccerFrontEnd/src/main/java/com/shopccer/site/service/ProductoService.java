@@ -15,4 +15,6 @@ public interface ProductoService {
 
 	Producto findById(Integer id) throws ProductoNotFoundException;
 
+	Page<Producto> searchBypalabraClave(String palabraClave, Integer numeroPagina);
+
 }

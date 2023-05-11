@@ -18,6 +18,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 @Controller
 @RequestMapping("/productos")
@@ -120,5 +121,36 @@ public class ProductoController {
         } catch (ProductoNotFoundException e) {
             return "error/404";
         }
+    }
+
+    @GetMapping("/search")
+    public String searchFirstPage(@RequestParam("palabraClave")String palabraClave,Model model){
+
+        return searchByPage(palabraClave,1,model);
+    }
+
+    @GetMapping("/search/pagina/{numeroPagina}")
+    public String searchByPage(@RequestParam("palabraClave")String palabraClave, @PathVariable("numeroPagina") Integer numeroPagina,
+                               Model model){
+
+        Page<Producto> pagina = productoService.searchBypalabraClave(palabraClave, numeroPagina);
+        List<Producto> listaProductos = pagina.getContent();
+
+        long startCount = (numeroPagina -1) * ProductoServiceImpl.PRODUCTOS_POR_PAG + 1;
+        long endCount = startCount + ProductoServiceImpl.PRODUCTOS_POR_PAG - 1;
+
+        if (endCount > pagina.getTotalElements()) {
+            endCount = pagina.getTotalElements();
+        }
+
+        model.addAttribute("paginaActual",numeroPagina);
+        model.addAttribute("paginasTotales",pagina.getTotalPages());
+        model.addAttribute("startCount",startCount);
+        model.addAttribute("endCount",endCount);
+        model.addAttribute("productosTotales",pagina.getTotalElements());
+        model.addAttribute("palabraClave", palabraClave);
+        model.addAttribute("listaProductos", listaProductos);
+        model.addAttribute("tituloPagina", palabraClave + " - Resultado búsqueda");
+        return "producto/search_result";
     }
 }

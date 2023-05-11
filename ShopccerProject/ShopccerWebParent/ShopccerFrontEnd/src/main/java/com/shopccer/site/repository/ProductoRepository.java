@@ -15,5 +15,8 @@ public interface ProductoRepository extends CrudRepository<Producto, Integer>, P
 
 	@Query("SELECT p FROM Producto p WHERE p.activo = true AND p.superficie.idSuperficie = ?1 AND p.marca.activo =true ORDER BY p.nombre ASC")
 	Page<Producto> listBySuperficie(Integer idSuperficie, Pageable pageable);
+	@Query(value="SELECT * FROM productos WHERE activo = true AND MATCH (nombre,descripcion) AGAINST (?1) ORDER BY nombre ASC ",
+			nativeQuery = true)
+	Page<Producto> searchBypalabraClave(String palabraClave, Pageable pageable);
 
 }
