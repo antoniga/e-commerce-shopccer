@@ -21,12 +21,15 @@
 						<span><b>Superficie:</b> [[${producto.superficie.nombre}]]</span>
 					</div>
 					<div>
-						<span th:if = "${producto.porcentajeDescuento <= 0}">[[${producto.precio}]] €</span>
+						<span th:if = "${producto.porcentajeDescuento <= 0}" style="font-size: larger">[[${producto.precio}]] €</span>
 						<del><span th:if = "${producto.porcentajeDescuento > 0}">[[${producto.precio}]] €</span></del>
 					</div>
 					<div th:if = "${producto.porcentajeDescuento > 0}">
 						<span style="font-size: larger; color: darkred">-[[${producto.porcentajeDescuento}]] %</span>
 						<span style="font-size: larger;color: darkred; font-weight: bolder">[[${producto.precioConDescuento}]] €</span>
+					</div>
+					<div>&nbsp;</div>
+					<div th:utext="${producto.descripcion}">
 					</div>
 
 				</div>
