@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
-<head th:replace="fragments :: pageHead(${tituloPagina})"></head>
+<head th:replace="fragments :: pageHead('Ajustes - Shopccer Admin')"></head>
 
 <body>
 	<div class="container-fluid">
@@ -8,124 +8,55 @@
 		<div>
 			<h2>Configuración</h2>
 		</div>
-
+		<div th:if="${msg != null}" class="alert alert-success alert-dismissible fade show text-center" role="alert">
+			[[${msg}]]
+			<button type="button" class="close" data-dismiss="alert" aria-label="Close">
+				<span aria-hidden="true">&times;</span>
+			</button>
 		</div>
+			<div class="border p-3">
+				<div>
+					<!-- Nav tabs -->
+					<ul class="nav nav-tabs" id="ajustesTab" role="tablist">
+						<li class="nav-item">
+							<a class="nav-link active" data-toggle="tab" href="#general" role="tab">Datos generales</a>
+						</li>
+						<li class="nav-item">
+							<a class="nav-link" data-toggle="tab" href="#paises" role="tab">Países</a>
+						</li>
+						<li class="nav-item">
+							<a class="nav-link" data-toggle="tab" href="#servidor" role="tab">Servidor de correo</a>
+						</li>
+						<li class="nav-item">
+							<a class="nav-link" data-toggle="tab" href="#plantillas" role="tab">Plantillas de correo</a>
+						</li>
+					</ul>
 
-		<div th:replace="modal_fragments :: modal_dialog"></div>
+					<!-- Tab panes -->
+					<div class="tab-content">
+						<div class="tab-pane active p-3" id="general" role="tabpanel">
+							<div th:replace="ajustes/ajustes_fragments :: general"></div>
+						</div>
+						<div class="tab-pane p-3" id="paises" role="tabpanel">
+							<h3>Países</h3>
+						</div>
+						<div class="tab-pane p-3" id="servidor" role="tabpanel">
+							<h3>Servidor de correo</h3>
+						</div>
+						<div class="tab-pane p-3" id="plantillas" role="tabpanel">
+							<h3>Plantillas de correo</h3>
+						</div>
+					</div>
 
+				</div>
+			</div>
+	</div>
 
 		<div th:replace="fragments :: footer"></div>
 
-		<script type="text/javascript">
-
-			defaultImageThumbnailSrc = "[[@{/images/default-producto.png}]]";
-
-			var extraImagesCount = 0;
-
-			$(document).ready(function () {
-				$("#btnCancelar").on("click", function () {
-					window.location = "[[@{/productos}]]";
-				});
-
-				$("input[name='fotoDetalle']").each(function(index){
-					$(this).change(function(){
-						showExtraThumbnailImage(this, index);
-					});
-				});
-
-				$("a[name = 'linkRemoveFotoDetalle']").each(function(index){
-					$(this).click(function (){
-						removeExtraImage(index);
-					});
-				});
 
 
-			});
-
-			function showExtraThumbnailImage(fileInput, index) {
-				var file = fileInput.files[0];
-
-				fileName = file.name;
-
-				imagenNombreHiddenField = $("#imagenNombre" + index);
-
-				if(imagenNombreHiddenField.length){
-					imagenNombreHiddenField.val(fileName);
-				}
-
-
-
-				var reader = new FileReader();
-				reader.onload = function(e) {
-					$("#extraThumbnail" + index).attr("src", e.target.result);
-				};
-				reader.readAsDataURL(file);
-				if(index >= extraImagesCount -1){
-					addNextExtraImageSection(index + 1);
-				}
-
-			}
-
-			function addNextExtraImageSection(index){
-				divExtraImg = `
-				<div class="row">
-					<div class="col border m-3 p-2" id="divExtraImage${index}">
-						<div id="extraImageHeader${index}"><label>Imagen detalle #${index + 1}:</label></div>
-						<div class="m-2">
-							<img id="extraThumbnail${index}" src="${defaultImageThumbnailSrc}" alt="Foto detalle #${index + 1}" class="img-fluid">
-						</div>
-						<div>
-							<input type="file" name="fotoDetalle" accept="image/png, image/jpeg, image/webp" onchange="showExtraThumbnailImage(this, ${index})">
-						</div>
-					</div>
-				</div>
-				`;
-
-				htmlLinkRemove = `
-					<a class="btn fas fa-times-circle fa-2x icon-dark float-right"
-					href="javascript:removeExtraImage(${index - 1})" title="Elimina la imagen "></a>
-				`;
-
-				$("#divImagenes").append(divExtraImg);
-				$("#extraImageHeader" + (index-1)).append(htmlLinkRemove);
-				extraImagesCount++;
-			}
-
-			function removeExtraImage(index){
-				$("#divExtraImage" + index).remove();
-
-			}
-
-			function checkNombreUnique(form) {
-
-				url = "[[@{/productos/checknombre}]]";
-				nombreProducto = $("#nombreProducto").val();
-				productoId = $("#idHidden").val();
-				csrf = $("input[name='_csrf']").val();
-
-				data = {
-					idProducto : productoId,
-					nombre : nombreProducto,
-					_csrf : csrf
-				};
-
-				$.post(url,data,function(response){
-					if(response == 'ok'){
-						form.submit();
-					} else if (response == 'duplicado'){
-						showModalDialog('Atención.','Ya hay un producto con el nombre: '+nombreProducto);
-					} else{
-						showModalDialog('Error.','Fallo en el servidor desconocido.');
-					}
-				}).fail(function(){
-					showModalDialog('Error.','No se pudo conectasr con el servidor.');
-				});
-
-				return false;
-
-			}
-		</script>
-		<script type="text/javascript" th:src="@{/js/common_form.js}"></script>
+	<script type="text/javascript" th:src="@{/js/common_form.js}"></script>
 </body>
 
 </html>

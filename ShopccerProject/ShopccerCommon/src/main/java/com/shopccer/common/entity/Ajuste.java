@@ -2,6 +2,8 @@ package com.shopccer.common.entity;
 
 import jakarta.persistence.*;
 
+import java.util.Objects;
+
 @Entity
 @Table(name="ajustes")
 public class Ajuste {
@@ -20,6 +22,10 @@ public class Ajuste {
     public Ajuste() {
     }
 
+    public Ajuste(String clave){
+        this.clave = clave;
+    }
+
     public Ajuste(String clave, String valor, AjusteCategoria categoria) {
         this.clave = clave;
         this.valor = valor;
@@ -34,11 +40,11 @@ public class Ajuste {
         this.clave = clave;
     }
 
-    public String getValue() {
+    public String getValor() {
         return valor;
     }
 
-    public void setValue(String valor) {
+    public void setValor(String valor) {
         this.valor = valor;
     }
 
@@ -48,5 +54,19 @@ public class Ajuste {
 
     public void setCategoria(AjusteCategoria categoria) {
         this.categoria = categoria;
+    }
+
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Ajuste ajuste = (Ajuste) o;
+        return Objects.equals(clave, ajuste.clave) && Objects.equals(valor, ajuste.valor) && categoria == ajuste.categoria;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(clave, valor, categoria);
     }
 }
