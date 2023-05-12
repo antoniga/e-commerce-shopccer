@@ -46,7 +46,7 @@ public class WebSecurityConfig{
 		// tokenValiditySeconds(7 * 24 * 60 * 60) mantenemos sesion durante una semana, expresado en segundos
 		//http.authorizeHttpRequests().anyRequest().permitAll();
 		http.authorizeHttpRequests()
-			.requestMatchers("/usuarios/**","/config/**").hasAuthority("Super-Admin")
+			.requestMatchers("/usuarios/**","/ajustes/**").hasAuthority("Super-Admin")
 			.requestMatchers("/marcas/**").hasAnyAuthority("Super-Admin","Admin")
 			.requestMatchers("/superficies/**").hasAnyAuthority("Super-Admin","Admin")
 			.requestMatchers("/productos/**").hasAnyAuthority("Super-Admin","Admin")
