@@ -4,7 +4,7 @@
 <head th:fragment="pageHead(title)">
 	<meta http-equiv="Content-Type" content="txt/html; charset=UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0">
-	<title>[[${title}]]</title>
+	<title>[[${title}]] - [[${SITE_NAME}]]</title>
 
 	<link rel="stylesheet" type="text/css" th:href="@{/webjars/bootstrap/css/bootstrap.min.css}">
 	<link rel="stylesheet" type="text/css" th:href="@{/fontawesome/all.css}">
@@ -18,7 +18,7 @@
     <!-- Plantilla para escribir codigo reusable por thymeleaf en nuestras vistas -->
 
     <div th:fragment="footer" class="text-center">
-        <p>Shopccer Copyright &copy; Shopccer Ltd.</p>
+        <p>[[${COPYRIGHT}]]</p>
     </div>
 
 	<a th:fragment="pageLink(viewName,numPag, label)" class="page-link"
