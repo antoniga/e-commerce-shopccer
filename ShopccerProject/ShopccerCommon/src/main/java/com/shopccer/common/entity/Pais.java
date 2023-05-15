@@ -2,6 +2,7 @@ package com.shopccer.common.entity;
 
 import jakarta.persistence.*;
 
+import java.util.List;
 import java.util.Set;
 
 @Entity
@@ -15,8 +16,8 @@ public class Pais {
     @Column(length = 5, nullable = false)
     private String codigo;
 
-    @OneToMany(mappedBy = "pais")
-    private Set<Comunidad> comunidades;
+    @OneToMany(mappedBy = "pais", cascade = CascadeType.ALL)
+    private List<Comunidad> comunidades;
 
     public Pais() {
     }

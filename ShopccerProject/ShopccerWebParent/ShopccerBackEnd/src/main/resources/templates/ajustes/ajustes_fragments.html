@@ -49,22 +49,23 @@
       <select class="form-control m-2" style="height: 300px" size="3" id="desplegablePais">
       </select>
     </div>
-    <div class="form-group row ml-2">
-      <label class="col-form-label mt-2">Nombre País:</label>
-      <div class="col-md">
-        <input type="text" class="form-control mt-2" name="" id="campoNombrePais">
+    <form action="" id="formPais">
+      <div class="form-group row ml-2">
+        <label class="col-form-label mt-2" id="nombrePais">Nombre País:</label>
+        <div class="col-md">
+          <input type="text" class="form-control mt-2" name="" id="campoNombrePais">
+        </div>
+        <label class="col-form-label mt-2" >Código País:</label>
+        <div class="col-md">
+          <input type="text" class="form-control mt-2" name="" id="campoCodigoPais">
+        </div>
+        <div class="col-lg-4 mt-2">
+          <input type="button" id="addPais" value="Añadir" class="btn btn-secondary mr-2">
+          <input type="button" id="updatePais" value="Actualizar" class="btn btn-secondary mr-2" disabled="disabled">
+          <input type="button" id="deletePais" value="Borrar" class="btn btn-secondary mr-2" disabled="disabled">
+        </div>
       </div>
-      <label class="col-form-label mt-2">Código País:</label>
-      <div class="col-md">
-        <input type="text" class="form-control mt-2" name="" id="campoCodigoPais">
-      </div>
-      <div class="col-lg-4 mt-2">
-        <input type="button" value="Añadir" class="btn btn-secondary mr-2">
-        <input type="button" value="Actualizar" class="btn btn-secondary mr-2">
-        <input type="button" value="Borrar" class="btn btn-secondary mr-2">
-      </div>
-
-    </div>
+    </form>
 
 
   </div>

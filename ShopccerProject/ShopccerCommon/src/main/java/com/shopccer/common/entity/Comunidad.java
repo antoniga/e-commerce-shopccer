@@ -6,15 +6,15 @@ import jakarta.persistence.*;
 @Table(name = "comunidades")
 public class Comunidad {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer idComunidad;
-    @Column(length = 45, nullable = false)
-    private String nombre;
+        @Id
+        @GeneratedValue(strategy = GenerationType.IDENTITY)
+        private Integer idComunidad;
+        @Column(length = 45, nullable = false)
+        private String nombre;
 
-    @ManyToOne
-    @JoinColumn(name = "idPais")
-    private Pais pais;
+        @ManyToOne(optional = false)
+        @JoinColumn(name = "id_pais")
+        private Pais pais;
 
     public Comunidad() {
     }
