@@ -25,6 +25,9 @@
 							<a class="nav-link" data-toggle="tab" href="#paises" role="tab">Países</a>
 						</li>
 						<li class="nav-item">
+							<a class="nav-link" data-toggle="tab" href="#comunidades" role="tab">Comunidades</a>
+						</li>
+						<li class="nav-item">
 							<a class="nav-link" data-toggle="tab" href="#servidor" role="tab">Servidor de correo</a>
 						</li>
 						<li class="nav-item">
@@ -39,6 +42,9 @@
 						</div>
 						<div class="tab-pane p-3" id="paises" role="tabpanel">
 							<div th:replace="ajustes/ajustes_fragments :: pais"></div>
+						</div>
+						<div class="tab-pane p-3" id="comunidades" role="tabpanel">
+							<div th:replace="ajustes/ajustes_fragments :: comunidad"></div>
 						</div>
 						<div class="tab-pane p-3" id="servidor" role="tabpanel">
 							<h3>Servidor de correo</h3>

@@ -27,6 +27,10 @@ public class Pais {
         this.codigo = codigo;
     }
 
+    public Pais(Integer idPais) {
+        this.idPais= idPais;
+    }
+
     public Integer getIdPais() {
         return idPais;
     }
