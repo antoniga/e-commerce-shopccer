@@ -22,6 +22,11 @@ public class Pais {
     public Pais() {
     }
 
+    public Pais(Integer idPais, String nombre) {
+        this.idPais = idPais;
+        this.nombre = nombre;
+    }
+
     public Pais(String nombre, String codigo) {
         this.nombre = nombre;
         this.codigo = codigo;

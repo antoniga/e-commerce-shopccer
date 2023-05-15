@@ -1,6 +1,7 @@
 package com.shopccer.admin.restcontroller;
 
 import com.shopccer.admin.repository.ComunidadRepository;
+import com.shopccer.admin.repository.PaisRepository;
 import com.shopccer.admin.utils.ComunidadDTO;
 import com.shopccer.common.entity.Comunidad;
 import com.shopccer.common.entity.Pais;
@@ -9,16 +10,20 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
 import java.util.List;
-
+@RestController
 @RequestMapping("/comunidades")
 public class ComunidadRestController {
 
     @Autowired
     private ComunidadRepository comunidadRepository;
 
+    @Autowired
+    private PaisRepository paisRepository;
+
     @GetMapping("/list_by_pais/{idPais}")
     public List<ComunidadDTO> listByCountry(@PathVariable("idPais") Integer idPais) {
-        List<Comunidad> listaComunidades = comunidadRepository.findByPaisOrderByNombreAsc(new Pais(idPais));
+        List<Comunidad> listaComunidades = comunidadRepository.findByPaisOrderByNombreAsc(paisRepository.findById(idPais).get());
+        listaComunidades.forEach(comunidad -> System.out.println(comunidad.getNombre()));
         List<ComunidadDTO> result = new ArrayList<>();
 
         for (Comunidad comunidad : listaComunidades) {
