@@ -49,6 +49,17 @@ public class AjusteController {
         return "redirect:/ajustes";
     }
 
+    @PostMapping("/ajustes/save_plantillas_correo")
+    public String saveMailTemplatesSetttings(HttpServletRequest request, RedirectAttributes redirectAttributes) {
+        List<Ajuste> ajustesMailTemplates = ajusteService.getAjustesMailTemplates();
+        updateAjustesGeneralesEnBBDD(request, ajustesMailTemplates);
+
+        redirectAttributes.addFlashAttribute("msg", "Los ajustes de las plantilals de correo " +
+                "han sido guardados");
+
+        return "redirect:/ajustes#servidor";
+    }
+
     @PostMapping("/ajustes/save_mail_server")
     public String saveMailServerSetttings(HttpServletRequest request, RedirectAttributes redirectAttributes) {
         List<Ajuste> ajustesMailServer = ajusteService.getAjustesMailServer();

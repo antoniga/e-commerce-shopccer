@@ -15,4 +15,6 @@ public interface AjusteService {
     void saveAll(Iterable<Ajuste> ajustes);
 
     List<Ajuste> getAjustesMailServer();
+
+    List<Ajuste> getAjustesMailTemplates();
 }
