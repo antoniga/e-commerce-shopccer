@@ -13,5 +13,5 @@ public interface ClienteService {
 
     boolean isEmailUnique(String email);
 
-    void registerCustomer(Cliente cliente);
+    void registroCliente(Cliente cliente);
 }

@@ -37,7 +37,7 @@ public class ClienteServiceImpl implements ClienteService {
         return cliente == null;
     }
     @Override
-    public void registerCustomer(Cliente cliente) {
+    public void registroCliente(Cliente cliente) {
         encodePassword(cliente);
         cliente.setActivo(false);
         cliente.setCreatedTime(new Date());
@@ -69,6 +69,7 @@ public class ClienteServiceImpl implements ClienteService {
         }
 
         String randomCode = sb.toString();
+        System.out.println(randomCode);
 
         return randomCode;
     }
