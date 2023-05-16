@@ -54,7 +54,7 @@ public class AjusteController {
         List<Ajuste> ajustesMailTemplates = ajusteService.getAjustesMailTemplates();
         updateAjustesGeneralesEnBBDD(request, ajustesMailTemplates);
 
-        redirectAttributes.addFlashAttribute("msg", "Los ajustes de las plantilals de correo " +
+        redirectAttributes.addFlashAttribute("msg", "Los ajustes de las plantillas de correo " +
                 "han sido guardados");
 
         return "redirect:/ajustes#servidor";

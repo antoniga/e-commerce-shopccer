@@ -192,4 +192,9 @@ public class Cliente {
                 ", apellidos='" + apellidos + '\'' +
                 '}';
     }
+
+    public String getNombreCompleto() {
+
+        return nombre + " "+apellidos;
+    }
 }

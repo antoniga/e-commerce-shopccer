@@ -44,6 +44,7 @@ public class ClienteServiceImpl implements ClienteService {
 
 
         String randomCode = generateRandomCode(64);
+        System.out.println(randomCode);
         cliente.setCodigoVerificacion(randomCode);
 
         clienteRepository.save(cliente);

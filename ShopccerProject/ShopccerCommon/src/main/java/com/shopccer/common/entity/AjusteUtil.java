@@ -21,13 +21,12 @@ public class AjusteUtil {
     }
 
     public String getValor(String clave){
-        Ajuste ajuste = get(clave);
 
-        if(ajuste != null){
-            return ajuste.getValor();
-        }
+        String valor = listaAjustes.stream()
+                .filter(ajuste -> ajuste.getClave().equals(clave))
+                .findFirst().orElse(null).getValor();
 
-        return null;
+        return valor;
     }
 
     public void update(String clave, String valor){
