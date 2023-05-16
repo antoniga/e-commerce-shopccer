@@ -5,6 +5,7 @@ import com.shopccer.common.entity.Pais;
 import com.shopccer.site.repository.ClienteRepository;
 import com.shopccer.site.repository.PaisRepository;
 import com.shopccer.site.service.ClienteService;
+import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -15,6 +16,7 @@ import java.util.List;
 import java.util.Random;
 
 @Service
+@Transactional
 public class ClienteServiceImpl implements ClienteService {
 
     @Autowired
@@ -49,6 +51,18 @@ public class ClienteServiceImpl implements ClienteService {
 
         clienteRepository.save(cliente);
 
+    }
+
+    @Override
+    public boolean verify(String codigoVerificacion) {
+            Cliente cliente = clienteRepository.findByCodigoVerificacion(codigoVerificacion);
+
+            if (cliente == null || cliente.isActivo()) {
+                return false;
+            } else {
+                clienteRepository.enable(cliente.getIdCliente());
+                return true;
+            }
     }
 
     private void encodePassword(Cliente cliente) {

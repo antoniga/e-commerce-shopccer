@@ -10,6 +10,7 @@ import jakarta.mail.MessagingException;
 import jakarta.mail.internet.MimeMessage;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.repository.query.Param;
 import org.springframework.mail.javamail.JavaMailSenderImpl;
 import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Controller;
@@ -81,5 +82,12 @@ public class ClienteController {
 
         System.out.println("to Address: " + toAddress);
         System.out.println("Verify URL: " + verifyURL);
+    }
+
+    @GetMapping("/verify")
+    public String verifyCuenta(@Param("code") String code, Model model) {
+        boolean verificado = clienteService.verify(code);
+
+        return "registro/" + (verificado ? "verificado_success" : "verificado_fail");
     }
 }

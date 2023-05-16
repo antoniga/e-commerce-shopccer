@@ -13,7 +13,7 @@ public interface ClienteRepository extends CrudRepository<Cliente, Integer> {
     @Query("SELECT c FROM Cliente c WHERE c.codigoVerificacion = ?1")
     Cliente findByCodigoVerificacion(String code);
 
-    @Query("UPDATE Cliente c SET c.activo = true WHERE c.idCliente = ?1")
+    @Query("UPDATE Cliente c SET c.activo = true, c.codigoVerificacion = null  WHERE c.idCliente = ?1")
     @Modifying
     void enable(Integer id);
 }

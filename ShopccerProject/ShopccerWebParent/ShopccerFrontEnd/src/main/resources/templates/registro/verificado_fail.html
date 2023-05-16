@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="fragments :: pageHead('Verificación fallida')"></head>
+<body>
+	<div th:replace="navigation :: header_menu"></div>
+	<div class="container">
+
+		<div class="text-center border-bottom m-3">
+			<h2>Verificación de nuevo cliente.</h2>
+		</div>
+		<div class="text-center m-3">
+			<h4>Tu cuenta ya ha sido verificada, o el código de verificación no es válido.</h4>
+		</div>
+
+	</div>
+	<div th:replace="navigation :: footer_menu"></div>
+	<div th:replace="fragments :: footer"></div>
+</body>
+</html>
