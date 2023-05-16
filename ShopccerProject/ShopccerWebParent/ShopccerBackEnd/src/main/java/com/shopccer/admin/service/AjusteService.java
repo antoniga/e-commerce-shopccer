@@ -13,4 +13,6 @@ public interface AjusteService {
     GeneralUtil getAjustesGenerales();
 
     void saveAll(Iterable<Ajuste> ajustes);
+
+    List<Ajuste> getAjustesMailServer();
 }

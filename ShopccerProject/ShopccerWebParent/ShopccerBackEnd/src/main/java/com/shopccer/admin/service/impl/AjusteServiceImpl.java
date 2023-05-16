@@ -38,4 +38,11 @@ public class AjusteServiceImpl implements AjusteService {
     public void saveAll(Iterable<Ajuste> ajustes) {
         ajusteRepository.saveAll(ajustes);
     }
+
+    @Override
+    public List<Ajuste> getAjustesMailServer() {
+        return ajusteRepository.findByCategoria(AjusteCategoria.MAIL_SERVER);
+    }
+
+
 }

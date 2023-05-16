@@ -1,5 +1,5 @@
 package com.shopccer.common.entity;
 
 public enum AjusteCategoria {
-    GENERAL, SERVIDOR_CORREO, PLANTILLAS_CORREO, MONEDA, PAGO
+    GENERAL, MAIL_SERVER, MAIL_TEMPLATE, MONEDA, PAGO
 }

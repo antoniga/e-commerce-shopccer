@@ -49,6 +49,17 @@ public class AjusteController {
         return "redirect:/ajustes";
     }
 
+    @PostMapping("/ajustes/save_mail_server")
+    public String saveMailServerSetttings(HttpServletRequest request, RedirectAttributes redirectAttributes) {
+        List<Ajuste> ajustesMailServer = ajusteService.getAjustesMailServer();
+        updateAjustesGeneralesEnBBDD(request, ajustesMailServer);
+
+        redirectAttributes.addFlashAttribute("msg", "Los ajustes del servidor de correo han sido " +
+                "guardados");
+
+        return "redirect:/ajustes#servidor";
+    }
+
     private static void saveSiteLogo(MultipartFile multipartFile, GeneralUtil ajustesGenerales) throws IOException {
         if(!multipartFile.isEmpty()) {
             String nombreArchivo = StringUtils.cleanPath(multipartFile.getOriginalFilename());
