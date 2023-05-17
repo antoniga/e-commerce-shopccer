@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="fragments :: pageHead(${tituloPagina})"></head>
+<body>
+<div class="container-fluid">
+	<div th:replace="navigation :: menu"></div>
+
+		<div>
+			<h2>Gestión de clientes | [[${tituloPagina}]]</h2>
+		</div>
+
+		<form th:action="@{/clientes/save}" th:object="${cliente}" method="post"
+			  style="max-width: 600px; margin:  0 auto;"
+			  onsubmit="return checkEmailUnique(this);"
+		>
+			<input type="hidden" th:field="*{idCliente}" />
+			<div class="border border-secondary rounded p-3">
+				<div class="form-group row">
+					<label for="nombre" class="col-sm-4 col-form-label">Nombre:</label>
+					<div class="col-sm-8">
+						<input type="text" class="form-control" th:field="*{nombre}" required minlength="2" maxlength="45">
+					</div>
+				</div>
+				<div class="form-group row">
+					<label for="apellidos" class="col-sm-4 col-form-label">Apellidos:</label>
+					<div class="col-sm-8">
+						<input type="text" class="form-control" th:field="*{apellidos}" required minlength="2" maxlength="45">
+					</div>
+				</div>
+
+				<div class="form-group row">
+					<label for="email" class="col-sm-4 col-form-label">E-mail:</label>
+					<div class="col-sm-8">
+						<input type="email" class="form-control" th:field="*{email}" required minlength="10" maxlength="45">
+					</div>
+				</div>
+
+				<div class="form-group row">
+					<label for="password" class="col-sm-4 col-form-label">Password:</label>
+					<div class="col-sm-8">
+						<input type="password" class="form-control" th:field="*{password}" minlength="6" maxlength="45" placeholder="Dejar en blanco si no se desea cambiar la contraseña">
+					</div>
+				</div>
+
+				<div class="form-group row">
+					<label for="numeroTelefono" class="col-sm-4 col-form-label">Número teléfono:</label>
+					<div class="col-sm-8">
+						<input type="text" class="form-control" th:field="*{numeroTelefono}" required minlength="9" maxlength="12">
+					</div>
+				</div>
+
+				<div class="form-group row">
+					<label for="direccion" class="col-sm-4 col-form-label">Dirección:</label>
+					<div class="col-sm-8">
+						<input type="text" class="form-control" th:field="*{direccion}" required minlength="9" maxlength="64">
+					</div>
+				</div>
+
+				<div class="form-group row">
+					<label for="ciudad" class="col-sm-4 col-form-label">Ciudad:</label>
+					<div class="col-sm-8">
+						<input type="text" class="form-control" th:field="*{ciudad}" required minlength="3" maxlength="64">
+					</div>
+				</div>
+
+				<div class="form-group row">
+					<label for="pais" class="col-sm-4 col-form-label">País:</label>
+					<div class="col-sm-8">
+						<select th:field="*{pais}" class="form-control">
+							<option th:each="pais : ${listaPaises}" th:value="${pais.idPais}">[[${pais.nombre}]]</option>
+						</select>
+					</div>
+				</div>
+
+				<div class="form-group row">
+					<label for="comunidad" class="col-sm-4 col-form-label">Comunidad/Provincia:</label>
+					<div class="col-sm-8">
+						<input type="text" class="form-control" th:field="*{comunidad}" minlength="3" maxlength="64" list="listaComunidades">
+						<datalist id="listaComunidades">
+
+						</datalist>
+					</div>
+				</div>
+
+				<div class="form-group row">
+					<label for="codPostal" class="col-sm-4 col-form-label">Código postal:</label>
+					<div class="col-sm-8">
+						<input type="text" class="form-control" th:field="*{codPostal}" required minlength="3" maxlength="6">
+					</div>
+				</div>
+
+				<div class="text-center">
+					<input type="submit" value="Guardar" class="btn btn-primary m-3" />
+					<input type="button" value="Cancelar" class="btn btn-secondary" id="buttonCancel" />
+				</div>
+			</div>
+		</form>
+
+
+
+		<div>&nbsp;</div>
+		<div th:replace="modal_fragments :: modal_dialog"></div>
+		<div th:replace="fragments :: footer"></div>
+	</div>
+	<script type="text/javascript">
+		contextPath = "[[@{/}]]";
+
+		var dropDownPais;
+		var dataListComunidad;
+
+		$(document).ready(function() {
+			dropDownPais = $("#pais");
+			dataListComunidad = $("#listaComunidades");
+			fieldComunidad = $("#comunidad");
+
+			dropDownPais.on("change", function() {
+				loadComunidadesDePais();
+				fieldComunidad.val("").focus();
+			});
+
+			loadComunidadesDePais();
+
+			$('#buttonCancel').click(function() {
+				window.location = "[[@{/clientes}]]";
+			});
+		});
+
+		function loadComunidadesDePais() {
+			selectedPais = $("#pais option:selected");
+			paisId = selectedPais.val();
+			url = contextPath + "clientes/list_comunidades_by_pais/" + paisId;
+
+			$.get(url, function(responseJSON) {
+				dataListComunidad.empty();
+
+				$.each(responseJSON, function(index, comunidad) {
+					$("<option>").val(comunidad.nombre).text(comunidad.nombre).appendTo(dataListComunidad);
+				});
+
+			}).fail(function() {
+				console.log(url);
+				alert('Error al conectar con el servidor.');
+			});
+		}
+
+		function checkEmailUnique(form) {
+			url = contextPath + "clientes/checkemail";
+			clienteId = $("#idCliente").val();
+			clienteEmail = $("#email").val();
+			csrfValue = $("input[name='_csrf']").val();
+
+			params = {idCliente:clienteId, email: clienteEmail, _csrf: csrfValue};
+
+			$.post(url, params, function(response) {
+				if (response == "ok") {
+					form.submit();
+				} else if (response == "duplicado") {
+					showWarningModal("Ya hay un cliente dado de alta con el siguiente email: " + clienteEmail);
+				} else {
+					showErrorModal("Error desconocido del servidor");
+				}
+				console.log(url);
+			}).fail(function() {
+				showErrorModal("No se puede conectar al servidor");
+			});
+
+			return false;
+		}
+
+		function showModalDialog(title, message) {
+			$("#modalTitle").text(title);
+			$("#modalBody").text(message);
+			$("#modalDialog").modal();
+		}
+
+		function showErrorModal(message) {
+			showModalDialog("Error", message);
+		}
+
+		function showWarningModal(message) {
+			showModalDialog("Atención", message);
+		}
+	</script>
+</body>
+</html>

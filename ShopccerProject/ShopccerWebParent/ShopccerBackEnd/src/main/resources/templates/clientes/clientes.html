@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head th:replace="fragments :: pageHead('Clientes- Shopccer Admin')"></head>
+
+<body>
+	<div class="container-fluid">
+		<div th:replace="navigation :: menu"></div>
+		<div>
+			<h2>Gestión de clientes</h2>
+		</div>
+
+		<div th:if="${msg != null}" class="alert alert-success alert-dismissible fade show text-center" role="alert">
+			[[${msg}]]
+			<button type="button" class="close" data-dismiss="alert" aria-label="Close">
+				<span aria-hidden="true">&times;</span>
+			</button>
+		</div>
+
+		<div class="row justify-content-lg-start">
+			<div class="col-lg-7 col-md-12">
+				<form th:action="@{/clientes/pagina/1}" class="form-inline mt-1 mb-1 ml-auto">
+					<input type="hidden" name="campoOrden" th:value="${campoOrden}">
+					<input type="hidden" name="dirOrden" th:value="${dirOrden}">
+					<input type="search" name="palabraClave" placeholder="Busca clientes" th:value="${palabraClave}" class="form-control" size="40%" required/>
+					&nbsp;&nbsp;
+					<button type="submit" class="btn btn-info mt-2 mt-sm-0"><i class="fas fa-search"></i></button>
+					&nbsp;&nbsp;
+					<button type="button" class="btn btn-secondary mt-2 mt-sm-0" onclick="limpiarFiltro()"/><i class="fas fa-eraser"></i></button>
+				</form>
+			</div>
+		</div>
+
+		<div class="full-details">
+			<table class="table table-bordered table-hover table-responsive-md">
+				<thead class="thead-dark">
+					<tr>
+						<th th:replace="fragments :: columnLink('clientes', 'idCliente', 'ID Cliente', 'none')" />
+						<th th:replace="fragments :: columnLink('clientes', 'nombre', 'Nombre', 'none')" />
+						<th th:replace="fragments :: columnLink('clientes', 'apellidos', 'Apellidos', 'none')" />
+						<th class="hideable-column">
+						<th th:replace="fragments :: columnLink('clientes', 'email', 'E-mail', 'tag')" />
+						</th>
+						<th class="hideable-column">
+						<th th:replace="fragments :: columnLink('clientes', 'ciudad', 'Ciudad', 'tag')" />
+						</th>
+						<th class="hideable-column">
+						<th th:replace="fragments :: columnLink('clientes', 'comunidad', 'Comunidad', 'tag')" />
+						</th>
+						<th th:replace="fragments :: columnLink('clientes', 'pais', 'Pais', 'none')" />
+						<th th:replace="fragments :: columnLink('clientes', 'activo', 'Activo', 'none')" />
+						<th></th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr th:each="cliente : ${listaClientes}">
+						<td>[[${cliente.idCliente}]]</td>
+						<td>[[${cliente.nombre}]]</td>
+						<td>[[${cliente.apellidos}]]</td>
+						<td class="hideable-column">[[${cliente.email}]]</td>
+						<td class="hideable-column">[[${cliente.ciudad}]]</td>
+						<td class="hideable-column">[[${cliente.comunidad}]]</td>
+						<td>[[${cliente.pais.nombre}]]</td>
+						<td>
+							<a th:if="${cliente.activo} == true" class="fa-solid fa-square-check fa-2x icon-green" style="text-decoration: none" th:href="@{'/clientes/' + ${cliente.idCliente} + '/activo/false'}" title="Desactiva cliente"></a>
+							<a th:if="${cliente.activo} != true" class="fa-solid fa-square fa-2x icon-silver" style="text-decoration: none" th:href="@{'/clientes/' + ${cliente.idCliente} + '/activo/true'}" title="Activa cliente"></a>
+						</td>
+						<td>
+							<a class="fas fa-file-alt fa-2x icon-green link-detail" style="text-decoration: none" th:href="@{'/clientes/detalles/' + ${cliente.idCliente}}" title="Ver detalles del cliente"></a> &nbsp;
+							<a class="fa-solid fa-edit fa-2x icon-green" style="text-decoration: none" th:href="@{'/clientes/edit/'+${cliente.idCliente}}" title="Editar cliente"></a> &nbsp;
+							<a class="fa-solid fa-trash fa-2x icon-dark link-delete" style="text-decoration: none" th:href="@{'/clientes/delete/'+${cliente.idCliente}}" th:clienteId="${cliente.idCliente}" title="Eliminar cliente"></a>
+						</td>
+					</tr>
+				</tbody>
+			</table>
+		</div>
+
+		<div class="less-details">
+			<div class="row m-1" th:each="cliente : ${listaClientes}">
+				<div class="col-8">
+					<div>[[${cliente.NombreCompleto}]]</div>
+					<div><em>[[${cliente.pais.nombre}]]</em></div>
+					<div class="mt-2">
+						<a th:if="${cliente.activo} == true" class="fa-solid fa-square-check fa-2x icon-green" style="text-decoration: none" th:href="@{'/clientes/' + ${cliente.idCliente} + '/activo/false'}" title="Desactiva cliente"></a>
+						<a th:if="${cliente.activo} != true" class="fa-solid fa-square fa-2x icon-silver" style="text-decoration: none" th:href="@{'/clientes/' + ${cliente.idCliente} + '/activo/true'}" title="Activa cliente"></a>
+						&nbsp;&nbsp;
+						<a class="fas fa-file-alt fa-2x icon-green link-detail" style="text-decoration: none" th:href="@{'/clientes/detalles/' + ${cliente.idCliente}}" title="Ver detalles del cliente"></a> &nbsp;
+						<a class="fa-solid fa-edit fa-2x icon-green" style="text-decoration: none" th:href="@{'/clientes/edit/'+${cliente.idCliente}}" title="Editar cliente"></a> &nbsp;
+						<a class="fa-solid fa-trash fa-2x icon-dark link-delete" style="text-decoration: none" th:href="@{'/clientes/delete/'+${cliente.idCliente}}" th:clienteId="${cliente.idCliente}" title="Eliminar cliente"></a>
+					</div>
+				</div>
+				<div>&nbsp;</div>
+			</div>
+		</div>
+
+		<div class= "text-center m-1" th:if="${clientesTotales > 0}">
+			<span>Mostrando los clientes del [[${startCount}]] al [[${endCount}]] de [[${clientesTotales}]] </span>
+		</div>
+		<div class="text-center m-1" th:unless="${clientesTotales > 0}">
+			<span>No se encontraron clientes </span>
+		</div>
+
+		<div th:if="${paginasTotales > 1}">
+			<nav aria-label="Page navigation example">
+				<ul class="pagination justify-content-center">
+					<li th:class="${paginaActual > 1 ? 'page-item':'page-item disabled'}"><a th:replace="fragments :: pageLink('clientes', 1,'<<')"> </a></li>
+					<li th:class="${paginaActual > 1 ? 'page-item':'page-item disabled'}"><a th:replace="fragments :: pageLink('clientes', ${paginaActual -1},'<')"> </a></li>
+					<li th:class="${paginaActual != i  ? 'page-item':'page-item active'}" th:each="i : ${#numbers.sequence(1,paginasTotales)}"><a th:replace="fragments :: pageLink('clientes', ${i},${i})"> </a></li>
+					<li th:class="${paginaActual < paginasTotales ? 'page-item':'page-item disabled'}"><a th:replace="fragments :: pageLink('clientes', ${paginaActual +1},'>')"> </a></li>
+					<li th:class="${paginaActual < paginasTotales ? 'page-item':'page-item disabled'}"><a th:replace="fragments :: pageLink('clientes', ${paginasTotales},'>>')"> </a></li>
+				</ul>
+			</nav>
+		</div>
+
+
+		<div th:replace="modal_fragments :: modal_delete"></div>
+		<div class="modal fade" id="detailModal">
+			<div class="modal-dialog modal-lg">
+				<div class="modal-content">
+				</div>
+			</div>
+		</div>
+
+	</div>
+
+	<div th:replace="fragments :: footer"></div>
+
+	<script type="text/javascript">
+		$(document).ready(function() {
+			$(".link-delete").on("click",function(e) {
+				e.preventDefault();
+				clienteId = $(this).attr("clienteId");
+				$("#btnSi").attr("href", $(this).attr("href"));
+				$("#confirmText").text("¿Seguro que desea eliminar el usuario con id: "+ clienteId + " ?");
+				$("#confirmDelete").modal();
+			});
+
+			$(".link-detail").on("click", function(e) {
+				e.preventDefault();
+				linkDetailURL = $(this).attr("href");
+				$("#detailModal").modal("show").find(".modal-content").load(linkDetailURL);
+			});
+		});
+
+		function limpiarFiltro(){
+			window.location ="[[@{/clientes}]]";
+		}
+	</script>
+</body>
+
+</html>
