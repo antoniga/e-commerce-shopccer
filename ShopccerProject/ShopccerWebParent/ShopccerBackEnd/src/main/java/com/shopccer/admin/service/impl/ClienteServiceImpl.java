@@ -70,13 +70,18 @@ public class ClienteServiceImpl implements ClienteService {
     }
 
     public void save(Cliente clienteInForm) {
+        Cliente clienteInBBDD = clienteRepository.findById(clienteInForm.getIdCliente()).get();
         if (!clienteInForm.getPassword().isEmpty()) {
             String encodedPassword = passwordEncoder.encode(clienteInForm.getPassword());
             clienteInForm.setPassword(encodedPassword);
         } else {
-            Cliente clienteInBBDD = clienteRepository.findById(clienteInForm.getIdCliente()).get();
             clienteInForm.setPassword(clienteInBBDD.getPassword());
         }
+
+        clienteInForm.setActivo(clienteInBBDD.isActivo());
+        clienteInForm.setCreatedTime(clienteInBBDD.getCreatedTime());
+        clienteInForm.setCodigoVerificacion(clienteInBBDD.getCodigoVerificacion());
+
         clienteRepository.save(clienteInForm);
     }
 
