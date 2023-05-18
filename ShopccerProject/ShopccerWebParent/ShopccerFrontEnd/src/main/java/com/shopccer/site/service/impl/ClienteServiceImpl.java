@@ -65,6 +65,27 @@ public class ClienteServiceImpl implements ClienteService {
             }
     }
 
+    @Override
+    public Cliente findClienteByEmail(String email) {
+        return clienteRepository.findByEmail(email);
+    }
+    @Override
+    public void update(Cliente clienteInForm) {
+        Cliente clienteInBBDD = clienteRepository.findById(clienteInForm.getIdCliente()).get();
+        if (!clienteInForm.getPassword().isEmpty()) {
+            String encodedPassword = passwordEncoder.encode(clienteInForm.getPassword());
+            clienteInForm.setPassword(encodedPassword);
+        } else {
+            clienteInForm.setPassword(clienteInBBDD.getPassword());
+        }
+
+        clienteInForm.setActivo(clienteInBBDD.isActivo());
+        clienteInForm.setCreatedTime(clienteInBBDD.getCreatedTime());
+        clienteInForm.setCodigoVerificacion(clienteInBBDD.getCodigoVerificacion());
+
+        clienteRepository.save(clienteInForm);
+    }
+
     private void encodePassword(Cliente cliente) {
         String encodedPassword = passwordEncoder.encode(cliente.getPassword());
         cliente.setPassword(encodedPassword);

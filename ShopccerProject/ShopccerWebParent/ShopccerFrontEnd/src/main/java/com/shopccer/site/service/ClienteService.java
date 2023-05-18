@@ -16,4 +16,8 @@ public interface ClienteService {
     void registroCliente(Cliente cliente);
 
     boolean verify(String codigoVerificacion);
+
+    Cliente findClienteByEmail(String email);
+
+    void update(Cliente clienteInForm);
 }
