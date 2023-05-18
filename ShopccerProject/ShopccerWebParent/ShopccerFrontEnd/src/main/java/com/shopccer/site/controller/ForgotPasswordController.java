@@ -85,8 +85,8 @@ public class ForgotPasswordController {
             model.addAttribute("token", token);
         } else {
             model.addAttribute("tituloPagina", "Token Inválido");
-            model.addAttribute("msg", "Token Inválido");
-            return "mensaje";
+            model.addAttribute("message", "Token Inválido");
+            return "clientes/message";
         }
 
         return "clientes/reset_password_form";
@@ -100,15 +100,15 @@ public class ForgotPasswordController {
         try {
             clienteService.updatePassword(token, password);
 
-            model.addAttribute("pageTitle", "Reset Your Password");
-            model.addAttribute("title", "Reset Your Password");
-            model.addAttribute("message", "You have successfully changed your password.");
+            model.addAttribute("tituloPagina", "Contraseña cambiada");
+            model.addAttribute("titulo", "¡Enhorabuena!");
+            model.addAttribute("message", "Tu contraseña ha sido cambiada con éxito.");
 
         } catch (ClienteNotFoundException e) {
             model.addAttribute("tituloPagina", "Token Inválido");
-            model.addAttribute("msg", e.getMessage());
+            model.addAttribute("message", e.getMessage());
         }
 
-        return "mensaje";
+        return "clientes/message";
     }
 }

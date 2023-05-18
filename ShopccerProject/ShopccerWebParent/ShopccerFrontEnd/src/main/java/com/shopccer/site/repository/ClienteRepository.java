@@ -17,5 +17,5 @@ public interface ClienteRepository extends CrudRepository<Cliente, Integer> {
     @Modifying
     void enable(Integer id);
 
-    public Cliente findByResetPasswordToken(String token);
+    Cliente findByResetPasswordToken(String token);
 }
