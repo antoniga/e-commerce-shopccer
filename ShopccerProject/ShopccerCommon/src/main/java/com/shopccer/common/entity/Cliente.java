@@ -52,6 +52,9 @@ public class Cliente {
     @JoinColumn(name = "id_pais")
     private Pais pais;
 
+    @Column(name = "reset_password_token", length = 30)
+    private String resetPasswordToken;
+
     public Cliente() {
     }
 
@@ -182,6 +185,15 @@ public class Cliente {
     public void setPais(Pais pais) {
         this.pais = pais;
     }
+
+    public String getResetPasswordToken() {
+        return resetPasswordToken;
+    }
+
+    public void setResetPasswordToken(String resetPasswordToken) {
+        this.resetPasswordToken = resetPasswordToken;
+    }
+
 
     @Override
     public String toString() {

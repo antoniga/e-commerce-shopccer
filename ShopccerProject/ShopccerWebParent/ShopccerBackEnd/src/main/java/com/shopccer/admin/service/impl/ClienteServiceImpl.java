@@ -81,6 +81,7 @@ public class ClienteServiceImpl implements ClienteService {
         clienteInForm.setActivo(clienteInBBDD.isActivo());
         clienteInForm.setCreatedTime(clienteInBBDD.getCreatedTime());
         clienteInForm.setCodigoVerificacion(clienteInBBDD.getCodigoVerificacion());
+        clienteInForm.setResetPasswordToken(clienteInBBDD.getResetPasswordToken());
 
         clienteRepository.save(clienteInForm);
     }

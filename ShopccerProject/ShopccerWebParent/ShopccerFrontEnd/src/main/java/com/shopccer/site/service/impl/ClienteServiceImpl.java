@@ -2,6 +2,7 @@ package com.shopccer.site.service.impl;
 
 import com.shopccer.common.entity.Cliente;
 import com.shopccer.common.entity.Pais;
+import com.shopccer.site.exception.ClienteNotFoundException;
 import com.shopccer.site.repository.ClienteRepository;
 import com.shopccer.site.repository.PaisRepository;
 import com.shopccer.site.service.ClienteService;
@@ -82,8 +83,41 @@ public class ClienteServiceImpl implements ClienteService {
         clienteInForm.setActivo(clienteInBBDD.isActivo());
         clienteInForm.setCreatedTime(clienteInBBDD.getCreatedTime());
         clienteInForm.setCodigoVerificacion(clienteInBBDD.getCodigoVerificacion());
+        clienteInForm.setResetPasswordToken(clienteInBBDD.getResetPasswordToken());
 
         clienteRepository.save(clienteInForm);
+    }
+
+    @Override
+    public String updateResetPasswordToken(String email) throws ClienteNotFoundException {
+        Cliente cliente = clienteRepository.findByEmail(email);
+        if (cliente != null) {
+            String token = generateRandomCode(30);
+            cliente.setResetPasswordToken(token);
+            clienteRepository.save(cliente);
+
+            return token;
+        } else {
+            throw new ClienteNotFoundException("No se ha podido encontrar ningún cliente con el siguiente email:" +
+                    " " + email);
+        }
+    }
+    @Override
+    public Cliente getByResetPasswordToken(String token) {
+        return clienteRepository.findByResetPasswordToken(token);
+    }
+
+    public void updatePassword(String token, String newPassword) throws ClienteNotFoundException {
+        Cliente cliente = clienteRepository.findByResetPasswordToken(token);
+        if (cliente == null) {
+            throw new ClienteNotFoundException("Ningún cliente encontrado: token inválido");
+        }
+
+        cliente.setPassword(newPassword);
+        cliente.setResetPasswordToken(null);
+        encodePassword(cliente);
+
+        clienteRepository.save(cliente);
     }
 
     private void encodePassword(Cliente cliente) {

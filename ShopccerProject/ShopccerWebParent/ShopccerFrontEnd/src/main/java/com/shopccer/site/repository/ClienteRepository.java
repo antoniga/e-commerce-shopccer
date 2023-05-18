@@ -16,4 +16,6 @@ public interface ClienteRepository extends CrudRepository<Cliente, Integer> {
     @Query("UPDATE Cliente c SET c.activo = true, c.codigoVerificacion = null  WHERE c.idCliente = ?1")
     @Modifying
     void enable(Integer id);
+
+    public Cliente findByResetPasswordToken(String token);
 }
