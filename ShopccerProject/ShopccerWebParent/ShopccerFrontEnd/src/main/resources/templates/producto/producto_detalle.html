@@ -3,6 +3,7 @@
 <head th:replace="fragments :: pageHead(${tituloPagina})"></head>
 <body>
 	<div th:replace="navigation :: header_menu"></div>
+	<div th:replace="navigation :: search_nav"></div>
 		<div class="container">
 			<div class="row">
 				<div class="col-sm">
@@ -40,16 +41,22 @@
 					<div th:if = "${producto.porcentajeDescuento > 0}">
 						<span style="font-size: larger;color: darkred; font-weight: bolder">[[${producto.precioConDescuento}]] €</span>
 					</div>
+					<div>&nbsp;</div>
 					<div>
 						<span th:if="${producto.inStock}" class="text-success"><b>DISPONIBLE</b></span>
 						<span th:if="${!producto.inStock}" class="text-danger"><b>SIN STOCK</b></span>
 					</div>
-					<div class="mt-2">
-						<input tpye="text" size="5" value="1"/>
+					<div>Seleccione una talla: <br>
+					<select th:field="*{producto.tallaStock}">
+						<option th:each="entry : ${producto.tallaStock.entrySet()}"
+								th:value="${entry.key}"
+								th:text="'Nº: '+${entry.key} + ' (Stock: ' + ${entry.value} + ')'"></option>
+					</select>
 					</div>
+					<br>
+					<div th:replace="carro/control_cantidad :: control_cantidad(1, ${producto.idProducto})"></div>
 					<div class="mt-3">
 						<input type="button" value="Añadir al carrito" class="btn btn-primary">
-
 					</div>
 					<div>&nbsp;</div>
 					<div th:utext="${producto.descripcion}">
@@ -63,6 +70,7 @@
 	<div th:replace="producto/images_carousel :: content"></div>
 	<div th:replace="navigation :: footer_menu"></div>
 	<div th:replace="fragments :: footer"></div>
+	<div th:replace="fragments :: modal_dialog"></div>
 
 	<script type="text/javascript">
 		$(document).ready(function(){
@@ -82,5 +90,7 @@
 			});
 		});
 	</script>
+	<script type="text/javascript" th:src="@{/js/common_modal.js}"></script>
+	<script type="text/javascript" th:src="@{/js/control_cantidad.js}"></script>
 </body>
 </html>
