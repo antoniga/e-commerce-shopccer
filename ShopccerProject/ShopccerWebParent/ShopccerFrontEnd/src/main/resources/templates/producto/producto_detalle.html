@@ -47,9 +47,9 @@
 						<span th:if="${!producto.inStock}" class="text-danger"><b>SIN STOCK</b></span>
 					</div>
 					<div>Seleccione una talla: <br>
-					<select th:field="*{producto.tallaStock}">
+					<select th:field="*{producto.tallaStock}" id="selectTalla">
 						<option th:each="entry : ${producto.tallaStock.entrySet()}"
-								th:value="${entry.key}"
+								th:value="${entry.value}"
 								th:text="'Nº: '+${entry.key} + ' (Stock: ' + ${entry.value} + ')'"></option>
 					</select>
 					</div>
@@ -89,6 +89,8 @@
 				$("#carouselExampleIndicators").carousel(imageIndex);
 			});
 		});
+
+
 	</script>
 	<script type="text/javascript" th:src="@{/js/common_modal.js}"></script>
 	<script type="text/javascript" th:src="@{/js/control_cantidad.js}"></script>

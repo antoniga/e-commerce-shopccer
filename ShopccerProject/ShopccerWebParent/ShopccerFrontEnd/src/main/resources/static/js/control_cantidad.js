@@ -1,4 +1,24 @@
 $(document).ready(function() {
+
+    var selectTalla = document.getElementById("selectTalla");
+    var cantidadStock = selectTalla.value;
+    console.log(cantidadStock);
+
+    var options = selectTalla.options;
+    for (var i = 0; i < options.length; i++) {
+        var option = options[i];
+        if (option.value === '0') {
+            option.disabled = true;
+        }
+    }
+
+    selectTalla.addEventListener("change", function() {
+        cantidadStock = this.value;
+        console.log(cantidadStock);
+        idProducto = $(this).attr("pid");
+        $("#cantidad" + idProducto).val(1);
+    });
+
     $(".linkMinus").on("click", function(event) {
         event.preventDefault();
         idProducto = $(this).attr("pid");
@@ -18,10 +38,15 @@ $(document).ready(function() {
         cantidadInput = $("#cantidad" + idProducto);
         nuevaCantidad = parseInt(cantidadInput.val()) + 1;
 
-        if (nuevaCantidad <= 5) {
+        if(cantidadStock == 0){
+            showWarningModal('No hay stock para esa talla.')
+        }
+        if (nuevaCantidad <= cantidadStock) {
             cantidadInput.val(nuevaCantidad);
         } else {
-            showWarningModal('La cantidad máxima del pedido es de 5 unidades.');
+            showWarningModal('La cantidad máxima del pedido no puede ser superior a su stock.');
         }
     });
+
+
 });
