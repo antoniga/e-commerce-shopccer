@@ -40,8 +40,15 @@ public class Producto {
     @ManyToOne
     @JoinColumn(name="idSuperficie")
     private Superficie superficie;
+    @OneToMany(mappedBy = "producto")
+    private List<ItemCarro> itemsCarro;
+
 
     public Producto() {
+    }
+
+    public Producto(Integer idProducto) {
+        this.idProducto = idProducto;
     }
 
     public Producto(String nombre, String descripcion, Map<Integer, Integer> tallaStock, String color, String fotoPrincipal, List<String> fotosDetalles, Date createdTime, Date updatedTime, Boolean activo, Boolean inStock, double precio, double porcentajeDescuento, Marca marca, Superficie superficie) {
@@ -201,6 +208,14 @@ public class Producto {
 
     public void setFotosDetalles(List<String> fotosDetalles) {
         this.fotosDetalles = fotosDetalles;
+    }
+
+    public List<ItemCarro> getItemsCarro() {
+        return itemsCarro;
+    }
+
+    public void setItemsCarro(List<ItemCarro> itemsCarro) {
+        this.itemsCarro = itemsCarro;
     }
 
     @Override

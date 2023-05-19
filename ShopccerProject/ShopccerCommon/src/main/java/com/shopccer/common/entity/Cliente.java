@@ -3,6 +3,7 @@ package com.shopccer.common.entity;
 import jakarta.persistence.*;
 
 import java.util.Date;
+import java.util.List;
 
 @Entity
 @Table(name = "clientes")
@@ -55,7 +56,15 @@ public class Cliente {
     @Column(name = "reset_password_token", length = 30)
     private String resetPasswordToken;
 
+    @OneToMany(mappedBy = "cliente")
+    private List<ItemCarro> itemsCarro;
+
+
     public Cliente() {
+    }
+
+    public Cliente(Integer idCliente) {
+        this.idCliente = idCliente;
     }
 
     public Cliente(String email, String password, String nombre, String apellidos, String numeroTelefono, String direccion, String ciudad, String comunidad, String codPostal, String codigoVerificacion, boolean activo, Date createdTime, Pais pais) {
@@ -194,6 +203,13 @@ public class Cliente {
         this.resetPasswordToken = resetPasswordToken;
     }
 
+    public List<ItemCarro> getItemsCarro() {
+        return itemsCarro;
+    }
+
+    public void setItemsCarro(List<ItemCarro> itemsCarro) {
+        this.itemsCarro = itemsCarro;
+    }
 
     @Override
     public String toString() {
