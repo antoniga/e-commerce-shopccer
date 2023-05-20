@@ -2,6 +2,7 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <body>
 <div th:fragment="control_cantidad(cantidadValor, idProducto)">
+    <input type="hidden" id="idProductoHidden" th:value="${idProducto}" />
     <nav>
         <ul class="pagination">
             <li class="page-item">

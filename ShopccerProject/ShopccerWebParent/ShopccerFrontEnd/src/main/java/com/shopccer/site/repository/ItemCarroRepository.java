@@ -13,11 +13,11 @@ public interface ItemCarroRepository extends CrudRepository<ItemCarro, Integer> 
 
     List<ItemCarro> findByCliente(Cliente cliente);
 
-    ItemCarro findByClienteAndProducto(Cliente cliente, Producto producto);
+    ItemCarro findByClienteAndProductoAndTalla(Cliente cliente, Producto producto, Integer talla);
 
     @Modifying
-    @Query("UPDATE ItemCarro i SET i.cantidad = ?1 WHERE i.cliente.idCliente = ?2 AND i.producto.idProducto = ?3")
-    void updateCanitdad(Integer cantidad, Integer idCliente, Integer idProducto);
+    @Query("UPDATE ItemCarro i SET i.cantidad = ?1 WHERE i.talla = ?2 AND i.cliente.idCliente = ?3 AND i.producto.idProducto = ?4")
+    void updateCantidad(Integer cantidad, Integer talla, Integer idCliente, Integer idProducto);
 
     @Modifying
     @Query("DELETE FROM ItemCarro i WHERE i.cliente.idCliente = ?1 AND i.producto.idProducto = ?2")

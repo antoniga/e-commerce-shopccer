@@ -17,7 +17,17 @@ public class ItemCarro {
 
     private Integer cantidad;
 
+    private Integer talla;
+
     public ItemCarro() {
+    }
+
+    public ItemCarro(Integer idItemCarro, Producto producto, Cliente cliente, Integer cantidad, Integer talla) {
+        this.idItemCarro = idItemCarro;
+        this.producto = producto;
+        this.cliente = cliente;
+        this.cantidad = cantidad;
+        this.talla = talla;
     }
 
     public ItemCarro(Integer idItemCarro, Producto producto, Cliente cliente, Integer cantidad) {
@@ -59,13 +69,22 @@ public class ItemCarro {
         this.cantidad = cantidad;
     }
 
+    public Integer getTalla() {
+        return talla;
+    }
+
+    public void setTalla(Integer talla) {
+        this.talla = talla;
+    }
+
     @Override
     public String toString() {
         return "ItemCarro{" +
                 "idItemCarro=" + idItemCarro +
-                ", producto=" + producto.getDescripcion() +
+                ", producto=" + producto.getNombre() +
                 ", cliente=" + cliente.getNombre() +
                 ", cantidad=" + cantidad +
+                ", talla=" + talla +
                 '}';
     }
 }

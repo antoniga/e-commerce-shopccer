@@ -2,6 +2,8 @@ package com.shopccer.site.util;
 
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.mail.javamail.JavaMailSenderImpl;
+import org.springframework.security.authentication.RememberMeAuthenticationToken;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 
 import java.util.Properties;
 
@@ -29,4 +31,19 @@ public class Utility {
 
         return mailSender;
     }
+
+    public static String getEmailOfAuthenticatedCustomer(HttpServletRequest request) {
+        Object principal = request.getUserPrincipal();
+        if (principal == null) return null;
+
+        String clienteEmail = null;
+
+        if (principal instanceof UsernamePasswordAuthenticationToken
+                || principal instanceof RememberMeAuthenticationToken) {
+            clienteEmail = request.getUserPrincipal().getName();
+        }
+        return clienteEmail;
+    }
+
+
 }

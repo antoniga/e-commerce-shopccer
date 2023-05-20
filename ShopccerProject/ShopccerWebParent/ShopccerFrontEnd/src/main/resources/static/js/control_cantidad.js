@@ -15,8 +15,7 @@ $(document).ready(function() {
     selectTalla.addEventListener("change", function() {
         cantidadStock = this.value;
         console.log(cantidadStock);
-        idProducto = $(this).attr("pid");
-        $("#cantidad" + idProducto).val(1);
+        $("#cantidad" + $("#idProductoHidden").val()).val(1);
     });
 
     $(".linkMinus").on("click", function(event) {

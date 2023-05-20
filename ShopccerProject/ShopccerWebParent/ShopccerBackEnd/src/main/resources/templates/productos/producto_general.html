@@ -61,18 +61,8 @@
 	<!-- Tallas y stock-->
 	<div th:fragment="stock" th:remove="tag">
 		<div>
-			<!--<th:block th:each="entry : ${producto.tallaStock.entrySet()}" class="form-group row">
-				<tr>
-					<td>
-						<label th:text="${entry.key}"></label>
-						<input type="hidden" th:field="*{tallaStock[__${entry.key}__]}" th:value="${entry.value}" />
-					</td>
-					<td>
-						<input type="number" th:field="*{tallaStock[__${entry.key}__]}" th:value="${entry.value}" />
-					</td>
-				</tr>
-			</th:block>-->
-
+			<button id="fillButton" class="btn btn-info">Rellenar con 25 uds. todas las tallas</button>
+			<br><br>
 			<th:block th:each="entry : ${producto.tallaStock.entrySet()}" class="form-group row">
 				<div class="col-sm-12">
 					<label class="form-label" for="tallaStock[[[${entry.key}]]]">Stock talla [[${entry.key}]]:</label>
@@ -81,7 +71,6 @@
 				</div>
 			</th:block>
 		</div>
-
 	</div>
 	<!-- Tallas y stock-->
 	<!-- Descripcion-->

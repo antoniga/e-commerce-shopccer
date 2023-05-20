@@ -98,7 +98,7 @@ public class ClienteController {
 
     @GetMapping("/detalles_cuenta")
     public String verDetallesCuentas(Model model, HttpServletRequest request) {
-        String email = getEmailOfAuthenticatedCustomer(request);
+        String email = Utility.getEmailOfAuthenticatedCustomer(request);
         Cliente cliente = clienteService.findClienteByEmail(email);
         List<Pais> listaPaises = clienteService.listAllPaises();
 
@@ -108,16 +108,7 @@ public class ClienteController {
         return "clientes/cuenta_form";
     }
 
-    private String getEmailOfAuthenticatedCustomer(HttpServletRequest request) {
-        Object principal = request.getUserPrincipal();
-        String clienteEmail = null;
 
-        if (principal instanceof UsernamePasswordAuthenticationToken
-                || principal instanceof RememberMeAuthenticationToken) {
-            clienteEmail = request.getUserPrincipal().getName();
-        }
-        return clienteEmail;
-    }
 
     @PostMapping("/update_detalles_cuenta")
     public String updateAccountDetails(Model model, Cliente cliente, RedirectAttributes ra,
