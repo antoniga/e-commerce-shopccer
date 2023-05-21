@@ -87,4 +87,11 @@ public class ItemCarro {
                 ", talla=" + talla +
                 '}';
     }
+
+    @Transient
+    public Double getSubtotal() {
+
+        double precioConDescuento = producto.getPrecioConDescuento();
+        return Math.round((precioConDescuento * cantidad) * 100.0) / 100.0;
+    }
 }

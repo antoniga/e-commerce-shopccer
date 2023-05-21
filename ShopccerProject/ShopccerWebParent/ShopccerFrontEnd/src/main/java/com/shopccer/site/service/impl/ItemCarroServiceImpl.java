@@ -11,6 +11,8 @@ import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 @Transactional
 public class ItemCarroServiceImpl implements ItemCarroService {
@@ -35,7 +37,8 @@ public class ItemCarroServiceImpl implements ItemCarroService {
                 throw new ItemCarroException("No se puede añadir " + cantidad + " item(s)"
                         + " por que ya hay " + cartItem.getCantidad() + " item(s) "
                         + "en tu carro de la compra. No hay tanto stock disponible en estos " +
-                        "momentos para el producto.");
+                        "momentos. Puede que haya más gente comprando el mismo producto." +
+                        " Recarga la página para ver el stock actualizado.");
             }else{
                 //Actualizamos el stock para esa talla
                 producto.getTallaStock().put(talla,stockTallaSeleccionada-cantidad);
@@ -56,5 +59,10 @@ public class ItemCarroServiceImpl implements ItemCarroService {
         itemCarroRepository.save(cartItem);
 
         return updatedCantidad;
+    }
+
+    @Override
+    public List<ItemCarro> listItemsCarro(Cliente cliente) {
+        return itemCarroRepository.findByCliente(cliente);
     }
 }

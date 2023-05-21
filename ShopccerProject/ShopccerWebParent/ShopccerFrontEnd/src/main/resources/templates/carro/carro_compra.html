@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="fragments :: pageHead('Carro Compra')"></head>
+<body>
+	<div th:replace="navigation :: header_menu"></div>
+	<div th:replace="navigation :: search_nav"></div>
+	<div class="container">
+
+		<div class="text-center border-bottom m-3">
+			<h2>Tú carro de la compra</h2>
+		</div>
+
+		<div class="row m-1">
+			<div class="col-sm-8">
+				<th:block th:each="item, status : ${itemsCarro}">
+					<div class="row border rounded p-1" th:with="producto = ${item.producto}">
+						<div class="col-1">
+							<div>[[${status.count}]]</div>
+							<div>
+								<a class="fas fa-trash icon-dark" href=""></a>
+							</div>
+						</div>
+						<div class="col-3">
+							<img th:src="@{${producto.pathFotoPrincipal}}" class="img-fluid" />
+						</div>
+						<div class="col-6">
+							<div>
+								<a th:href="@{'/productos/' + ${producto.idProducto}}" target="_blank"
+								   th:title="${producto.nombre}">
+									<b>[[${producto.nombre}]]</b>
+								</a>
+							</div>
+							<div>
+								<p>Talla: [[${item.talla}]]</p>
+							</div>
+							<div th:replace="carro/control_cantidad :: control_cantidad(${item.cantidad}, ${producto.idProducto})"></div>
+
+							<div>
+								<span>X&nbsp;</span><br>
+								<span th:if = "${producto.porcentajeDescuento <= 0}" style="font-size: larger">[[${producto.precio}]] €</span>
+								<del><span th:if = "${producto.porcentajeDescuento > 0}">[[${producto.precio}]] €</span></del>
+								<span th:if = "${producto.porcentajeDescuento > 0}" style="font-size: larger;color: darkred; font-weight: bolder">
+									[[${producto.precioConDescuento}]] €</span>
+							</div>
+							<div>
+								<span>=&nbsp;</span>
+								<span class="h4">[[${item.subtotal}]] €</span>
+							</div>
+						</div>
+					</div>
+					<div class="row m-1">&nbsp;</div>
+				</th:block>
+			</div>
+
+			<div class="col-sm-4" th:unless="${#lists.isEmpty(itemsCarro)}">
+				<div>
+					<span class="h3">Total estimado:</span>
+				</div>
+				<div class="mt-2">
+					<span class="h2" id="totalEstimado">[[${totalEstimado}]] €</span>
+				</div>
+				<div class="mt-2">
+					<button class="btn btn-danger p-3 mt-2">Finalizar compra</button>
+				</div>
+			</div>
+		</div>
+
+		<div class="text-center" th:if="${#lists.isEmpty(itemsCarro)}">
+			<h3>Tu carro de la compra está vacío.</h3>
+		</div>
+
+	</div>
+	<div th:replace="navigation :: footer_menu"></div>
+	<div th:replace="fragments :: footer"></div>
+</body>
+</html>

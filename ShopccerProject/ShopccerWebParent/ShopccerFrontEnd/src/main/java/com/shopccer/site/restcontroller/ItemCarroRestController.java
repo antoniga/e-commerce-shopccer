@@ -25,7 +25,7 @@ public class ItemCarroRestController {
                                    HttpServletRequest request) {
 
         try {
-            Cliente cliente = getAuthenticatedCustomer(request);
+            Cliente cliente = getClienteAutenticado(request);
             Integer updatedQuantity = itemCarroService.addProduct(productId, talla,cantidad, cliente);
 
             return updatedQuantity + " item(s) del producto han sido añadidos al carro de la compra.";
@@ -37,7 +37,7 @@ public class ItemCarroRestController {
 
     }
 
-    private Cliente getAuthenticatedCustomer(HttpServletRequest request)
+    private Cliente getClienteAutenticado(HttpServletRequest request)
             throws ClienteNotFoundException {
         String email = Utility.getEmailOfAuthenticatedCustomer(request);
         if (email == null) {
