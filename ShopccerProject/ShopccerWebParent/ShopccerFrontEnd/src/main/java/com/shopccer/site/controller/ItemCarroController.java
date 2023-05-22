@@ -28,6 +28,7 @@ public class ItemCarroController {
 
         for (ItemCarro item : itemsCarro) {
             totalEstimado += item.getSubtotal();
+            totalEstimado = Math.round((totalEstimado) * 100.0) / 100.0;
         }
 
         model.addAttribute("itemsCarro", itemsCarro);
