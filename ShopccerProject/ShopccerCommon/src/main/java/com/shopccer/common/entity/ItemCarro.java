@@ -94,4 +94,5 @@ public class ItemCarro {
         double precioConDescuento = producto.getPrecioConDescuento();
         return Math.round((precioConDescuento * cantidad) * 100.0) / 100.0;
     }
+
 }

@@ -37,6 +37,21 @@ public class ItemCarroRestController {
 
     }
 
+    @PostMapping("/carro/update/{productId}/{talla}/{cantidad}")
+    public String updateQuantity(@PathVariable("productId") Integer idProducto,
+                                 @PathVariable("talla") Integer talla,
+                                 @PathVariable("cantidad") Integer cantidad,
+                                 HttpServletRequest request) {
+        try {
+            Cliente cliente = getClienteAutenticado(request);
+            Double subtotal = itemCarroService.updateCantidad(idProducto, talla, cantidad, cliente);
+
+            return String.valueOf(subtotal);
+        } catch (ClienteNotFoundException ex) {
+            return "Debes loguearte para actualizar la cantidad del producto.";
+        }
+    }
+
     private Cliente getClienteAutenticado(HttpServletRequest request)
             throws ClienteNotFoundException {
         String email = Utility.getEmailOfAuthenticatedCustomer(request);

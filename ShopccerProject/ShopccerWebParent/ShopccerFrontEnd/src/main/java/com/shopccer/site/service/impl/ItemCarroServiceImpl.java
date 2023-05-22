@@ -65,4 +65,11 @@ public class ItemCarroServiceImpl implements ItemCarroService {
     public List<ItemCarro> listItemsCarro(Cliente cliente) {
         return itemCarroRepository.findByCliente(cliente);
     }
+
+    public Double updateCantidad(Integer idProducto, Integer talla, Integer cantidad, Cliente cliente) {
+        itemCarroRepository.updateCantidad(cantidad, talla, cliente.getIdCliente(), idProducto);
+        Producto producto = productoRepository.findById(idProducto).get();
+        Double subtotal = producto.getPrecioConDescuento() * cantidad;
+        return subtotal;
+    }
 }

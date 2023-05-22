@@ -13,4 +13,6 @@ public interface ItemCarroService {
     Integer addProduct(Integer idProducto, Integer talla, Integer cantidad, Cliente cliente) throws ItemCarroException;
 
     public List<ItemCarro> listItemsCarro(Cliente cliente);
+
+    Double updateCantidad(Integer idProducto, Integer talla, Integer cantidad, Cliente cliente);
 }

@@ -1,20 +1,21 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <body>
-<div th:fragment="control_cantidad(cantidadValor, idProducto)">
+<div th:fragment="control_cantidad(cantidadValor, idProducto, tallaHidden)">
     <input type="hidden" id="idProductoHidden" th:value="${idProducto}" />
     <nav>
-        <ul class="pagination">
+        <ul class="pagination"  th:pid ="${idProducto}" th:pta="${tallaHidden}">
             <li class="page-item">
                 <a class="page-link linkMinus" th:pid="${idProducto}" href=""><b>-</b></a>
             </li>
             <li class="page-item">
-                <input type="text" th:value="${cantidadValor}" th:id="'cantidad' + ${idProducto}"
+                <input type="text" th:value="${cantidadValor}" th:id="'cantidad' + ${idProducto}+${tallaHidden}"
                        onkeydown="return false;"
                        class="form-control text-center" style="width: 55px" />
+                <input type="hidden" name="" id="tallaHidden" th:value="${tallaHidden}">
             </li>
             <li class="page-item">
-                <a class="page-link linkPlus" th:pid="${idProducto}" href=""><b>+</b></a>
+                <a class="page-link linkPlus" th:pid="${idProducto}+${tallaHidden}" href=""><b>+</b></a>
             </li>
         </ul>
     </nav>

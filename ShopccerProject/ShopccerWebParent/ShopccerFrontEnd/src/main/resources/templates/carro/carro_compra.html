@@ -14,6 +14,7 @@
 			<div class="col-sm-8">
 				<th:block th:each="item, status : ${itemsCarro}">
 					<div class="row border rounded p-1" th:with="producto = ${item.producto}">
+					<input type="hidden" name="" th:id="'stockTalla'+${producto.idProducto}" th:value="${item.producto.getValue(item.talla)}">
 						<div class="col-1">
 							<div>[[${status.count}]]</div>
 							<div>
@@ -33,7 +34,7 @@
 							<div>
 								<p>Talla: [[${item.talla}]]</p>
 							</div>
-							<div th:replace="carro/control_cantidad :: control_cantidad(${item.cantidad}, ${producto.idProducto})"></div>
+							<div th:replace="carro/control_cantidad :: control_cantidad(${item.cantidad}, ${producto.idProducto}, ${item.talla})"></div>
 
 							<div>
 								<span>X&nbsp;</span><br>
@@ -72,5 +73,10 @@
 	</div>
 	<div th:replace="navigation :: footer_menu"></div>
 	<div th:replace="fragments :: footer"></div>
+	<div th:replace="fragments :: modal_dialog"></div>
+
+
+	<script type="text/javascript" th:src="@{/js/carro_compra.js}"></script>
+	<script type="text/javascript" th:src="@{/js/common_modal.js}"></script>
 </body>
 </html>
