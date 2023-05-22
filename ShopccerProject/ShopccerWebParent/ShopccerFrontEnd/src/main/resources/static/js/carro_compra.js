@@ -28,7 +28,7 @@ $(document).ready(function() {
         var idProducto = $(this).closest('ul').attr('pid');
         var talla = $(this).closest('ul').attr('pta');
 
-        stockTalla = $("#stockTalla" +  idProducto);
+        stockTalla = $("#stockTalla" +  idProducto + talla);
 
         cantidadInput = $("#cantidad" + idProducto + talla);
         nuevaCantidad = parseInt(cantidadInput.val()) + 1;

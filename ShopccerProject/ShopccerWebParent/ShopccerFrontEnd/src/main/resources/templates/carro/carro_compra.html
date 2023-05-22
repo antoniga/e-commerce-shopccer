@@ -14,7 +14,7 @@
 			<div class="col-sm-8">
 				<th:block th:each="item, status : ${itemsCarro}">
 					<div class="row border rounded p-1" th:with="producto = ${item.producto}">
-					<input type="hidden" name="" th:id="'stockTalla'+${producto.idProducto}" th:value="${item.producto.getValue(item.talla)}">
+					<input type="hidden" name="" th:id="'stockTalla'+${producto.idProducto}+${item.talla}" th:value="${item.producto.getValue(item.talla)}">
 						<div class="col-1">
 							<div>[[${status.count}]]</div>
 							<div>
