@@ -45,7 +45,7 @@ public class ItemCarroRestController {
         try {
             Cliente cliente = getClienteAutenticado(request);
             Double subtotal = itemCarroService.updateCantidad(idProducto, talla, cantidad, cliente);
-
+            subtotal = Math.round((subtotal) * 100.0) / 100.0;
             return String.valueOf(subtotal);
         } catch (ClienteNotFoundException ex) {
             return "Debes loguearte para actualizar la cantidad del producto.";
