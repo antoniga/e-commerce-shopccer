@@ -16,5 +16,5 @@ public interface ItemCarroService {
 
     public List<ItemCarro> listItemsCarro(Cliente cliente);
 
-    Double updateCantidad(Integer idProducto, Integer talla, Integer cantidad, Cliente cliente);
+    Double updateCantidad(Integer idProducto, Integer talla, Integer cantidad, Cliente cliente, String variacionStock);
 }

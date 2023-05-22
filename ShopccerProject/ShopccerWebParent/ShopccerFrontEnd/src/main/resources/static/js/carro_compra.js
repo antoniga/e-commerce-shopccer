@@ -5,12 +5,18 @@ $(document).ready(function() {
         var idProducto = $(this).closest('ul').attr('pid');
         var talla = $(this).closest('ul').attr('pta');
 
+        stockTalla = $("#stockTalla" +  idProducto + talla);
+        cantidadStock = stockTalla.val();
         cantidadInput = $("#cantidad" + idProducto + talla);
         nuevaCantidad = parseInt(cantidadInput.val()) - 1;
 
+        console.log("STOCK anterior: " + cantidadStock)
+
         if (nuevaCantidad > 0) {
             cantidadInput.val(nuevaCantidad);
-            updateCantidad(idProducto, talla, nuevaCantidad);
+            stockTalla.val(parseInt(cantidadStock) +1);
+            console.log("STOCK actual: " + (parseInt(cantidadStock) +1));
+            updateCantidad(idProducto, talla, nuevaCantidad, "minus");
         } else {
             showWarningModal('La cantidad mínima del pedido es de 1 unidad.');
         }
@@ -22,27 +28,28 @@ $(document).ready(function() {
         var talla = $(this).closest('ul').attr('pta');
 
         stockTalla = $("#stockTalla" +  idProducto + talla);
-
         cantidadInput = $("#cantidad" + idProducto + talla);
         nuevaCantidad = parseInt(cantidadInput.val()) + 1;
-
         cantidadStock = stockTalla.val();
-        console.log("STOCK" + cantidadStock)
+
+        console.log("STOCK anterior: " + cantidadStock)
 
         if(cantidadStock == 0){
             showWarningModal('No hay stock para esa talla.')
         }
-        if (nuevaCantidad <= cantidadStock) {
+        if (cantidadStock > 0 ) {
             cantidadInput.val(nuevaCantidad);
-            updateCantidad(idProducto, talla, nuevaCantidad);
+            stockTalla.val(parseInt(cantidadStock) -1);
+            console.log("STOCK actual: " + (parseInt(cantidadStock) -1));
+            updateCantidad(idProducto, talla, nuevaCantidad,"plus");
         } else {
             showWarningModal('La cantidad máxima del pedido no puede ser superior a su stock.');
         }
     });
 });
 
-function updateCantidad(idProducto, talla, cantidad) {
-    url = contextPath + "carro/update/" + idProducto + "/" + talla+ "/" + cantidad;
+function updateCantidad(idProducto, talla, cantidad,variacionStock) {
+    url = contextPath + "carro/update/" + idProducto + "/" + talla + "/" + cantidad+ "/" + variacionStock;
 
     $.ajax({
         type: "POST",

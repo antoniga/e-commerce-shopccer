@@ -66,15 +66,24 @@ public class ItemCarroServiceImpl implements ItemCarroService {
         return itemCarroRepository.findByCliente(cliente);
     }
 
-    public Double updateCantidad(Integer idProducto, Integer talla, Integer cantidad, Cliente cliente) {
+    public Double updateCantidad(Integer idProducto, Integer talla, Integer cantidad, Cliente cliente,  String variacionStock) {
         //actualizamos el carro
         itemCarroRepository.updateCantidad(cantidad, talla, cliente.getIdCliente(), idProducto);
 
         //recuperamos el producto de bd y actualizamos su stock
-//        Producto productoInBd = productoRepository.findById(idProducto).get();
-//        Integer stockTallaSeleccionada = productoInBd.getTallaStock().get(talla);
-//        productoInBd.getTallaStock().put(talla,stockTallaSeleccionada-cantidad);
-//        productoRepository.save(productoInBd);
+        Producto productoInBd = productoRepository.findById(idProducto).get();
+        Integer stockTallaSeleccionada = productoInBd.getTallaStock().get(talla);
+
+        //si quitamos un producto del carro, lo sumamos al stock
+        if("minus".equals(variacionStock)){
+            productoInBd.getTallaStock().put(talla,stockTallaSeleccionada + 1);
+        }
+        //si añadimos un producto al carro, lo quitamos del stock
+        if("plus".equals(variacionStock)){
+            productoInBd.getTallaStock().put(talla,stockTallaSeleccionada - 1);
+        }
+
+        productoRepository.save(productoInBd);
 
         Producto producto = productoRepository.findById(idProducto).get();
         Double subtotal = producto.getPrecioConDescuento() * cantidad;

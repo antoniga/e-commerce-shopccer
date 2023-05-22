@@ -37,14 +37,15 @@ public class ItemCarroRestController {
 
     }
 
-    @PostMapping("/carro/update/{productId}/{talla}/{cantidad}")
+    @PostMapping("/carro/update/{productId}/{talla}/{cantidad}/{variacionStock}")
     public String updateQuantity(@PathVariable("productId") Integer idProducto,
                                  @PathVariable("talla") Integer talla,
                                  @PathVariable("cantidad") Integer cantidad,
+                                 @PathVariable("variacionStock") String variacionStock,
                                  HttpServletRequest request) {
         try {
             Cliente cliente = getClienteAutenticado(request);
-            Double subtotal = itemCarroService.updateCantidad(idProducto, talla, cantidad, cliente);
+            Double subtotal = itemCarroService.updateCantidad(idProducto, talla, cantidad, cliente, variacionStock);
             subtotal = Math.round((subtotal) * 100.0) / 100.0;
             return String.valueOf(subtotal);
         } catch (ClienteNotFoundException ex) {
