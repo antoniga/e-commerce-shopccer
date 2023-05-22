@@ -92,6 +92,17 @@ public class ItemCarroServiceImpl implements ItemCarroService {
 
     @Override
     public void removeProducto(Cliente cliente, Integer idProducto,String talla) {
+
+        Integer tallaInt = Integer.parseInt(talla);
+        Producto producto = productoRepository.findById(idProducto).get();
+        Integer stockExistente = producto.getTallaStock().get(tallaInt);
+        ItemCarro itemCarro = itemCarroRepository.findByClienteAndProductoAndTalla(cliente,producto, tallaInt);
+        //recuperamos la cantidad que habia en ese item para devolverlo al stock del producto
+        Integer cantidad = itemCarro.getCantidad();
+        //actualizamos stock
+        producto.getTallaStock().put(tallaInt,stockExistente + cantidad);
+
+        //eliminamos el item del carro
         itemCarroRepository.deleteByClienteAndProductoAAndTalla(cliente.getIdCliente(), idProducto, talla);
     }
 }
