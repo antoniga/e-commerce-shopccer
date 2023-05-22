@@ -46,6 +46,15 @@ $(document).ready(function() {
             showWarningModal('La cantidad máxima del pedido no puede ser superior a su stock.');
         }
     });
+
+    $(".linkRemove").on("click", function(event) {
+        event.preventDefault();
+        removeProduct($(this));
+    });
+
+    $('#modalDeleteProducto').on('hidden.bs.modal', function (e) {
+        location.reload();
+    });
 });
 
 function updateCantidad(idProducto, talla, cantidad,variacionStock) {
@@ -79,4 +88,26 @@ function updateTotal() {
 
     //formattedTotal = $.number(total, 2, ',','.');
     $("#totalEstimado").text(total.toFixed(2) + ' €');
+}
+
+function removeProduct(link) {
+    url = link.attr("href");
+    console.log(url);
+
+    $.ajax({
+        type: "DELETE",
+        url: url,
+        beforeSend: function(xhr) {
+            xhr.setRequestHeader(csrfHeaderName, csrfValue);
+        }
+    }).done(function(response) {
+        // rowNumber = link.attr("rowNumber");
+        // removeProductHTML(rowNumber);
+        // updateTotal();
+        // updateCountNumbers();
+        showModalDialogDeleteProducto("Shopping Cart", response);
+
+    }).fail(function() {
+        showErrorModal("Error while removing product.");
+    });
 }

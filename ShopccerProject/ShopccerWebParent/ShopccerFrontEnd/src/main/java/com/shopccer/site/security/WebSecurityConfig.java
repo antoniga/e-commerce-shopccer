@@ -27,7 +27,7 @@ public class WebSecurityConfig {
 		//http.authorizeHttpRequests().anyRequest().permitAll();
 
 		http.authorizeRequests()
-				.requestMatchers("/detalles_cuenta","/update_detalles_cuenta","/carro").authenticated()
+				.requestMatchers("/detalles_cuenta","/update_detalles_cuenta","/carro/**").authenticated()
 				.anyRequest().permitAll()
 				.and()
 				.formLogin()

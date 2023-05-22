@@ -89,4 +89,9 @@ public class ItemCarroServiceImpl implements ItemCarroService {
         Double subtotal = producto.getPrecioConDescuento() * cantidad;
         return subtotal;
     }
+
+    @Override
+    public void removeProducto(Cliente cliente, Integer idProducto,String talla) {
+        itemCarroRepository.deleteByClienteAndProductoAAndTalla(cliente.getIdCliente(), idProducto, talla);
+    }
 }

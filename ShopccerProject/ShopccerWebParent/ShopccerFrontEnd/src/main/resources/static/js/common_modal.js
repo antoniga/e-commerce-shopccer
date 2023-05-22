@@ -11,3 +11,9 @@ function showErrorModal(message) {
 function showWarningModal(message) {
     showModalDialog("Atención", message);
 }
+
+function showModalDialogDeleteProducto(title, message) {
+    $("#modalTitleDeleteProducto").text(title);
+    $("#modalBodyDelteProducto").text(message);
+    $("#modalDeleteProducto").modal();
+}

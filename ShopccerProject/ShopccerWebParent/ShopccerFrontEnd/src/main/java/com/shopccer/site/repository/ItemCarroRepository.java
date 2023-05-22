@@ -20,6 +20,6 @@ public interface ItemCarroRepository extends CrudRepository<ItemCarro, Integer> 
     void updateCantidad(Integer cantidad, Integer talla, Integer idCliente, Integer idProducto);
 
     @Modifying
-    @Query("DELETE FROM ItemCarro i WHERE i.cliente.idCliente = ?1 AND i.producto.idProducto = ?2")
-    void deleteByClienteAndProducto(Integer idCliente, Integer idProducto);
+    @Query("DELETE FROM ItemCarro i WHERE i.cliente.idCliente = ?1 AND i.producto.idProducto = ?2 AND i.talla = ?3")
+    void deleteByClienteAndProductoAAndTalla(Integer idCliente, Integer idProducto, String talla);
 }

@@ -1,5 +1,6 @@
 package com.shopccer.site.restcontroller;
 
+import ch.qos.logback.core.net.server.Client;
 import com.shopccer.common.entity.Cliente;
 import com.shopccer.site.exception.ClienteNotFoundException;
 import com.shopccer.site.exception.ItemCarroException;
@@ -8,6 +9,7 @@ import com.shopccer.site.service.ItemCarroService;
 import com.shopccer.site.util.Utility;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -50,6 +52,21 @@ public class ItemCarroRestController {
             return String.valueOf(subtotal);
         } catch (ClienteNotFoundException ex) {
             return "Debes loguearte para actualizar la cantidad del producto.";
+        }
+    }
+
+    @DeleteMapping("/carro/remove/{idProducto}/{talla}")
+    public String removeProduct(@PathVariable("idProducto") Integer idProducto,
+                                @PathVariable("talla") String talla,
+                                HttpServletRequest request) {
+        try {
+            Cliente cliente = getClienteAutenticado(request);
+            itemCarroService.removeProducto(cliente,idProducto,talla);
+
+            return "El producto ha sido eliminado de su cesta de la compra.";
+
+        } catch (ClienteNotFoundException e) {
+            return "Debes loguearte para eliminar el producto.";
         }
     }
 
