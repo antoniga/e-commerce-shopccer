@@ -43,6 +43,9 @@ public class Producto {
     @OneToMany(mappedBy = "producto")
     private List<ItemCarro> itemsCarro;
 
+    @OneToMany(mappedBy = "producto")
+    private List<DetallePedido> detallesPedido;
+
 
     public Producto() {
     }
@@ -216,6 +219,14 @@ public class Producto {
 
     public void setItemsCarro(List<ItemCarro> itemsCarro) {
         this.itemsCarro = itemsCarro;
+    }
+
+    public List<DetallePedido> getDetallesPedido() {
+        return detallesPedido;
+    }
+
+    public void setDetallesPedido(List<DetallePedido> detallesPedido) {
+        this.detallesPedido = detallesPedido;
     }
 
     @Override

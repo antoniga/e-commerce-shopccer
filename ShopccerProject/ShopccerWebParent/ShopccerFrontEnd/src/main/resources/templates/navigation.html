@@ -28,10 +28,10 @@
                         <a class="nav-link" href="">Envíos y Entregas</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" th:href="@{/login}">Login</a>
+                        <a class="nav-link" th:if="${not #authorization.expression('isAuthenticated()')}" th:href="@{/login}">Login</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" th:href="@{/registro}">Registro</a>
+                        <a class="nav-link" th:if="${not #authorization.expression('isAuthenticated()')}" th:href="@{/registro}">Registro</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="">Contacto</a>

@@ -59,6 +59,9 @@ public class Cliente {
     @OneToMany(mappedBy = "cliente")
     private List<ItemCarro> itemsCarro;
 
+    @OneToMany(mappedBy = "cliente")
+    private List<Pedido> pedidos;
+
 
     public Cliente() {
     }
@@ -209,6 +212,14 @@ public class Cliente {
 
     public void setItemsCarro(List<ItemCarro> itemsCarro) {
         this.itemsCarro = itemsCarro;
+    }
+
+    public List<Pedido> getPedidos() {
+        return pedidos;
+    }
+
+    public void setPedidos(List<Pedido> pedidos) {
+        this.pedidos = pedidos;
     }
 
     @Override
