@@ -38,7 +38,7 @@ public class Pedido {
     @Column(nullable = false, length = 45)
     private String pais;
 
-    private Date horaPedido;
+    private Date fechaPedido;
 
     private Double costeEnvio;
     private Double costeProducto;
@@ -59,7 +59,7 @@ public class Pedido {
     public Pedido() {
     }
 
-    public Pedido(String nombre, String apellidos, String numeroTelefono, String direccion, String ciudad, String comunidad, String codPostal, String pais, Date horaPedido, Double costeEnvio, Double costeProducto, Double total, int diasEntrega, Date fechaEntrega, EstadoPedido estado, Cliente cliente, Set<DetallePedido> detallePedido) {
+    public Pedido(String nombre, String apellidos, String numeroTelefono, String direccion, String ciudad, String comunidad, String codPostal, String pais, Date fechaPedido, Double costeEnvio, Double costeProducto, Double total, int diasEntrega, Date fechaEntrega, EstadoPedido estado, Cliente cliente, Set<DetallePedido> detallePedido) {
         this.nombre = nombre;
         this.apellidos = apellidos;
         this.numeroTelefono = numeroTelefono;
@@ -68,7 +68,7 @@ public class Pedido {
         this.comunidad = comunidad;
         this.codPostal = codPostal;
         this.pais = pais;
-        this.horaPedido = horaPedido;
+        this.fechaPedido = fechaPedido;
         this.costeEnvio = costeEnvio;
         this.costeProducto = costeProducto;
         this.total = total;
@@ -79,7 +79,7 @@ public class Pedido {
         this.detallePedido = detallePedido;
     }
 
-    public Pedido(Integer idPedido, String nombre, String apellidos, String numeroTelefono, String direccion, String ciudad, String comunidad, String codPostal, String pais, Date horaPedido, Double costeEnvio, Double costeProducto, Double total, int diasEntrega, Date fechaEntrega, EstadoPedido estado, Cliente cliente, Set<DetallePedido> detallePedido) {
+    public Pedido(Integer idPedido, String nombre, String apellidos, String numeroTelefono, String direccion, String ciudad, String comunidad, String codPostal, String pais, Date fechaPedido, Double costeEnvio, Double costeProducto, Double total, int diasEntrega, Date fechaEntrega, EstadoPedido estado, Cliente cliente, Set<DetallePedido> detallePedido) {
         this.idPedido = idPedido;
         this.nombre = nombre;
         this.apellidos = apellidos;
@@ -89,7 +89,7 @@ public class Pedido {
         this.comunidad = comunidad;
         this.codPostal = codPostal;
         this.pais = pais;
-        this.horaPedido = horaPedido;
+        this.fechaPedido = fechaPedido;
         this.costeEnvio = costeEnvio;
         this.costeProducto = costeProducto;
         this.total = total;
@@ -172,12 +172,12 @@ public class Pedido {
         this.pais = pais;
     }
 
-    public Date getHoraPedido() {
-        return horaPedido;
+    public Date getFechaPedido() {
+        return fechaPedido;
     }
 
-    public void setHoraPedido(Date horaPedido) {
-        this.horaPedido = horaPedido;
+    public void setFechaPedido(Date fechaPedido) {
+        this.fechaPedido = fechaPedido;
     }
 
     public Double getCosteEnvio() {
@@ -242,5 +242,14 @@ public class Pedido {
 
     public void setDetallesPedido(Set<DetallePedido> detallePedido) {
         this.detallePedido = detallePedido;
+    }
+
+    @Transient
+    public String getDestino() {
+        String destino =  ciudad + ", ";
+        if (comunidad != null && !comunidad.isEmpty()) destino += comunidad + ", ";
+        destino += pais;
+
+        return destino;
     }
 }
