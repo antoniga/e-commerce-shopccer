@@ -2,7 +2,6 @@ package com.shopccer.site.controller;
 
 import com.shopccer.common.entity.Cliente;
 import com.shopccer.common.entity.Pais;
-import com.shopccer.site.security.ClienteUserDetails;
 import com.shopccer.site.service.AjusteService;
 import com.shopccer.site.service.ClienteService;
 import com.shopccer.site.util.EmailUtil;
@@ -11,15 +10,13 @@ import jakarta.mail.MessagingException;
 import jakarta.mail.internet.MimeMessage;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.repository.query.Param;
 import org.springframework.mail.javamail.JavaMailSenderImpl;
 import org.springframework.mail.javamail.MimeMessageHelper;
-import org.springframework.security.authentication.RememberMeAuthenticationToken;
-import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.io.UnsupportedEncodingException;
@@ -89,7 +86,7 @@ public class ClienteController {
     }
 
     @GetMapping("/verify")
-    public String verifyCuenta(@Param("code") String code, Model model) {
+    public String verifyCuenta(@RequestParam("code") String code, Model model) {
         boolean verificado = clienteService.verify(code);
 
         return "registro/" + (verificado ? "verificado_success" : "verificado_fail");

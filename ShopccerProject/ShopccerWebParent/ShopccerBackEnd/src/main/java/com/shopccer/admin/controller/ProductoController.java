@@ -14,7 +14,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
-import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.util.StringUtils;
@@ -56,9 +55,9 @@ public class ProductoController {
 
     @GetMapping("/productos/pagina/{numeroPagina}")
     public String listByPage(@PathVariable(name="numeroPagina") Integer numeroPagina, Model model,
-                             @Param("campoOrden") String campoOrden, @Param("dirOrden") String dirOrden,
-                             @Param("palabraClave") String palabraClave, @Param("marcaId") Integer marcaId,
-                             @Param("superficieId") Integer superficieId) {
+                             @RequestParam("campoOrden") String campoOrden, @RequestParam("dirOrden") String dirOrden,
+                             @RequestParam("palabraClave") String palabraClave, @RequestParam("marcaId") Integer marcaId,
+                             @RequestParam("superficieId") Integer superficieId) {
 
         System.out.println("------- Superficie seleccionada: " + superficieId);
         Page<Producto> pagina = productoService.listByPage(numeroPagina, campoOrden, dirOrden, palabraClave,marcaId,superficieId);

@@ -1,11 +1,10 @@
 package com.shopccer.admin.restcontroller;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.repository.query.Param;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RestController;
-
 import com.shopccer.admin.service.UsuarioService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 public class UsuarioRestController {
@@ -14,7 +13,7 @@ public class UsuarioRestController {
 	private UsuarioService  usuarioService;
 	
 	@PostMapping("/usuarios/checkemail")
-	public String checkDuplicateEmail(@Param("idUsuario") Integer idUsuario, @Param("email") String email) {
+	public String checkDuplicateEmail(@RequestParam("idUsuario") Integer idUsuario, @RequestParam("email") String email) {
 		return usuarioService.isEmailUnique(idUsuario,email) ? "ok" : "duplicado";
 	}
 

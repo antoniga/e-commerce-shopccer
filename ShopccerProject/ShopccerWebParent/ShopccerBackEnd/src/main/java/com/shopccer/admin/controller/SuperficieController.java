@@ -7,10 +7,8 @@ import com.shopccer.admin.utils.FileLoadUtil;
 import com.shopccer.common.entity.Superficie;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
-import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-
 import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -36,8 +34,8 @@ public class SuperficieController {
     
     @GetMapping("/superficies/pagina/{numeroPagina}")
     public String listByPage(@PathVariable(name = "numeroPagina") Integer numeroPagina, Model model,
-                             @Param("campoOrden") String campoOrden, @Param("dirOrden") String dirOrden,
-                             @Param("palabraClave") String palabraClave){
+                             @RequestParam("campoOrden") String campoOrden, @RequestParam("dirOrden") String dirOrden,
+                             @RequestParam("palabraClave") String palabraClave){
 
         Page<Superficie> pagina = superficieService.listByPage(numeroPagina, campoOrden, dirOrden, palabraClave);
         List<Superficie> listSuperficies = pagina.getContent();

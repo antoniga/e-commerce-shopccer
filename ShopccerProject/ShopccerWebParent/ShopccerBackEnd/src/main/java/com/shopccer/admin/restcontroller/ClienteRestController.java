@@ -6,11 +6,7 @@ import com.shopccer.admin.service.ClienteService;
 import com.shopccer.admin.utils.ComunidadDTO;
 import com.shopccer.common.entity.Comunidad;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.repository.query.Param;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -28,7 +24,7 @@ public class ClienteRestController {
 	private PaisRepository paisRepository;
 	
 	@PostMapping("/clientes/checkemail")
-	public String checkDuplicateEmail(@Param("idCliente") Integer idCliente, @Param("email") String email) {
+	public String checkDuplicateEmail(@RequestParam("idCliente") Integer idCliente, @RequestParam("email") String email) {
 		return clienteService.isEmailUnique(idCliente,email) ? "ok" : "duplicado";
 	}
 

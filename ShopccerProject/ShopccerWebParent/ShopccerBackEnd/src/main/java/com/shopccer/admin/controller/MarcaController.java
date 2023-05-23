@@ -1,8 +1,10 @@
 package com.shopccer.admin.controller;
 
-import java.io.IOException;
-import java.util.List;
-
+import com.shopccer.admin.exception.MarcaNotFoundException;
+import com.shopccer.admin.service.MarcaService;
+import com.shopccer.admin.service.impl.MarcaServiceImpl;
+import com.shopccer.admin.utils.FileLoadUtil;
+import com.shopccer.common.entity.Marca;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.repository.query.Param;
@@ -16,11 +18,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import com.shopccer.admin.exception.MarcaNotFoundException;
-import com.shopccer.admin.service.MarcaService;
-import com.shopccer.admin.service.impl.MarcaServiceImpl;
-import com.shopccer.admin.utils.FileLoadUtil;
-import com.shopccer.common.entity.Marca;
+import java.io.IOException;
+import java.util.List;
 
 @Controller
 public class MarcaController {
@@ -36,8 +35,8 @@ public class MarcaController {
 	
 	@GetMapping("/marcas/pagina/{numeroPagina}")
 	public String listByPage(@PathVariable(name="numeroPagina") Integer numeroPagina, Model model,
-			@Param("campoOrden") String campoOrden, @Param("dirOrden") String dirOrden, 
-			@Param("palabraClave") String palabraClave) {
+			@RequestParam("campoOrden") String campoOrden, @RequestParam("dirOrden") String dirOrden,
+			@RequestParam("palabraClave") String palabraClave) {
 		
 		Page<Marca> pagina = marcaService.listByPage(numeroPagina, campoOrden, dirOrden, palabraClave);
 		List<Marca> listaMarcas = pagina.getContent();
