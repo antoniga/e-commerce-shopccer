@@ -138,7 +138,6 @@
 				});
 
 			}).fail(function() {
-				console.log(url);
 				alert('Error al conectar con el servidor.');
 			});
 		}
@@ -159,7 +158,6 @@
 				} else {
 					showErrorModal("Error desconocido del servidor");
 				}
-				console.log(url);
 			}).fail(function() {
 				showErrorModal("No se puede conectar al servidor");
 			});

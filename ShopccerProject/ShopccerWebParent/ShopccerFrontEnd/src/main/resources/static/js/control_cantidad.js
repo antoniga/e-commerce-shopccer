@@ -2,7 +2,6 @@ $(document).ready(function() {
 
     var selectTalla = document.getElementById("selectTalla");
     var cantidadStock = selectTalla.value;
-    console.log(cantidadStock);
 
     var options = selectTalla.options;
     for (var i = 0; i < options.length; i++) {
@@ -14,7 +13,6 @@ $(document).ready(function() {
 
     selectTalla.addEventListener("change", function() {
         cantidadStock = this.value;
-        console.log(cantidadStock);
         $("#cantidad" + $("#idProductoHidden").val()).val(1);
     });
 

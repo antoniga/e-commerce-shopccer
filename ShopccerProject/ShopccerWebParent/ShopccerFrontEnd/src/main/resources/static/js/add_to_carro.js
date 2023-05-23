@@ -8,12 +8,9 @@ function addToCart() {
     selectElement = document.getElementById('selectTalla');
     talla = selectElement.options[selectElement.selectedIndex].getAttribute('data-key');
 
-
     cantidad = $("#cantidad" + idProducto).val();
-    console.log('TALLA: '+talla);
     url = contextPath + "carro/add/" + idProducto + "/" + talla+ "/" + cantidad;
 
-    console.log(url);
 
     $.ajax({
         type: "POST",

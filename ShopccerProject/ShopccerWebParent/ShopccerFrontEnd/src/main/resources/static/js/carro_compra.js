@@ -10,12 +10,10 @@ $(document).ready(function() {
         cantidadInput = $("#cantidad" + idProducto + talla);
         nuevaCantidad = parseInt(cantidadInput.val()) - 1;
 
-        console.log("STOCK anterior: " + cantidadStock)
 
         if (nuevaCantidad > 0) {
             cantidadInput.val(nuevaCantidad);
             stockTalla.val(parseInt(cantidadStock) +1);
-            console.log("STOCK actual: " + (parseInt(cantidadStock) +1));
             updateCantidad(idProducto, talla, nuevaCantidad, "minus");
         } else {
             showWarningModal('La cantidad mínima del pedido es de 1 unidad.');
@@ -32,7 +30,6 @@ $(document).ready(function() {
         nuevaCantidad = parseInt(cantidadInput.val()) + 1;
         cantidadStock = stockTalla.val();
 
-        console.log("STOCK anterior: " + cantidadStock)
 
         if(cantidadStock == 0){
             showWarningModal('No hay stock para esa talla.')
@@ -40,7 +37,6 @@ $(document).ready(function() {
         if (cantidadStock > 0 ) {
             cantidadInput.val(nuevaCantidad);
             stockTalla.val(parseInt(cantidadStock) -1);
-            console.log("STOCK actual: " + (parseInt(cantidadStock) -1));
             updateCantidad(idProducto, talla, nuevaCantidad,"plus");
         } else {
             showWarningModal('La cantidad máxima del pedido no puede ser superior a su stock.');
@@ -92,7 +88,6 @@ function updateTotal() {
 
 function removeProduct(link) {
     url = link.attr("href");
-    console.log(url);
 
     $.ajax({
         type: "DELETE",

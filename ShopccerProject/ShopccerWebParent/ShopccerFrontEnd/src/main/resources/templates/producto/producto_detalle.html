@@ -59,7 +59,8 @@
 						<br>
 						<div id="controlCantidad" th:replace="carro/control_cantidad :: control_cantidad(1, ${producto.idProducto},'')"></div>
 						<div class="mt-3">
-							<input type="button" value="Añadir al carrito"  id="buttonAdd2Carro" class="btn btn-primary">
+							<input type="button" value="Añadir al carrito"  id="buttonAdd2Carro" class="btn btn-primary"  th:attr="disabled=${not #authorization.expression('isAuthenticated()')},
+							title=${not #authorization.expression('isAuthenticated()') ? 'Debes loguearte para poder añadir productos a tu carro' : 'Añade los productos al carro'}" />
 						</div>
 					</th:block>
 					<div>&nbsp;</div>
