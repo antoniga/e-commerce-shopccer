@@ -40,10 +40,11 @@ public class Producto {
     @ManyToOne
     @JoinColumn(name="idSuperficie")
     private Superficie superficie;
-    @OneToMany(mappedBy = "producto")
+
+    @OneToMany(mappedBy = "producto", cascade = CascadeType.ALL)
     private List<ItemCarro> itemsCarro;
 
-    @OneToMany(mappedBy = "producto")
+    @OneToMany(mappedBy = "producto", cascade = CascadeType.ALL)
     private List<DetallePedido> detallesPedido;
 
 

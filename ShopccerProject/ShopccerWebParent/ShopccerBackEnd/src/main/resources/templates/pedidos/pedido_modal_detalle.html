@@ -1,0 +1,161 @@
+<div class="modal-header">
+  <h4 class="modal-title">Detalles pedido</h4>
+  <button type="button" class="close" data-dismiss="modal">&times;</button>
+</div>
+
+<div>
+  <ul class="nav nav-tabs" id="myTab" role="tablist">
+    <li class="nav-item">
+      <a class="nav-link active" id="resumen-tab" data-toggle="tab" href="#resumen" role="tab">Resumen</a>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link" id="productos-tab" data-toggle="tab" href="#productos" role="tab">Productos</a>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link" id="envio-tab" data-toggle="tab" href="#envio" role="tab">Envío</a>
+    </li>
+  </ul>
+  <div class="tab-content" id="myTabContent">
+    <div class="tab-pane fade show active p-3" id="resumen" role="tabpanel" aria-labelledby="resumen-tab">
+      <form>
+        <div class="form-group row">
+          <label class="col-sm-2 col-form-label">Id Pedido:</label>
+          <div class="col-sm-10">
+            <input type="text" readonly class="form-control" th:value="${pedido.idPedido}">
+          </div>
+        </div>
+        <div class="form-group row">
+          <label class="col-sm-2 col-form-label">Cliente:</label>
+          <div class="col-sm-10">
+            <input type="text" readonly class="form-control" th:value="${pedido.cliente.nombreCompleto}">
+          </div>
+        </div>
+        <div class="form-group row">
+          <label class="col-sm-2 col-form-label">Coste producto:</label>
+          <div class="col-sm-10">
+            <span>[[${pedido.costeProducto}]] €</span>
+          </div>
+        </div>
+        <div class="form-group row">
+          <label class="col-sm-2 col-form-label">Coste envío:</label>
+          <div class="col-sm-10">
+            <span>[[${pedido.costeEnvio}]] €</span>
+          </div>
+        </div>
+        <div class="form-group row">
+          <label class="col-sm-2 col-form-label">Total:</label>
+          <div class="col-sm-10">
+            <span>[[${pedido.total}]] €</span>
+          </div>
+        </div>
+        <div class="form-group row">
+          <label class="col-sm-2 col-form-label">Estado:</label>
+          <div class="col-sm-10">
+            <span>[[${pedido.estado}]]</span>
+          </div>
+        </div>
+        <div class="form-group row">
+          <label class="col-sm-2 col-form-label">Fecha pedido:</label>
+          <div class="col-sm-10">
+            <div th:replace="fragments :: format_time(${pedido.fechaPedido})">Fecha pedido</div>
+          </div>
+        </div>
+      </form>
+    </div>
+    <div class="tab-pane fade p-3" id="productos" role="tabpanel" aria-labelledby="productos-tab">
+      <th:block th:each="detail, status : ${pedido.detallesPedido}">
+        <div class="row border rounded p-1" th:with="producto = ${detail.producto}">
+          <div class="col-sm-1">
+            <div class="div-count">[[${status.count}]]</div>
+          </div>
+          <div class="col-sm-3"><img th:src="@{${producto.pathFotoPrincipal}}" class="img-fluid" /></div>
+          <div class="col-sm-8">
+            <div class="text-wrap">
+              <b>[[${producto.nombre}]]</b>
+            </div>
+            <div>
+              Precio Producto: [[${detail.costeProducto}]]  €
+            </div>
+            <div>
+              Total: [[${detail.cantidad}]] X
+              [[${detail.precioUnitario}]]  €
+              =
+              [[${detail.subtotal}]]  €
+            </div>
+            <div>
+              Coste envío: [[${detail.costeEnvio}]]  €
+            </div>
+          </div>
+        </div>
+      </th:block>
+    </div>
+    <div class="tab-pane fade p-3" id="envio" role="tabpanel" aria-labelledby="envio-tab">
+      <div class="form-group row">
+        <label class="col-sm-2 col-form-label">Días entrega:</label>
+        <div class="col-sm-10">
+          <input type="text" readonly class="form-control" th:value="${pedido.diasEntrega}">
+        </div>
+      </div>
+      <div class="form-group row">
+        <label class="col-sm-2 col-form-label">Fecha esperada de entrega:</label>
+        <div class="col-sm-10">
+          <span th:text="${#dates.format(pedido.fechaEntrega, 'E, dd MMM yyyy')}"></span>
+        </div>
+      </div>
+      <div class="form-group row">
+        <label class="col-sm-2 col-form-label">Nombre:</label>
+        <div class="col-sm-10">
+          <input type="text" readonly class="form-control" th:value="${pedido.nombre}">
+        </div>
+      </div>
+      <div class="form-group row">
+        <label class="col-sm-2 col-form-label">Apellidos:</label>
+        <div class="col-sm-10">
+          <input type="text" readonly class="form-control" th:value="${pedido.apellidos}">
+        </div>
+      </div>
+      <div class="form-group row">
+        <label class="col-sm-2 col-form-label">Número de teléfono:</label>
+        <div class="col-sm-10">
+          <input type="text" readonly class="form-control" th:value="${pedido.numeroTelefono}">
+        </div>
+      </div>
+      <div class="form-group row">
+        <label class="col-sm-2 col-form-label">Dirección:</label>
+        <div class="col-sm-10">
+          <input type="text" readonly class="form-control" th:value="${pedido.direccion}">
+        </div>
+      </div>
+      <div class="form-group row">
+        <label class="col-sm-2 col-form-label">Ciudad:</label>
+        <div class="col-sm-10">
+          <input type="text" readonly class="form-control" th:value="${pedido.ciudad}">
+        </div>
+      </div>
+      <div class="form-group row">
+        <label class="col-sm-2 col-form-label">Comunidad/Provincia:</label>
+        <div class="col-sm-10">
+          <input type="text" readonly class="form-control" th:value="${pedido.comunidad}">
+        </div>
+      </div>
+      <div class="form-group row">
+        <label class="col-sm-2 col-form-label">País:</label>
+        <div class="col-sm-10">
+          <input type="text" readonly class="form-control" th:value="${pedido.pais}">
+        </div>
+      </div>
+      <div class="form-group row">
+        <label class="col-sm-2 col-form-label">Código postal:</label>
+        <div class="col-sm-10">
+          <input type="text" readonly class="form-control" th:value="${pedido.codPostal}">
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+
+<div class="modal-footer">
+  <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+</div>

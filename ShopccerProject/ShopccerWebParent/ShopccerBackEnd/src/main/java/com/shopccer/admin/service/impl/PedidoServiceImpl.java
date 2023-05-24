@@ -1,5 +1,7 @@
 package com.shopccer.admin.service.impl;
 
+import com.shopccer.admin.exception.ClienteNotFoundException;
+import com.shopccer.admin.exception.PedidoNotFoundException;
 import com.shopccer.admin.repository.PedidoRepository;
 import com.shopccer.admin.service.PedidoService;
 import com.shopccer.common.entity.Pedido;
@@ -40,5 +42,11 @@ public class PedidoServiceImpl implements PedidoService {
         }
 
         return pedidoRepository.findAll(pageable);
+    }
+
+    @Override
+    public Pedido findById(Integer idPedido) throws PedidoNotFoundException {
+        return pedidoRepository.findById(idPedido)
+                .orElseThrow(() -> new PedidoNotFoundException("No existe ningún pedido con id: " + idPedido));
     }
 }

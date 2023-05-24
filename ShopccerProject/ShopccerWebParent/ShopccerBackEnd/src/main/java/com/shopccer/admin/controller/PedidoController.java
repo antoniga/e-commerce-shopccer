@@ -1,8 +1,10 @@
 package com.shopccer.admin.controller;
 
+import com.shopccer.admin.exception.PedidoNotFoundException;
 import com.shopccer.admin.service.PedidoService;
 import com.shopccer.admin.service.impl.PedidoServiceImpl;
 import com.shopccer.common.entity.Pedido;
+import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Controller;
@@ -10,6 +12,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.util.List;
 
@@ -53,5 +56,20 @@ public class PedidoController {
         model.addAttribute("endCount", endCount);
 
         return "pedidos/pedidos";
+    }
+
+    @GetMapping("/pedidos/detalles/{idPedido}")
+    public String viewOrderDetails(@PathVariable("idPedido") Integer idPedido, Model model,
+                                   RedirectAttributes redirectAttributes, HttpServletRequest request) {
+        try {
+            Pedido pedido = pedidoService.findById(idPedido);
+            model.addAttribute("pedido", pedido);
+
+            return "pedidos/pedido_modal_detalle";
+        } catch (PedidoNotFoundException ex) {
+            redirectAttributes.addFlashAttribute("msg", ex.getMessage());
+            return "redirect:/pedidos";
+        }
+
     }
 }
