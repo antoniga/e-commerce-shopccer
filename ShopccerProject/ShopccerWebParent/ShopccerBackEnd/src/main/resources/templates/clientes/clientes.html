@@ -66,7 +66,7 @@
 							<a th:if="${cliente.activo} != true" class="fa-solid fa-square fa-2x icon-silver" style="text-decoration: none" th:href="@{'/clientes/' + ${cliente.idCliente} + '/activo/true'}" title="Activa cliente"></a>
 						</td>
 						<td>
-							<a class="fas fa-file-alt fa-2x icon-green link-detail" style="text-decoration: none" th:href="@{'/clientes/detalles/' + ${cliente.idCliente}}" title="Ver detalles del cliente"></a> &nbsp;
+							<a class="fas fa-file-alt fa-2x icon-shopccer link-detail" style="text-decoration: none" th:href="@{'/clientes/detalles/' + ${cliente.idCliente}}" title="Ver detalles del cliente"></a> &nbsp;
 							<a class="fa-solid fa-edit fa-2x icon-green" style="text-decoration: none" th:href="@{'/clientes/edit/'+${cliente.idCliente}}" title="Editar cliente"></a> &nbsp;
 							<a class="fa-solid fa-trash fa-2x icon-dark link-delete" style="text-decoration: none" th:href="@{'/clientes/delete/'+${cliente.idCliente}}" th:clienteId="${cliente.idCliente}" title="Eliminar cliente"></a>
 						</td>
