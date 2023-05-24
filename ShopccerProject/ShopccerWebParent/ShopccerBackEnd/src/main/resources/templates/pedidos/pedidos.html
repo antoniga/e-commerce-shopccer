@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head th:replace="fragments :: pageHead('Pedidos- Shopccer Admin')"></head>
+
+<body>
+	<div class="container-fluid">
+		<div th:replace="navigation :: menu"></div>
+		<div>
+			<h2>Gestión de pedidos</h2>
+		</div>
+
+		<div th:if="${msg != null}" class="alert alert-success alert-dismissible fade show text-center" role="alert">
+			[[${msg}]]
+			<button type="button" class="close" data-dismiss="alert" aria-label="Close">
+				<span aria-hidden="true">&times;</span>
+			</button>
+		</div>
+
+		<div class="row justify-content-lg-start">
+			<div class="col-lg-7 col-md-12">
+				<form th:action="@{/pedidos/pagina/1}" class="form-inline mt-1 mb-1 ml-auto">
+					<input type="hidden" name="campoOrden" th:value="${campoOrden}">
+					<input type="hidden" name="dirOrden" th:value="${dirOrden}">
+					<input type="search" name="palabraClave" placeholder="Busca pedidos" th:value="${palabraClave}" class="form-control" size="40%" required/>
+					&nbsp;&nbsp;
+					<button type="submit" class="btn btn-info mt-2 mt-sm-0"><i class="fas fa-search"></i></button>
+					&nbsp;&nbsp;
+					<button type="button" class="btn btn-secondary mt-2 mt-sm-0" onclick="limpiarFiltro()"/><i class="fas fa-eraser"></i></button>
+				</form>
+			</div>
+		</div>
+
+		<div class="full-details">
+			<table class="table table-bordered table-hover table-responsive-md">
+				<thead class="thead-dark">
+					<tr>
+						<th th:replace="fragments :: columnLink('pedidos', 'idPedido', 'ID Pedido', 'none')" />
+						<th th:replace="fragments :: columnLink('pedidos', 'cliente', 'Cliente', 'none')" />
+						<th th:replace="fragments :: columnLink('pedidos', 'total', 'Total', 'none')" />
+						<th th:replace="fragments :: columnLink('pedidos', 'fechaPedido', 'Fecha pedido', 'none')" />
+						<th th:replace="fragments :: columnLink('pedidos', 'destino', 'Destino', 'none')" />
+						<th th:replace="fragments :: columnLink('pedidos', 'estado', 'Estado', 'none')" />
+						<th></th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr th:each="pedido : ${listaPedidos}">
+						<td>[[${pedido.idPedido}]]</td>
+						<td>
+							<a class="linkClienteDetalle" th:href="@{'/clientes/detalles/' + ${pedido.cliente.idCliente}}">
+								[[${pedido.cliente.nombreCompleto}]]
+							</a>
+						</td>
+						<td>[[${pedido.total}]] €</td>
+						<td>
+							<div th:replace="fragments :: format_time(${pedido.fechaPedido})"></div>
+						</td>
+						<td>[[${pedido.destino}]]</td>
+						<td>[[${pedido.estado}]]</td>
+						<td>
+							<a class="fas fa-file-alt fa-2x icon-green link-detail" style="text-decoration: none" th:href="@{'/pedidos/detalles/' + ${pedido.idPedido}}" title="Ver detalles del pedido"></a> &nbsp;
+							<a class="fa-solid fa-edit fa-2x icon-green" style="text-decoration: none" th:href="@{'/pedidos/edit/'+${pedido.idPedido}}" title="Editar pedido"></a> &nbsp;
+							<a class="fa-solid fa-trash fa-2x icon-dark link-delete" style="text-decoration: none" th:href="@{'/pedidos/delete/'+${pedido.idPedido}}" th:pedidoId="${pedido.idPedido}" title="Eliminar pedido"></a>
+						</td>
+					</tr>
+				</tbody>
+			</table>
+		</div>
+
+		<div class= "text-center m-1" th:if="${pedidosTotales > 0}">
+			<span>Mostrando los pedidos del [[${startCount}]] al [[${endCount}]] de [[${pedidostTotales}]] </span>
+		</div>
+		<div class="text-center m-1" th:unless="${pedidosTotales > 0}">
+			<span>No se encontraron pedidos </span>
+		</div>
+
+		<div th:if="${paginasTotales > 1}">
+			<nav aria-label="Page navigation example">
+				<ul class="pagination justify-content-center">
+					<li th:class="${paginaActual > 1 ? 'page-item':'page-item disabled'}"><a th:replace="fragments :: pageLink('pedidos', 1,'<<')"> </a></li>
+					<li th:class="${paginaActual > 1 ? 'page-item':'page-item disabled'}"><a th:replace="fragments :: pageLink('pedidos', ${paginaActual -1},'<')"> </a></li>
+					<li th:class="${paginaActual != i  ? 'page-item':'page-item active'}" th:each="i : ${#numbers.sequence(1,paginasTotales)}"><a th:replace="fragments :: pageLink('pedidos', ${i},${i})"> </a></li>
+					<li th:class="${paginaActual < paginasTotales ? 'page-item':'page-item disabled'}"><a th:replace="fragments :: pageLink('pedidos', ${paginaActual +1},'>')"> </a></li>
+					<li th:class="${paginaActual < paginasTotales ? 'page-item':'page-item disabled'}"><a th:replace="fragments :: pageLink('pedidos', ${paginasTotales},'>>')"> </a></li>
+				</ul>
+			</nav>
+		</div>
+
+
+		<div th:replace="modal_fragments :: modal_delete"></div>
+		<div class="modal fade" id="detailModal">
+			<div class="modal-dialog modal-lg">
+				<div class="modal-content">
+				</div>
+			</div>
+		</div>
+
+	</div>
+
+	<div th:replace="fragments :: footer"></div>
+
+	<script type="text/javascript">
+		$(document).ready(function() {
+			gestionarLinkClienteDetalle();
+		});
+
+		function gestionarLinkClienteDetalle() {
+			$(".linkClienteDetalle").on("click", function(e) {
+				e.preventDefault();
+				linkDetailURL = $(this).attr("href");
+				$("#detailModal").modal("show").find(".modal-content").load(linkDetailURL);
+			});
+		}
+
+		function limpiarFiltro(){
+			window.location ="[[@{/pedidos}]]";
+		}
+	</script>
+</body>
+
+</html>

@@ -56,8 +56,8 @@ public class ProductoController {
     @GetMapping("/productos/pagina/{numeroPagina}")
     public String listByPage(@PathVariable(name="numeroPagina") Integer numeroPagina, Model model,
                              @RequestParam("campoOrden") String campoOrden, @RequestParam("dirOrden") String dirOrden,
-                             @RequestParam("palabraClave") String palabraClave, @RequestParam("marcaId") Integer marcaId,
-                             @RequestParam("superficieId") Integer superficieId) {
+                             String palabraClave, Integer marcaId,
+                             Integer superficieId) {
 
         System.out.println("------- Superficie seleccionada: " + superficieId);
         Page<Producto> pagina = productoService.listByPage(numeroPagina, campoOrden, dirOrden, palabraClave,marcaId,superficieId);

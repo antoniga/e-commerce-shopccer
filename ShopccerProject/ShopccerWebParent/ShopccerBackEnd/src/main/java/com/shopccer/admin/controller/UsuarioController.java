@@ -40,7 +40,7 @@ public class UsuarioController {
 	@GetMapping("/usuarios/pagina/{numeroPagina}")
 	public String listByPage(@PathVariable(name="numeroPagina") Integer numeroPagina,Model model,
 			@RequestParam("campoOrden") String campoOrden, @RequestParam("dirOrden") String dirOrden,
-			@RequestParam("palabraClave") String palabraClave) {
+			String palabraClave) {
 		
 		Page<Usuario> pagina = usuarioService.listByPage(numeroPagina, campoOrden, dirOrden, palabraClave);		
 		List<Usuario> listaUsuarios = pagina.getContent();

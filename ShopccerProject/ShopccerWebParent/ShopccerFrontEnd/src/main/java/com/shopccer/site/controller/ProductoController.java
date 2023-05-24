@@ -124,13 +124,13 @@ public class ProductoController {
     }
 
     @GetMapping("/search")
-    public String searchFirstPage(@RequestParam("palabraClave")String palabraClave,Model model){
+    public String searchFirstPage(String palabraClave,Model model){
 
         return searchByPage(palabraClave,1,model);
     }
 
     @GetMapping("/search/pagina/{numeroPagina}")
-    public String searchByPage(@RequestParam("palabraClave")String palabraClave, @PathVariable("numeroPagina") Integer numeroPagina,
+    public String searchByPage(String palabraClave, @PathVariable("numeroPagina") Integer numeroPagina,
                                Model model){
 
         Page<Producto> pagina = productoService.searchBypalabraClave(palabraClave, numeroPagina);

@@ -33,7 +33,7 @@ public class ClienteController {
                              @PathVariable(name = "numeroPagina") int numeroPagina,
                              @RequestParam("campoOrden") String campoOrden,
                              @RequestParam("dirOrden") String dirOrden,
-                             @RequestParam("palabraClave") String palabraClave) {
+                             String palabraClave) {
 
         Page<Cliente> pagina = clienteService.listByPage(numeroPagina, campoOrden, dirOrden, palabraClave);
         List<Cliente> listaClientes = pagina.getContent();

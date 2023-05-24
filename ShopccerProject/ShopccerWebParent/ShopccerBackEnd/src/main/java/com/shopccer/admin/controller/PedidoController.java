@@ -29,7 +29,7 @@ public class PedidoController {
                              @PathVariable(name = "numeroPagina") int numeroPagina,
                              @RequestParam("campoOrden") String campoOrden,
                              @RequestParam("dirOrden") String dirOrden,
-                             @RequestParam("palabraClave") String palabraClave) {
+                             String palabraClave) {
 
         Page<Pedido> pagina = pedidoService.listByPage(numeroPagina, campoOrden, dirOrden, palabraClave);
         List<Pedido> listaPedidos = pagina.getContent();

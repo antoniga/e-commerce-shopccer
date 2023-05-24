@@ -36,7 +36,7 @@ public class MarcaController {
 	@GetMapping("/marcas/pagina/{numeroPagina}")
 	public String listByPage(@PathVariable(name="numeroPagina") Integer numeroPagina, Model model,
 			@RequestParam("campoOrden") String campoOrden, @RequestParam("dirOrden") String dirOrden,
-			@RequestParam("palabraClave") String palabraClave) {
+			String palabraClave) {
 		
 		Page<Marca> pagina = marcaService.listByPage(numeroPagina, campoOrden, dirOrden, palabraClave);
 		List<Marca> listaMarcas = pagina.getContent();

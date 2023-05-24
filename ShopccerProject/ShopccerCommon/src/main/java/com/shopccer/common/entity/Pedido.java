@@ -23,7 +23,7 @@ public class Pedido {
     @Column(name = "numeroTelefono", nullable = false, length = 15)
     private String numeroTelefono;
 
-    @Column(name = "address_line_1", nullable = false, length = 64)
+    @Column(name = "direccion", nullable = false, length = 64)
     private String direccion;
 
     @Column(nullable = false, length = 45)

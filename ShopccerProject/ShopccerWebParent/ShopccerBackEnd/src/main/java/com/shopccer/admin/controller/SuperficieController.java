@@ -35,7 +35,7 @@ public class SuperficieController {
     @GetMapping("/superficies/pagina/{numeroPagina}")
     public String listByPage(@PathVariable(name = "numeroPagina") Integer numeroPagina, Model model,
                              @RequestParam("campoOrden") String campoOrden, @RequestParam("dirOrden") String dirOrden,
-                             @RequestParam("palabraClave") String palabraClave){
+                             String palabraClave){
 
         Page<Superficie> pagina = superficieService.listByPage(numeroPagina, campoOrden, dirOrden, palabraClave);
         List<Superficie> listSuperficies = pagina.getContent();
