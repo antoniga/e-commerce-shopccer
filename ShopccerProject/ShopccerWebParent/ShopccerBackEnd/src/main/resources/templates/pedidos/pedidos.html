@@ -110,6 +110,7 @@
 		$(document).ready(function() {
 			gestionarLinkClienteDetalle();
 			gestionarLinkPedidoDetalle();
+			gestionarLinkDeletePedido();
 		});
 
 		function gestionarLinkClienteDetalle() {
@@ -125,6 +126,16 @@
 				e.preventDefault();
 				linkDetailURL = $(this).attr("href");
 				$("#pedidoDetailModal").modal("show").find(".modal-content").load(linkDetailURL);
+			});
+		}
+
+		function gestionarLinkDeletePedido(){
+			$(".link-delete").on("click",function(e) {
+				e.preventDefault();
+				pedidoId = $(this).attr("pedidoId");
+				$("#btnSi").attr("href", $(this).attr("href"));
+				$("#confirmText").text("¿Seguro que desea eliminar el pedido con id: "+ pedidoId + " ?");
+				$("#confirmDelete").modal();
 			});
 		}
 

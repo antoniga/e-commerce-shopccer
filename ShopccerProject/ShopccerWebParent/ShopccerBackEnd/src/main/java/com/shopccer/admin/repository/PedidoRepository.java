@@ -17,5 +17,7 @@ public interface PedidoRepository extends CrudRepository<Pedido, Integer>, Pagin
             + " p.estado LIKE %?1% OR"
             + " p.cliente.nombre LIKE %?1% OR"
             + " p.cliente.apellidos LIKE %?1%")
-    public Page<Pedido> findAll(String palabraClave, Pageable pageable);
+    Page<Pedido> findAll(String palabraClave, Pageable pageable);
+
+    Long countByIdPedido(Integer idPedido);
 }

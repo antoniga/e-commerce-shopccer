@@ -49,4 +49,14 @@ public class PedidoServiceImpl implements PedidoService {
         return pedidoRepository.findById(idPedido)
                 .orElseThrow(() -> new PedidoNotFoundException("No existe ningún pedido con id: " + idPedido));
     }
+
+    @Override
+    public void deleteById(Integer idPedido) throws PedidoNotFoundException {
+        Long count = pedidoRepository.countByIdPedido(idPedido);
+        if (count == null || count == 0) {
+            throw new PedidoNotFoundException("No se pudo encontrar ningún pedido con id: " + idPedido);
+        }
+
+        pedidoRepository.deleteById(idPedido);
+    }
 }

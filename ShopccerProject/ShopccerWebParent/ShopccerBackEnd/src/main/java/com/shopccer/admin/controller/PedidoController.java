@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -71,5 +72,17 @@ public class PedidoController {
             return "redirect:/pedidos";
         }
 
+    }
+
+    @GetMapping("/pedidos/delete/{idPedido}")
+    public String deleteOrder(@PathVariable("idPedido") Integer idPedido, Model model, RedirectAttributes redirectAttributes) {
+        try {
+            pedidoService.deleteById(idPedido);;
+            redirectAttributes.addFlashAttribute("msg", "El pedido con id: " + idPedido + " ha sido eliminado.");
+        } catch (PedidoNotFoundException ex) {
+            redirectAttributes.addFlashAttribute("msg", ex.getMessage());
+        }
+
+        return "redirect:/pedidos";
     }
 }

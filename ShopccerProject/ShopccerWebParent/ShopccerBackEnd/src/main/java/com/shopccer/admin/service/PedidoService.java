@@ -12,4 +12,6 @@ public interface PedidoService {
     Page<Pedido> listByPage(int numeroPagina, String campoOrden, String dirOrden, String palabraClave);
 
     Pedido findById(Integer idPedido) throws PedidoNotFoundException;
+
+    void deleteById(Integer idPedido) throws PedidoNotFoundException;
 }
