@@ -39,8 +39,12 @@
 						<th th:replace="fragments :: columnLink('pedidos', 'cliente', 'Cliente', 'none')" />
 						<th th:replace="fragments :: columnLink('pedidos', 'total', 'Total', 'none')" />
 						<th th:replace="fragments :: columnLink('pedidos', 'fechaPedido', 'Fecha pedido', 'none')" />
-						<th th:replace="fragments :: columnLink('pedidos', 'destino', 'Destino', 'none')" />
-						<th th:replace="fragments :: columnLink('pedidos', 'estado', 'Estado', 'none')" />
+						<th class="hideable-column">
+							<th th:replace="fragments :: columnLink('pedidos', 'destino', 'Destino', 'tag')" />
+						</th>
+						<th class="hideable-column">
+							<th th:replace="fragments :: columnLink('pedidos', 'estado', 'Estado', 'tag')" />
+						</th>
 						<th></th>
 					</tr>
 				</thead>
@@ -56,8 +60,8 @@
 						<td>
 							<div th:replace="fragments :: format_time(${pedido.fechaPedido})"></div>
 						</td>
-						<td>[[${pedido.destino}]]</td>
-						<td>[[${pedido.estado}]]</td>
+						<td class="hideable-column">[[${pedido.destino}]]</td>
+						<td class="hideable-column">[[${pedido.estado}]]</td>
 						<td>
 							<a class="fas fa-file-alt fa-2x icon-shopccer linkPedidoDetalle" style="text-decoration: none" th:href="@{'/pedidos/detalles/' + ${pedido.idPedido}}" title="Ver detalles del pedido"></a> &nbsp;
 							<a class="fa-solid fa-edit fa-2x icon-green" style="text-decoration: none" th:href="@{'/pedidos/edit/'+${pedido.idPedido}}" title="Editar pedido"></a> &nbsp;
@@ -66,6 +70,30 @@
 					</tr>
 				</tbody>
 			</table>
+		</div>
+
+		<div class="less-details">
+			<th:block th:each="pedido : ${listaPedidos}">
+				<div class="row m-1">
+					<div class="col-2">
+						[[${pedido.idPedido}]]
+					</div>
+					<div class="col-10">
+						<div><a class="linkClienteDetalle" th:href="@{'/clientes/detalles/' + ${pedido.cliente.idCliente}}">
+							[[${pedido.cliente.nombreCompleto}]]
+						</a>
+						<br>([[${pedido.pais}]])</div>
+						<div><small><span th:replace="fragments :: format_time(${pedido.fechaPedido})"></span> - [[${pedido.estado}]]</small></div>
+						<div><b>[[${pedido.total}]] €</b></div>
+						<div>
+							<a class="fas fa-file-alt fa-2x icon-shopccer linkPedidoDetalle" style="text-decoration: none" th:href="@{'/pedidos/detalles/' + ${pedido.idPedido}}" title="Ver detalles del pedido"></a> &nbsp;
+							<a class="fa-solid fa-edit fa-2x icon-green" style="text-decoration: none" th:href="@{'/pedidos/edit/'+${pedido.idPedido}}" title="Editar pedido"></a> &nbsp;
+							<a class="fa-solid fa-trash fa-2x icon-dark link-delete" style="text-decoration: none" th:href="@{'/pedidos/delete/'+${pedido.idPedido}}" th:pedidoId="${pedido.idPedido}" title="Eliminar pedido"></a>
+						</div>
+					</div>
+				</div>
+				<div>&nbsp;</div>
+			</th:block>
 		</div>
 
 		<div class= "text-center m-1" th:if="${pedidosTotales > 0}">

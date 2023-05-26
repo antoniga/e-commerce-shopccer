@@ -11,7 +11,7 @@
 <body>
     <!-- Plantilla para escribir codigo reusable por thymeleaf en nuestras vistas -->
     <div th:fragment="header_menu">
-        <nav class="navbar navbar-expand-lg bg-dark navbar-dark mb-3">
+        <nav class="navbar navbar-expand-lg bg-dark navbar-dark">
             <a class="navbar-brand" th:href="@{/}" href=""><img th:src="@{${SITE_LOGO}}"></a>
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#topNavBar,#searchNavBar,#clienteNavBar">
                 <span class="navbar-toggler-icon"></span>
@@ -28,14 +28,32 @@
                         <a class="nav-link" href="">Envíos y Entregas</a>
                     </li>
                     <li class="nav-item">
+                        <a class="nav-link" href="">Contacto</a>
+                    </li>
+                    <li class="nav-item">
                         <a class="nav-link" th:if="${not #authorization.expression('isAuthenticated()')}" th:href="@{/login}">Login</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" th:if="${not #authorization.expression('isAuthenticated()')}" th:href="@{/registro}">Registro</a>
                     </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="">Contacto</a>
-                    </li>
+                    <th:block sec:authorize="isAuthenticated()">
+                        <li class="nav-item pl-2"><span class="fas fa-user fa-2x icon-silver"></span></li>
+                        <li class="nav-item pl-2" >
+                            <b><a class="nav-link " th:href="@{/detalles_cuenta}"
+                                  sec:authentication="principal.fullName"></a></b>
+                        </li>
+                        <li class="nav-item pl-2" >
+                            <a class="nav-link" href="">Pedidos</a>
+                        </li>
+                        <li class="nav-item pl-2">
+                            <a class="nav-link" th:href="@{/carro}">
+                                <i class="fa-solid fa-cart-shopping fa-lg"></i></a>
+                        </li>
+                        <li class="nav-item pl-2">
+                            <a class="nav-link" href="javascript: document.logoutForm.submit()">
+                                <i class="fa-solid fa-right-from-bracket fa-lg"></i></a>
+                        </li>
+                    </th:block>
                 </ul>
             </div>
         </nav>
@@ -56,30 +74,30 @@
                         <input type="submit" class="btn btn-outline-dark mr-sm-2 mt-1 mb-1" value="Buscar">
                     </form>
                 </div>
-                <div class="justify-content-end collapse navbar-collapse navbar-light"  id="clienteNavBar">
-                    <ul class="navbar-nav">
-                        <th:block sec:authorize="isAuthenticated()">
-                            <li class="nav-item pl-2" style="background-color: #17a2b8; color:white;">
-                                <b><a class="nav-link " style=" color: white;" th:href="@{/detalles_cuenta}"
-                                      sec:authentication="principal.fullName"></a></b>
-                            </li>
-                            <li class="nav-item pl-2" style="background-color: #17a2b8;">
-                                <a class="nav-link" style=" color: white;" href="">Dirección</a>
-                            </li>
-                            <li class="nav-item pl-2" style="background-color: #17a2b8;">
-                                <a class="nav-link" style=" color: white;" href="">Pedidos</a>
-                            </li>
-                            <li class="nav-item pl-2" style="background-color: #17a2b8;">
-                                <a class="nav-link" style=" color: white;" th:href="@{/carro}">
-                                    <i class="fa-solid fa-cart-shopping fa-lg"></i></a>
-                            </li>
-                            <li class="nav-item pl-2" style="background-color: #17a2b8;">
-                                <a class="nav-link" style=" color: white;" href="javascript: document.logoutForm.submit()">
-                                    <i class="fa-solid fa-right-from-bracket fa-lg"></i></a>
-                            </li>
-                        </th:block>
-                    </ul>
-                </div>
+<!--                <div class="justify-content-end collapse navbar-collapse navbar-light"  id="clienteNavBar">-->
+<!--                    <ul class="navbar-nav">-->
+<!--                        <th:block sec:authorize="isAuthenticated()">-->
+<!--                            <li class="nav-item pl-2" style="background-color: #17a2b8; color:white;">-->
+<!--                                <b><a class="nav-link " style=" color: white;" th:href="@{/detalles_cuenta}"-->
+<!--                                      sec:authentication="principal.fullName"></a></b>-->
+<!--                            </li>-->
+<!--                            <li class="nav-item pl-2" style="background-color: #17a2b8;">-->
+<!--                                <a class="nav-link" style=" color: white;" href="">Dirección</a>-->
+<!--                            </li>-->
+<!--                            <li class="nav-item pl-2" style="background-color: #17a2b8;">-->
+<!--                                <a class="nav-link" style=" color: white;" href="">Pedidos</a>-->
+<!--                            </li>-->
+<!--                            <li class="nav-item pl-2" style="background-color: #17a2b8;">-->
+<!--                                <a class="nav-link" style=" color: white;" th:href="@{/carro}">-->
+<!--                                    <i class="fa-solid fa-cart-shopping fa-lg"></i></a>-->
+<!--                            </li>-->
+<!--                            <li class="nav-item pl-2" style="background-color: #17a2b8;">-->
+<!--                                <a class="nav-link" style=" color: white;" href="javascript: document.logoutForm.submit()">-->
+<!--                                    <i class="fa-solid fa-right-from-bracket fa-lg"></i></a>-->
+<!--                            </li>-->
+<!--                        </th:block>-->
+<!--                    </ul>-->
+<!--                </div>-->
             </nav>
         </div>
     </div>
