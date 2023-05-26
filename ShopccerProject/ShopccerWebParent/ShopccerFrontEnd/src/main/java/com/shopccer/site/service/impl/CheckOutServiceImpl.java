@@ -87,7 +87,7 @@ public class CheckOutServiceImpl implements com.shopccer.site.service.CheckOutSe
         Double precio = 0.0;
 
         for (ItemCarro item : itemCarros) {
-            precio += item.getCantidad() * item.getProducto().getPrecio();
+            precio += item.getCantidad() * item.getProducto().getPrecioConDescuento();
         }
 
         precio = Math.round(precio * 100.0) / 100.0;

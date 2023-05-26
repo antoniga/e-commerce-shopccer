@@ -105,4 +105,8 @@ public class ItemCarroServiceImpl implements ItemCarroService {
         //eliminamos el item del carro
         itemCarroRepository.deleteByClienteAndProductoAAndTalla(cliente.getIdCliente(), idProducto, talla);
     }
+    @Override
+    public void deleteByCliente(Cliente cliente) {
+        itemCarroRepository.deleteByCliente(cliente.getIdCliente());
+    }
 }

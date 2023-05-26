@@ -22,4 +22,8 @@ public interface ItemCarroRepository extends CrudRepository<ItemCarro, Integer> 
     @Modifying
     @Query("DELETE FROM ItemCarro i WHERE i.cliente.idCliente = ?1 AND i.producto.idProducto = ?2 AND i.talla = ?3")
     void deleteByClienteAndProductoAAndTalla(Integer idCliente, Integer idProducto, String talla);
+
+    @Modifying
+    @Query("DELETE ItemCarro i WHERE i.cliente.idCliente = ?1")
+    void deleteByCliente(Integer idClente);
 }

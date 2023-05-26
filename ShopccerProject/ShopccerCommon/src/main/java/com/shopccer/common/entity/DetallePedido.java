@@ -11,7 +11,6 @@ public class DetallePedido {
 
     private int cantidad;
     private Double costeProducto;
-    private Double costeEnvio;
     private Double precioUnitario;
     private Double subtotal;
 
@@ -26,21 +25,19 @@ public class DetallePedido {
     public DetallePedido() {
     }
 
-    public DetallePedido(int cantidad, Double costeProducto, Double costeEnvio, Double precioUnitario, Double subtotal, Producto producto, Pedido pedido) {
+    public DetallePedido(int cantidad, Double costeProducto, Double precioUnitario, Double subtotal, Producto producto, Pedido pedido) {
         this.cantidad = cantidad;
         this.costeProducto = costeProducto;
-        this.costeEnvio = costeEnvio;
         this.precioUnitario = precioUnitario;
         this.subtotal = subtotal;
         this.producto = producto;
         this.pedido = pedido;
     }
 
-    public DetallePedido(Integer idDetallePedido, int cantidad, Double costeProducto, Double costeEnvio, Double precioUnitario, Double subtotal, Producto producto, Pedido pedido) {
+    public DetallePedido(Integer idDetallePedido, int cantidad, Double costeProducto, Double precioUnitario, Double subtotal, Producto producto, Pedido pedido) {
         this.idDetallePedido = idDetallePedido;
         this.cantidad = cantidad;
         this.costeProducto = costeProducto;
-        this.costeEnvio = costeEnvio;
         this.precioUnitario = precioUnitario;
         this.subtotal = subtotal;
         this.producto = producto;
@@ -69,14 +66,6 @@ public class DetallePedido {
 
     public void setCosteProducto(Double costeProducto) {
         this.costeProducto = costeProducto;
-    }
-
-    public Double getCosteEnvio() {
-        return costeEnvio;
-    }
-
-    public void setCosteEnvio(Double costeEnvio) {
-        this.costeEnvio = costeEnvio;
     }
 
     public Double getPrecioUnitario() {

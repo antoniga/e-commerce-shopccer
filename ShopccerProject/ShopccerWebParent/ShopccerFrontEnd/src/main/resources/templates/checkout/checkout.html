@@ -31,11 +31,13 @@
 				<div class="card mt-3 mb-3">
 					<div class="card-header"><h5>Método de pago</h5></div>
 					<div class="card-body">
-						<p>
-							<input type="radio" /> Cash on Delivery (COD)
-							&nbsp;
-							<button class="btn btn-primary">Place Order with COD</button>
-						</p>
+						<form th:action="@{/realizar_pedido}" method="post">
+							<p>
+								<input type="radio" name="paymentMethod" id="radioCOD" value="COD" /> Pago en metálico
+								&nbsp;
+								<button class="btn btn-primary d-none" type="submit" id="buttonSubmit">Realizar pedido</button>
+							</p>
+						</form>
 					</div>
 				</div>
 			</div>
@@ -86,6 +88,17 @@
 	</div>
 	<div th:replace="navigation :: footer_menu"></div>
 	<div th:replace="fragments :: footer"></div>
+	<script type="text/javascript">
+		contextPath = "[[@{/}]]";
+		var csrfHeaderName = "[[${_csrf.headerName}]]";
+		var csrfValue = "[[${_csrf.token}]]";
 
+		$(document).ready(function() {
+			$("#radioCOD").on("click", function() {
+				$("#buttonSubmit").removeClass("d-none");
+			});
+		});
+
+	</script>
 </body>
 </html>

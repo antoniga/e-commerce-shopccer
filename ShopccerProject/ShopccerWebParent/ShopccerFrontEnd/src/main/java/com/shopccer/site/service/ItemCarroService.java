@@ -19,4 +19,6 @@ public interface ItemCarroService {
     Double updateCantidad(Integer idProducto, Integer talla, Integer cantidad, Cliente cliente, String variacionStock);
 
     void removeProducto(Cliente cliente, Integer idProducto,String talla);
+
+    void deleteByCliente(Cliente cliente);
 }
