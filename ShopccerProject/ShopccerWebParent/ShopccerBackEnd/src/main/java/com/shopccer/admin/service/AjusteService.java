@@ -17,4 +17,6 @@ public interface AjusteService {
     List<Ajuste> getAjustesMailServer();
 
     List<Ajuste> getAjustesMailTemplates();
+
+    List<Ajuste> getAjustesPagos();
 }

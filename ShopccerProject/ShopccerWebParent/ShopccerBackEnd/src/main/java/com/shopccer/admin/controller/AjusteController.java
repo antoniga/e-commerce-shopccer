@@ -71,6 +71,17 @@ public class AjusteController {
         return "redirect:/ajustes#servidor";
     }
 
+    @PostMapping("/ajustes/save_pago")
+    public String saveAjustesPago(HttpServletRequest request, RedirectAttributes redirectAttributes) {
+        List<Ajuste> ajustesPago = ajusteService.getAjustesPagos();
+        updateAjustesGeneralesEnBBDD(request, ajustesPago);
+
+        redirectAttributes.addFlashAttribute("msg", "Los ajustes de pago han sido " +
+                "guardados");
+
+        return "redirect:/ajustes#pagos";
+    }
+
     private static void saveSiteLogo(MultipartFile multipartFile, GeneralUtil ajustesGenerales) throws IOException {
         if(!multipartFile.isEmpty()) {
             String nombreArchivo = StringUtils.cleanPath(multipartFile.getOriginalFilename());
@@ -96,4 +107,5 @@ public class AjusteController {
         }
         ajusteService.saveAll(listaAjustes);
     }
+
 }

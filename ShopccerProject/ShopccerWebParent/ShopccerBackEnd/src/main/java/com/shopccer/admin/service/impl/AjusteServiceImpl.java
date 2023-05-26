@@ -49,5 +49,10 @@ public class AjusteServiceImpl implements AjusteService {
         return ajusteRepository.findByCategoria(AjusteCategoria.MAIL_TEMPLATE);
     }
 
+    @Override
+    public List<Ajuste> getAjustesPagos() {
+        return ajusteRepository.findByCategoria(AjusteCategoria.PAGO);
+    }
+
 
 }
