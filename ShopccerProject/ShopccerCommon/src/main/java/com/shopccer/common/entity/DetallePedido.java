@@ -10,10 +10,10 @@ public class DetallePedido {
     private Integer idDetallePedido;
 
     private int cantidad;
-    private float costeProducto;
-    private float costeEnvio;
-    private float precioUnitario;
-    private float subtotal;
+    private Double costeProducto;
+    private Double costeEnvio;
+    private Double precioUnitario;
+    private Double subtotal;
 
     @ManyToOne
     @JoinColumn(name = "id_producto")
@@ -26,7 +26,7 @@ public class DetallePedido {
     public DetallePedido() {
     }
 
-    public DetallePedido(int cantidad, float costeProducto, float costeEnvio, float precioUnitario, float subtotal, Producto producto, Pedido pedido) {
+    public DetallePedido(int cantidad, Double costeProducto, Double costeEnvio, Double precioUnitario, Double subtotal, Producto producto, Pedido pedido) {
         this.cantidad = cantidad;
         this.costeProducto = costeProducto;
         this.costeEnvio = costeEnvio;
@@ -36,7 +36,7 @@ public class DetallePedido {
         this.pedido = pedido;
     }
 
-    public DetallePedido(Integer idDetallePedido, int cantidad, float costeProducto, float costeEnvio, float precioUnitario, float subtotal, Producto producto, Pedido pedido) {
+    public DetallePedido(Integer idDetallePedido, int cantidad, Double costeProducto, Double costeEnvio, Double precioUnitario, Double subtotal, Producto producto, Pedido pedido) {
         this.idDetallePedido = idDetallePedido;
         this.cantidad = cantidad;
         this.costeProducto = costeProducto;
@@ -63,35 +63,35 @@ public class DetallePedido {
         this.cantidad = cantidad;
     }
 
-    public float getCosteProducto() {
+    public Double getCosteProducto() {
         return costeProducto;
     }
 
-    public void setCosteProducto(float costeProducto) {
+    public void setCosteProducto(Double costeProducto) {
         this.costeProducto = costeProducto;
     }
 
-    public float getCosteEnvio() {
+    public Double getCosteEnvio() {
         return costeEnvio;
     }
 
-    public void setCosteEnvio(float costeEnvio) {
+    public void setCosteEnvio(Double costeEnvio) {
         this.costeEnvio = costeEnvio;
     }
 
-    public float getPrecioUnitario() {
+    public Double getPrecioUnitario() {
         return precioUnitario;
     }
 
-    public void setPrecioUnitario(float precioUnitario) {
+    public void setPrecioUnitario(Double precioUnitario) {
         this.precioUnitario = precioUnitario;
     }
 
-    public float getSubtotal() {
+    public Double getSubtotal() {
         return subtotal;
     }
 
-    public void setSubtotal(float subtotal) {
+    public void setSubtotal(Double subtotal) {
         this.subtotal = subtotal;
     }
 

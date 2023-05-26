@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="fragments :: pageHead('Carro Compra')"></head>
+<body>
+	<div th:replace="navigation :: header_menu"></div>
+	<div th:replace="navigation :: search_nav"></div>
+	<div class="container">
+
+		<div class="text-center border-bottom m-3">
+			<h2>Finalizar compra</h2>
+		</div>
+
+		<div class="row m-1">
+			<div class="col-sm-8">
+				<div class="card">
+					<div class="card-header"><h5>Datos de envío</h5></div>
+					<div class="card-body">
+						<p>
+							<b>Enviar a:</b>&nbsp; [[${cliente.direccion}]], [[${cliente.ciudad}]], [[${cliente.comunidad}]],
+							[[${cliente.codPostal}]], [[${cliente.pais.nombre}]]
+						</p>
+						<p>
+							<b>Tiempo de entrega: </b>[[${checkoutInfo.diasEntrega}]] día(s)
+						</p>
+						<p>
+							<b>Fecha esperada de entrega: </b>[[${#dates.format(checkoutInfo.fechaEntrega, 'E, dd MMM yyyy')}]]
+						</p>
+					</div>
+				</div>
+
+				<div class="card mt-3 mb-3">
+					<div class="card-header"><h5>Método de pago</h5></div>
+					<div class="card-body">
+						<p>
+							<input type="radio" /> Cash on Delivery (COD)
+							&nbsp;
+							<button class="btn btn-primary">Place Order with COD</button>
+						</p>
+					</div>
+				</div>
+			</div>
+
+
+			<div class="col-sm-4">
+				<div class="card">
+					<div class="card-header"><h5>Resumen del pedido</h5></div>
+					<div class="card-body">
+						<div>
+							<table>
+								<th:block th:each="item : ${itemsCarro}">
+									<tr th:with="producto = ${item.producto}">
+										<td>[[${item.cantidad}]] X &nbsp;&nbsp;</td>
+										<td>
+											<a th:href="@{'/productos/' + ${producto.idProducto}}" target="_blank">
+												[[${producto.nombre}]]
+											</a>
+										</td>
+										<td>
+											<span>[[${item.subtotal}]] € &nbsp;&nbsp;</span>
+										</td>
+									</tr>
+									<tr><td colspan="4"><hr/></tr>
+								</th:block>
+							</table>
+						</div>
+
+						<div class="row mt-2">
+							<div class="col">Total productos: </div>
+							<div class="col">[[${checkoutInfo.totalProducto}]] €</div>
+						</div>
+
+						<div class="row mt-2">
+							<div class="col">Total envío: </div>
+							<div class="col">[[${checkoutInfo.costeEnvio}]] €</div>
+						</div>
+
+						<div class="row mt-2">
+							<div class="col">Total a pagar: </div>
+							<div class="col"><b>[[${checkoutInfo.totalPago}]] €</b></div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+
+	</div>
+	<div th:replace="navigation :: footer_menu"></div>
+	<div th:replace="fragments :: footer"></div>
+
+</body>
+</html>
