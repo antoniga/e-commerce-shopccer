@@ -1,7 +1,10 @@
 package com.shopccer.site.checkout;
 
+import java.text.DecimalFormat;
+import java.text.DecimalFormatSymbols;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.Locale;
 
 public class CheckoutInfo {
 
@@ -56,5 +59,10 @@ public class CheckoutInfo {
         calendar.add(Calendar.DATE, diasEntrega);
 
         return calendar.getTime();
+    }
+
+    public String getPaymentTotal4PayPal() {
+        DecimalFormat formatter = new DecimalFormat("##.##", new DecimalFormatSymbols(Locale.ENGLISH));
+        return formatter.format(totalPago);
     }
 }

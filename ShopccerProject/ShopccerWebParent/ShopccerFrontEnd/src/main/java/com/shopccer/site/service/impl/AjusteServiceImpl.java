@@ -5,6 +5,7 @@ import com.shopccer.common.entity.AjusteCategoria;
 import com.shopccer.site.repository.AjusteRepository;
 import com.shopccer.site.service.AjusteService;
 import com.shopccer.site.util.EmailUtil;
+import com.shopccer.site.util.PagoUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -30,5 +31,10 @@ public class AjusteServiceImpl implements AjusteService {
         ajustes.addAll(ajusteRepository.findByCategoria(AjusteCategoria.MAIL_TEMPLATE));
 
         return new EmailUtil(ajustes);
+    }
+    @Override
+    public PagoUtil getAjustesPago() {
+        List<Ajuste> ajustes = ajusteRepository.findByCategoria(AjusteCategoria.PAGO);
+        return new PagoUtil(ajustes);
     }
 }

@@ -6,6 +6,7 @@ import com.shopccer.common.entity.Pedido;
 import com.shopccer.site.checkout.CheckoutInfo;
 import com.shopccer.site.service.*;
 import com.shopccer.site.util.EmailUtil;
+import com.shopccer.site.util.PagoUtil;
 import com.shopccer.site.util.Utility;
 import jakarta.mail.MessagingException;
 import jakarta.mail.internet.MimeMessage;
@@ -48,6 +49,11 @@ public class CheckoutController {
         List<ItemCarro> itemsCarro = itemCarroService.listItemsCarro(cliente);
         CheckoutInfo checkoutInfo = checkOutService.prepareCheckout(itemsCarro);
 
+        PagoUtil paymentSettings = ajusteService.getAjustesPago();
+        String paypalClientId = paymentSettings.getClientID();
+
+        model.addAttribute("paypalClientId", paypalClientId);
+        model.addAttribute("cliente", cliente);
         model.addAttribute("checkoutInfo", checkoutInfo);
         model.addAttribute("itemsCarro", itemsCarro);
         model.addAttribute("cliente", cliente);
