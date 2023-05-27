@@ -59,6 +59,7 @@ public class ClienteController {
 
         EmailUtil emailSettings = ajusteService.getAjustesEmail();
         JavaMailSenderImpl mailSender = Utility.prepareMailSender(emailSettings);
+        mailSender.setDefaultEncoding("utf-8");
 
         String toAddress = cliente.getEmail();
         String subject = emailSettings.getCustomerVerifySubject();

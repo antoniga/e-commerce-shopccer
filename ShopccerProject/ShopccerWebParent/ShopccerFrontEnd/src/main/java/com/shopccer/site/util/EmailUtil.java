@@ -51,4 +51,12 @@ public class EmailUtil extends AjusteUtil {
         return super.getValor("CUSTOMER_VERIFY_CONTENT");
     }
 
+    public String getOrderConfirmationSubject() {
+        return super.getValor("ORDER_CONFIRMATION_SUBJECT");
+    }
+
+    public String getOrderConfirmationContent() {
+        return super.getValor("ORDER_CONFIRMATION_CONTENT");
+    }
+
 }
