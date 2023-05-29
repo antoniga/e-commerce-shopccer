@@ -86,7 +86,7 @@ public class ForgotPasswordController {
         } else {
             model.addAttribute("tituloPagina", "Token Inválido");
             model.addAttribute("message", "Token Inválido");
-            return "clientes/message";
+            return "message";
         }
 
         return "clientes/reset_password_form";
@@ -109,6 +109,6 @@ public class ForgotPasswordController {
             model.addAttribute("message", e.getMessage());
         }
 
-        return "clientes/message";
+        return "message";
     }
 }

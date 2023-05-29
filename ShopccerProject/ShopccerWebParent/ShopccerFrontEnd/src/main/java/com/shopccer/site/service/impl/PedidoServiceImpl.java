@@ -21,7 +21,7 @@ public class PedidoServiceImpl implements com.shopccer.site.service.PedidoServic
         Pedido pedido = new Pedido();
 
         pedido.setFechaPedido(new Date());
-        pedido.setEstado(EstadoPedido.NUEVO);
+        pedido.setEstado(EstadoPedido.PAGADO);
         pedido.setCliente(cliente);
         pedido.setCosteProducto(checkoutInfo.getCosteProducto());
         pedido.setTotal(checkoutInfo.getTotalProducto());

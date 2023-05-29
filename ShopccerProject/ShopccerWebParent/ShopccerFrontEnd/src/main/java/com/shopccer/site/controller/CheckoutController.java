@@ -4,6 +4,8 @@ import com.shopccer.common.entity.Cliente;
 import com.shopccer.common.entity.ItemCarro;
 import com.shopccer.common.entity.Pedido;
 import com.shopccer.site.checkout.CheckoutInfo;
+import com.shopccer.site.checkout.paypal.PayPalApiException;
+import com.shopccer.site.checkout.paypal.PayPalService;
 import com.shopccer.site.service.*;
 import com.shopccer.site.util.EmailUtil;
 import com.shopccer.site.util.PagoUtil;
@@ -42,6 +44,9 @@ public class CheckoutController {
     @Autowired
     private AjusteService ajusteService;
 
+    @Autowired
+    private PayPalService payPalService;
+
     @GetMapping("/checkout")
     public String showCheckoutPage(Model model, HttpServletRequest request) {
         Cliente cliente = getClienteAutenticado(request);
@@ -74,6 +79,33 @@ public class CheckoutController {
         sendEmailconfirmacion(request,pedido);
 
         return "checkout/pedido_completado";
+    }
+
+    @PostMapping("/procesar_pedido_paypal")
+    public String procesarPedidoPaypal(HttpServletRequest request, Model model)
+            throws UnsupportedEncodingException, MessagingException {
+        String orderId = request.getParameter("orderId");
+
+        String tituloPAgina = "Fallo Checkout";
+        String message = null;
+
+        try {
+            if (payPalService.validateOrder(orderId)) {
+                return realizarPedido(request);
+            } else {
+                tituloPAgina = "Fallo Checkout";
+                message = "ERROR: La transacción no se pudo completar debido a que la información del pedido es inválida.";
+            }
+        } catch (PayPalApiException e) {
+            message = "ERROR: Transacción fallida debido al siguiente error: " + e.getMessage();
+        }
+
+        model.addAttribute("tituloPagina", tituloPAgina);
+        model.addAttribute("titulo", tituloPAgina);
+        model.addAttribute("msg", message);
+
+        return "message";
+
     }
 
     private Cliente getClienteAutenticado(HttpServletRequest request) {
