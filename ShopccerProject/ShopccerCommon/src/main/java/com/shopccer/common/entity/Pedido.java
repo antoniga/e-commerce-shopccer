@@ -55,6 +55,7 @@ public class Pedido {
     private Set<DetallePedido> detallePedido = new HashSet<>();
 
     @OneToMany(mappedBy = "pedido", cascade = CascadeType.ALL)
+    @OrderBy("updatedTime ASC")
     private List<SeguimientoPedido> seguimientosPedido = new ArrayList<>();
 
     public Pedido() {
