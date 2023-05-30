@@ -1,8 +1,10 @@
 package com.shopccer.admin.controller;
 
 import com.shopccer.admin.exception.PedidoNotFoundException;
+import com.shopccer.admin.repository.PaisRepository;
 import com.shopccer.admin.service.PedidoService;
 import com.shopccer.admin.service.impl.PedidoServiceImpl;
+import com.shopccer.common.entity.Pais;
 import com.shopccer.common.entity.Pedido;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,6 +24,9 @@ public class PedidoController {
 
     @Autowired
     private PedidoService pedidoService;
+
+    @Autowired
+    private PaisRepository paisRepository;
 
     @GetMapping("/pedidos")
     public String listFirstPage(Model model) {
@@ -84,5 +89,26 @@ public class PedidoController {
         }
 
         return "redirect:/pedidos";
+    }
+
+    @GetMapping("/pedidos/edit/{idPedido}")
+    public String editOrder(@PathVariable("idPedido") Integer idPedido, Model model, RedirectAttributes redirectAttributes,
+                            HttpServletRequest request) {
+        try {
+            Pedido pedido = pedidoService.findById(idPedido);;
+
+            List<Pais> listaPaises = paisRepository.findAllByOrderByNombreAsc();
+
+            model.addAttribute("tituloPagina", "Editar pedido (ID: " + idPedido + ")");
+            model.addAttribute("pedido", pedido);
+            model.addAttribute("listaPaises", listaPaises);
+
+            return "pedidos/pedidos_form";
+
+        } catch (PedidoNotFoundException ex) {
+            redirectAttributes.addFlashAttribute("message", ex.getMessage());
+            return "redirect:/pedidos";
+        }
+
     }
 }

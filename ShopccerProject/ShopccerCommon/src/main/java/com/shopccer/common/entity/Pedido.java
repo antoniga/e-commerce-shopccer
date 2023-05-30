@@ -2,6 +2,8 @@ package com.shopccer.common.entity;
 
 import jakarta.persistence.*;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.*;
 
 @Entity
@@ -269,5 +271,11 @@ public class Pedido {
         destino += pais;
 
         return destino;
+    }
+
+    @Transient
+    public String getFechaEntregaOnForm() {
+        DateFormat dateFormatter = new SimpleDateFormat("yyyy-MM-dd");
+        return dateFormatter.format(this.fechaEntrega);
     }
 }

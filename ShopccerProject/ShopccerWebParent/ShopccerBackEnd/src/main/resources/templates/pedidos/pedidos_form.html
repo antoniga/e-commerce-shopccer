@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head th:replace="fragments :: pageHead(${tituloPagina})"></head>
+
+<body>
+	<div class="container-fluid">
+		<div th:replace="navigation :: menu"></div>
+		<div>
+			<h2>Gestión de pedidos | [[${tituloPagina}]]</h2>
+		</div>
+		<form th:action="@{/pedidos/save}" th:object="${pedido}" method="post">
+			<input type="hidden" th:field="*{idPedido}" />
+			<div>
+				<ul class="nav nav-tabs" id="myTab" role="tablist">
+					<li class="nav-item">
+						<a class="nav-link active" id="resumen-tab" data-toggle="tab" href="#resumen" role="tab">Resumen</a>
+					</li>
+					<li class="nav-item">
+						<a class="nav-link" id="productos-tab" data-toggle="tab" href="#productos" role="tab">Productos</a>
+					</li>
+					<li class="nav-item">
+						<a class="nav-link" id="envio-tab" data-toggle="tab" href="#envio" role="tab">Envío</a>
+					</li>
+					<li class="nav-item">
+						<a class="nav-link" id="seguimiento-tab" data-toggle="tab" href="#seguimiento" role="tab">Seguimiento</a>
+					</li>
+				</ul>
+				<div class="tab-content" id="myTabContent">
+					<div class="tab-pane fade show active p-3" id="resumen" role="tabpanel">
+						<div th:replace="pedidos/pedido_form_resumen :: content"></div>
+					</div>
+
+					<div class="tab-pane fade p-3" id="productos" role="tabpanel">
+						<h2>Editar productos</h2>
+					</div>
+
+					<div class="tab-pane fade p-3" id="envio" role="tabpanel">
+						<div th:replace="pedidos/pedido_form_envio :: content"></div>
+					</div>
+
+					<div class="tab-pane fade p-3" id="seguimiento" role="tabpanel">
+						<h2>Editar seguimiento pedido</h2>
+					</div>
+				</div>
+			</div>
+			<div>
+				<p class="text-center">
+					<input type="submit" value="Guardar" class="btn btn-primary m-3" />
+					<input type="button" value="Cancelar" class="btn btn-secondary" id="buttonCancel" />
+				</p>
+			</div>
+		</form>
+
+		<div th:replace="modal_fragments :: modal_dialog"></div>
+
+	</div>
+	<div th:replace="fragments :: footer"></div>
+	<script type="text/javascript">
+		contextPath = "[[@{/}]]";
+		var dropdownPais;
+		var dropdownComunidades;
+
+		$(document).ready(function() {
+			$('#buttonCancel').click(function() {
+				window.location = "[[@{/pedidos}]]";
+			});
+
+			dropdownPais = $("#pais");
+			dropdownComunidades = $("#listaComunidades");
+
+			dropdownPais.on("change", function() {
+				loadStates4Country();
+				$("#comunidad").val("").focus();
+			});
+
+			loadStates4Country();
+
+		});
+
+		function loadStates4Country() {
+			selectedCountry = $("#pais option:selected");
+			countryId = selectedCountry.val();
+			url = "/ShopccerAdmin/comunidades/list_by_pais/" + countryId;
+
+			$.get(url, function(responseJSON) {
+				dropdownComunidades.empty();
+
+				$.each(responseJSON, function(index, comunidad) {
+					$("<option>").val(comunidad.nombre).text(comunidad.nombre).appendTo(dropdownComunidades);
+				});
+
+			}).fail(function() {
+				showErrorModal("Error loading states/provinces for the selected country.");
+			})
+		}
+
+
+	</script>
+	<script th:src="@{/js/common_form.js}"></script>
+</body>
+
+</html>
