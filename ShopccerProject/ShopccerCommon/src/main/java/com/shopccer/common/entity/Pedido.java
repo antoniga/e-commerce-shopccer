@@ -2,9 +2,7 @@ package com.shopccer.common.entity;
 
 import jakarta.persistence.*;
 
-import java.util.Date;
-import java.util.HashSet;
-import java.util.Set;
+import java.util.*;
 
 @Entity
 @Table(name = "pedidos")
@@ -55,6 +53,9 @@ public class Pedido {
 
     @OneToMany(mappedBy = "pedido", cascade = CascadeType.ALL)
     private Set<DetallePedido> detallePedido = new HashSet<>();
+
+    @OneToMany(mappedBy = "pedido", cascade = CascadeType.ALL)
+    private List<SeguimientoPedido> seguimientosPedido = new ArrayList<>();
 
     public Pedido() {
     }
@@ -242,6 +243,22 @@ public class Pedido {
 
     public void setDetallesPedido(Set<DetallePedido> detallePedido) {
         this.detallePedido = detallePedido;
+    }
+
+    public Set<DetallePedido> getDetallePedido() {
+        return detallePedido;
+    }
+
+    public void setDetallePedido(Set<DetallePedido> detallePedido) {
+        this.detallePedido = detallePedido;
+    }
+
+    public List<SeguimientoPedido> getSeguimientosPedido() {
+        return seguimientosPedido;
+    }
+
+    public void setSeguimientosPedido(List<SeguimientoPedido> seguimientosPedido) {
+        this.seguimientosPedido = seguimientosPedido;
     }
 
     @Transient
