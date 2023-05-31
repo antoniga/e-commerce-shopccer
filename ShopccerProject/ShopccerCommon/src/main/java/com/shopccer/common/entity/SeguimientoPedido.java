@@ -2,6 +2,9 @@ package com.shopccer.common.entity;
 
 import jakarta.persistence.*;
 
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 
 @Entity
@@ -63,5 +66,21 @@ public class SeguimientoPedido {
 
     public void setPedido(Pedido pedido) {
         this.pedido = pedido;
+    }
+
+    @Transient
+    public String getUpdatedTimeOnForm() {
+        DateFormat dateFormatter = new SimpleDateFormat("yyyy-MM-dd'T'hh:mm:ss");
+        return dateFormatter.format(this.updatedTime);
+    }
+
+    public void setUpdatedTimeOnForm(String dateString) {
+        DateFormat dateFormatter = new SimpleDateFormat("yyyy-MM-dd'T'hh:mm:ss");
+
+        try {
+            this.updatedTime = dateFormatter.parse(dateString);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
     }
 }
