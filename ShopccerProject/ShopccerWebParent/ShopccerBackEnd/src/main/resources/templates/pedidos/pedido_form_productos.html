@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<body>
+<div th:fragment="content" th:remove="tag">
+    <div id="productList">
+
+        <th:block th:each="detalle, status : ${pedido.detallesPedido}">
+            <div class="border rounded p-1" th:with="producto = ${detalle.producto}">
+                <div class="row">
+                    <div class="col-1">
+                        <div>[[${status.count}]]</div>
+                    </div>
+                    <div class="col-3">
+                        <img th:src="@{${producto.pathFotoPrincipal}}" class="img-fluid" />
+                    </div>
+                </div>
+
+                <div class="row m-2">
+                    <b>[[${producto.nombre}]]</b>
+                </div>
+
+                <div class="row m-2">
+                    <table>
+                        <tr>
+                            <td>Precio producto:</td>
+                            <td>
+                                <input type="text" readonly="readonly" class="form-control m-1 "
+                                       th:value="${detalle.costeProducto}" style="max-width: 140px"/>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Cantidad:</td>
+                            <td>
+                                <input type="number" step="1" min="1" max="5" class="form-control m-1 "
+                                       readonly="readonly"
+                                       th:value="${detalle.cantidad}" style="max-width: 140px"/>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Precio unitario:</td>
+                            <td>
+                                <input type="text" readonly="readonly" class="form-control m-1 "
+                                       th:value="${detalle.precioUnitario}" style="max-width: 140px"/>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Total:</td>
+                            <td>
+                                <input type="text" readonly="readonly" class="form-control m-1 "
+                                       th:value="${detalle.subtotal}" style="max-width: 140px"/>
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+
+            </div>
+            <div class="row">&nbsp;</div>
+        </th:block>
+
+    </div>
+    </div>
+</div>
