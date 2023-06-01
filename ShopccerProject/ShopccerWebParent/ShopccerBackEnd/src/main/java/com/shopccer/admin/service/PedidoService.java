@@ -14,4 +14,6 @@ public interface PedidoService {
     Pedido findById(Integer idPedido) throws PedidoNotFoundException;
 
     void deleteById(Integer idPedido) throws PedidoNotFoundException;
+
+    void save(Pedido pedido);
 }

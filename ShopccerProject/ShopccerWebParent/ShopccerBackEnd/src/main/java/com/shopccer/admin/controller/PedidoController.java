@@ -4,20 +4,24 @@ import com.shopccer.admin.exception.PedidoNotFoundException;
 import com.shopccer.admin.repository.PaisRepository;
 import com.shopccer.admin.service.PedidoService;
 import com.shopccer.admin.service.impl.PedidoServiceImpl;
+import com.shopccer.common.entity.EstadoPedido;
 import com.shopccer.common.entity.Pais;
 import com.shopccer.common.entity.Pedido;
+import com.shopccer.common.entity.SeguimientoPedido;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Comparator;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Controller
 public class PedidoController {
@@ -111,4 +115,65 @@ public class PedidoController {
         }
 
     }
+
+    @PostMapping("/pedidos/save")
+    public String saveOrder(Pedido pedido, HttpServletRequest request, RedirectAttributes ra) throws PedidoNotFoundException {
+//        String countryName = request.getParameter("countryName");
+//        order.setCountry(countryName);
+//
+//        updateProductDetails(order, request);
+//
+//        orderService.save(order);
+//
+//        ra.addFlashAttribute("message", "The order ID " + order.getId() + " has been updated successfully");
+
+        Integer idPedido = Integer.valueOf(request.getParameter("idPedido"));
+        Pedido pedidoInDB= pedidoService.findById(idPedido);
+        updateOrderTracks(pedidoInDB, request);
+
+        List<SeguimientoPedido> listaOrdenada = pedidoInDB.getSeguimientosPedido().stream()
+                .sorted(Comparator.comparing(SeguimientoPedido::getUpdatedTime).reversed())
+                .collect(Collectors.toList());
+
+        EstadoPedido estado = listaOrdenada.get(0).getEstado();
+        pedidoInDB.setEstado(estado);
+        pedidoService.save(pedidoInDB);
+
+        return "redirect:/pedidos";
+    }
+
+
+    private void updateOrderTracks(Pedido pedido, HttpServletRequest request) {
+        String[] trackIds = request.getParameterValues("trackId");
+        String[] trackStatuses = request.getParameterValues("trackStatus");
+        String[] trackDates = request.getParameterValues("trackDate");
+        String[] trackNotes = request.getParameterValues("trackNotes");
+
+        List<SeguimientoPedido> orderTracks = pedido.getSeguimientosPedido();
+        orderTracks.clear();
+        DateFormat dateFormatter = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss");
+
+        for (int i = 0; i < trackIds.length; i++) {
+            SeguimientoPedido trackRecord = new SeguimientoPedido();
+
+            Integer trackId = Integer.parseInt(trackIds[i]);
+            if (trackId > 0) {
+                trackRecord.setIdSeguimientoPedido(trackId);
+            }
+
+            trackRecord.setPedido(pedido);
+            trackRecord.setEstado(EstadoPedido.valueOf(trackStatuses[i]));
+            trackRecord.setNotas(trackNotes[i]);
+
+            try {
+                trackRecord.setUpdatedTime(dateFormatter.parse(trackDates[i]));
+                System.out.println("FECHA-------------> " + dateFormatter.parse(trackDates[i]));
+            } catch (ParseException e) {
+                e.printStackTrace();
+            }
+            orderTracks.add(trackRecord);
+        }
+    }
+
+
 }

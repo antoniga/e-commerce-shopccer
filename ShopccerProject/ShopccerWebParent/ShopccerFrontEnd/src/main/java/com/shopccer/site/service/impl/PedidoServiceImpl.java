@@ -49,6 +49,21 @@ public class PedidoServiceImpl implements com.shopccer.site.service.PedidoServic
             detallesPedido.add(detallePedido);
         }
 
+        SeguimientoPedido trackNuevo = new SeguimientoPedido();
+        trackNuevo.setPedido(pedido);
+        trackNuevo.setEstado(EstadoPedido.NUEVO);
+        trackNuevo.setNotas(EstadoPedido.NUEVO.defaultDescription());
+        trackNuevo.setUpdatedTime(new Date());
+
+        SeguimientoPedido trackPagado = new SeguimientoPedido();
+        trackPagado.setPedido(pedido);
+        trackPagado.setEstado(EstadoPedido.PAGADO);
+        trackPagado.setNotas(EstadoPedido.PAGADO.defaultDescription());
+        trackPagado.setUpdatedTime(new Date());
+
+        pedido.getSeguimientosPedido().add(trackNuevo);
+        pedido.getSeguimientosPedido().add(trackPagado);
+
 
         return pedidoRepository.save(pedido);
     }

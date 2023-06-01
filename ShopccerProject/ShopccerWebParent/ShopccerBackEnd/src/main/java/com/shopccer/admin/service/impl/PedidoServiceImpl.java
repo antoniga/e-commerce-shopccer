@@ -59,4 +59,9 @@ public class PedidoServiceImpl implements PedidoService {
 
         pedidoRepository.deleteById(idPedido);
     }
+
+    @Override
+    public void save(Pedido pedido) {
+            pedidoRepository.save(pedido);
+    }
 }

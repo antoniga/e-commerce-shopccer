@@ -56,7 +56,7 @@ public class Pedido {
     @OneToMany(mappedBy = "pedido", cascade = CascadeType.ALL)
     private Set<DetallePedido> detallePedido = new HashSet<>();
 
-    @OneToMany(mappedBy = "pedido", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "pedido", cascade = CascadeType.ALL,  orphanRemoval = true)
     @OrderBy("updatedTime ASC")
     private List<SeguimientoPedido> seguimientosPedido = new ArrayList<>();
 
@@ -277,5 +277,28 @@ public class Pedido {
     public String getFechaEntregaOnForm() {
         DateFormat dateFormatter = new SimpleDateFormat("yyyy-MM-dd");
         return dateFormatter.format(this.fechaEntrega);
+    }
+
+    @Override
+    public String toString() {
+        return "Pedido{" +
+                "idPedido=" + idPedido +
+                ", nombre='" + nombre + '\'' +
+                ", apellidos='" + apellidos + '\'' +
+                ", numeroTelefono='" + numeroTelefono + '\'' +
+                ", direccion='" + direccion + '\'' +
+                ", ciudad='" + ciudad + '\'' +
+                ", comunidad='" + comunidad + '\'' +
+                ", codPostal='" + codPostal + '\'' +
+                ", pais='" + pais + '\'' +
+                ", fechaPedido=" + fechaPedido +
+                ", costeEnvio=" + costeEnvio +
+                ", costeProducto=" + costeProducto +
+                ", total=" + total +
+                ", diasEntrega=" + diasEntrega +
+                ", fechaEntrega=" + fechaEntrega +
+                ", estado=" + estado +
+                ", cliente=" + cliente.getNombre() +
+                '}';
     }
 }
