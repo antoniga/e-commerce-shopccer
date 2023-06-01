@@ -64,7 +64,7 @@
 						<td class="hideable-column">[[${pedido.estado}]]</td>
 						<td>
 							<a class="fas fa-file-alt fa-2x icon-shopccer linkPedidoDetalle" style="text-decoration: none" th:href="@{'/pedidos/detalles/' + ${pedido.idPedido}}" title="Ver detalles del pedido"></a> &nbsp;
-							<a class="fa-solid fa-boxes-packing fa-2x icon-green" style="text-decoration: none" th:href="@{'/pedidos/edit/'+${pedido.idPedido}}" title="Editar seguimiento pedido"></a> &nbsp;
+							<a class="fa-solid fa-truck-fast fa-2x icon-green" style="text-decoration: none" th:href="@{'/pedidos/edit/'+${pedido.idPedido}}" title="Editar seguimiento pedido"></a> &nbsp;
 							<a class="fa-solid fa-trash fa-2x icon-dark link-delete" style="text-decoration: none" th:href="@{'/pedidos/delete/'+${pedido.idPedido}}" th:pedidoId="${pedido.idPedido}" title="Eliminar pedido"></a>
 						</td>
 					</tr>
@@ -87,7 +87,7 @@
 						<div><b>[[${pedido.total}]] €</b></div>
 						<div>
 							<a class="fas fa-file-alt fa-2x icon-shopccer linkPedidoDetalle" style="text-decoration: none" th:href="@{'/pedidos/detalles/' + ${pedido.idPedido}}" title="Ver detalles del pedido"></a> &nbsp;
-							<a class="fa-solid fa-edit fa-2x icon-green" style="text-decoration: none" th:href="@{'/pedidos/edit/'+${pedido.idPedido}}" title="Editar pedido"></a> &nbsp;
+							<a class="fa-solid fa-truck fa-2x icon-green" style="text-decoration: none" th:href="@{'/pedidos/edit/'+${pedido.idPedido}}" title="Editar seguimiento pedido"></a> &nbsp;
 							<a class="fa-solid fa-trash fa-2x icon-dark link-delete" style="text-decoration: none" th:href="@{'/pedidos/delete/'+${pedido.idPedido}}" th:pedidoId="${pedido.idPedido}" title="Eliminar pedido"></a>
 						</div>
 					</div>

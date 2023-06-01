@@ -34,7 +34,7 @@ public class PedidoController {
 
     @GetMapping("/pedidos")
     public String listFirstPage(Model model) {
-        return listByPage(model, 1, "fechaPedido", "asc", null);
+        return listByPage(model, 1, "fechaPedido", "desc", null);
     }
 
     @GetMapping("/pedidos/pagina/{numeroPagina}")
@@ -118,14 +118,6 @@ public class PedidoController {
 
     @PostMapping("/pedidos/save")
     public String saveOrder(Pedido pedido, HttpServletRequest request, RedirectAttributes ra) throws PedidoNotFoundException {
-//        String countryName = request.getParameter("countryName");
-//        order.setCountry(countryName);
-//
-//        updateProductDetails(order, request);
-//
-//        orderService.save(order);
-//
-//        ra.addFlashAttribute("message", "The order ID " + order.getId() + " has been updated successfully");
 
         Integer idPedido = Integer.valueOf(request.getParameter("idPedido"));
         Pedido pedidoInDB= pedidoService.findById(idPedido);
@@ -138,6 +130,9 @@ public class PedidoController {
         EstadoPedido estado = listaOrdenada.get(0).getEstado();
         pedidoInDB.setEstado(estado);
         pedidoService.save(pedidoInDB);
+
+        ra.addFlashAttribute("msg", "El pedido con id: " + pedido.getIdPedido() +
+                " ha sido actualizado correctamente.");
 
         return "redirect:/pedidos";
     }
@@ -167,7 +162,6 @@ public class PedidoController {
 
             try {
                 trackRecord.setUpdatedTime(dateFormatter.parse(trackDates[i]));
-                System.out.println("FECHA-------------> " + dateFormatter.parse(trackDates[i]));
             } catch (ParseException e) {
                 e.printStackTrace();
             }

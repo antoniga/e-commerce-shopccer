@@ -17,7 +17,8 @@ public class CheckOutServiceImpl implements com.shopccer.site.service.CheckOutSe
         Double costeProducto = calcularPrecioProducto(itemsCarro);
         Double totalCoste = calcularTotalProducto(itemsCarro);
         Double gastosEnvio = calcularGastosEnvio(itemsCarro);
-        Double totalPago = totalCoste + gastosEnvio;
+
+        Double totalPago = getTotalPago(totalCoste, gastosEnvio);
 
         checkoutInfo.setCosteProducto(costeProducto);
         checkoutInfo.setTotalProducto(totalCoste);
@@ -93,5 +94,10 @@ public class CheckOutServiceImpl implements com.shopccer.site.service.CheckOutSe
         precio = Math.round(precio * 100.0) / 100.0;
 
         return precio;
+    }
+
+    private static Double getTotalPago(Double totalCoste, Double gastosEnvio) {
+        Double totalPago = Math.round((totalCoste + gastosEnvio) * 100.0) / 100.0;
+        return totalPago;
     }
 }
