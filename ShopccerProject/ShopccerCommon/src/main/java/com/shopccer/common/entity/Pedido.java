@@ -328,6 +328,11 @@ public class Pedido {
     }
 
     @Transient
+    public boolean isEnProceso() {
+        return hasEstado(EstadoPedido.EN_PROCESO);
+    }
+
+    @Transient
     public boolean isEntregado() {
         return hasEstado(EstadoPedido.ENTREGADO);
     }

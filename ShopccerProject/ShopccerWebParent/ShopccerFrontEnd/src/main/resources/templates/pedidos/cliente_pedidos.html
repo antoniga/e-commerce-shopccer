@@ -69,7 +69,7 @@
 								</div>
 								<div class="col">
 									<div class="float-right">
-										<a class="fas fa-file-alt fa-2x icon-green" href=""></a>
+										<a class="fas fa-file-alt fa-2x icon-shopccer linkPedidoDetalle" style="text-decoration: none" th:href="@{'/pedidos/detalles/' + ${pedido.idPedido}}" title="Ver detalles del pedido"></a> &nbsp;
 
 										<th:block th:unless="${pedido.peticionReembolso}">
 											&nbsp;
@@ -117,7 +117,12 @@
 			</nav>
 		</div>
 
-
+		<div class="modal fade" id="orderDetailsModal">
+			<div class="modal-dialog modal-xl">
+				<div class="modal-content">
+				</div>
+			</div>
+		</div>
 
 
 	</div>
@@ -129,6 +134,17 @@
 
 		function limpiarFiltro() {
 			window.location = moduleURL;
+		}
+
+		$(document).ready(function(){
+			handleDetailLink();
+		});
+
+		function handleDetailLink() {
+			$(".linkPedidoDetalle").on("click", function(e) {
+				e.preventDefault();
+				$('#orderDetailsModal').modal('show').find('.modal-content').load($(this).attr('href'));
+			});
 		}
 	</script>
 </body>

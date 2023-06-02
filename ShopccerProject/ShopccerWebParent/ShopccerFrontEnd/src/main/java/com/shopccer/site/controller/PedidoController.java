@@ -60,6 +60,16 @@ public class PedidoController {
         return "pedidos/cliente_pedidos";
     }
 
+    @GetMapping("/pedidos/detalles/{idPedido}")
+    public String verDetallesPedido(Model model,@PathVariable(name = "idPedido") Integer idPedido, HttpServletRequest request) {
+        Cliente cliente = getClienteAutenticado(request);
+
+        Pedido pedido = pedidoService.findByIdAndCliente(idPedido, cliente);
+        model.addAttribute("pedido", pedido);
+
+        return "pedidos/pedido_detalle_modal";
+    }
+
     private Cliente getClienteAutenticado(HttpServletRequest request) {
         String email = Utility.getEmailOfAuthenticatedCustomer(request);
         return clienteService.findClienteByEmail(email);

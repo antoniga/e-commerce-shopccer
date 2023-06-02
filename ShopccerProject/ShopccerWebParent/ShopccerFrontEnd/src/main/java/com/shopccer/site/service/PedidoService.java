@@ -14,4 +14,7 @@ public interface PedidoService {
     Pedido createPedido(Cliente cliente, List<ItemCarro> itemsCarro, CheckoutInfo checkoutInfo);
 
     Page<Pedido> listarClientesByPage(Cliente cliente, int numeroPagina, String campoOrden, String dirOrden, String palabraClave);
+
+
+    Pedido findByIdAndCliente(Integer idCliente, Cliente cliente);
 }

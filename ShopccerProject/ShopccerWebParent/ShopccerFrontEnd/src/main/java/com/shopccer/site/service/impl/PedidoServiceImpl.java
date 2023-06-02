@@ -88,6 +88,11 @@ public class PedidoServiceImpl implements com.shopccer.site.service.PedidoServic
             return pedidoRepository.findAll(cliente.getIdCliente(), pageable);
     }
 
+    @Override
+    public Pedido findByIdAndCliente(Integer idCliente, Cliente cliente) {
+        return pedidoRepository.findByIdPedidoAndCliente(idCliente, cliente);
+    }
+
     private void copiarDireccionDeCliente(Pedido pedido, Cliente cliente) {
         pedido.setNombre(cliente.getNombre());
         pedido.setApellidos(cliente.getApellidos());
