@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
-<head th:replace="fragments :: pageHead('Carro Compra')"></head>
+<head th:replace="fragments :: pageHead('Mis pedidos')"></head>
 <body>
 	<div th:replace="navigation :: header_menu"></div>
 	<div th:replace="navigation :: search_nav"></div>
@@ -61,11 +61,11 @@
 		<div class="less-details p-2">
 			<th:block th:each="pedido : ${listaPedidos}">
 				<div class="row m-1">
-					<div class="card">
+					<div class="card" style="width: 100%;">
 						<div class="card-header">
 							<div class="row">
 								<div class="col">
-									<span>Pedido Id: [[${pedido.idPedido}]]</span>
+									<span><strong>Pedido Id:</strong> [[${pedido.idPedido}]]</span>
 								</div>
 								<div class="col">
 									<div class="float-right">
@@ -96,6 +96,25 @@
 					</div>
 				</div>
 			</th:block>
+		</div>
+
+		<div class= "text-center m-1" th:if="${pedidosTotales > 0}">
+			<span>Mostrando los pedidos del [[${startCount}]] al [[${endCount}]] de [[${pedidostTotales}]] </span>
+		</div>
+		<div class="text-center m-1" th:unless="${pedidosTotales > 0}">
+			<span>No se encontraron pedidos </span>
+		</div>
+
+		<div th:if="${paginasTotales > 1}">
+			<nav aria-label="Page navigation example">
+				<ul class="pagination justify-content-center">
+					<li th:class="${paginaActual > 1 ? 'page-item':'page-item disabled'}"><a th:replace="fragments :: pageLink('pedidos', 1,'<<')"> </a></li>
+					<li th:class="${paginaActual > 1 ? 'page-item':'page-item disabled'}"><a th:replace="fragments :: pageLink('pedidos', ${paginaActual -1},'<')"> </a></li>
+					<li th:class="${paginaActual != i  ? 'page-item':'page-item active'}" th:each="i : ${#numbers.sequence(1,paginasTotales)}"><a th:replace="fragments :: pageLink('pedidos', ${i},${i})"> </a></li>
+					<li th:class="${paginaActual < paginasTotales ? 'page-item':'page-item disabled'}"><a th:replace="fragments :: pageLink('pedidos', ${paginaActual +1},'>')"> </a></li>
+					<li th:class="${paginaActual < paginasTotales ? 'page-item':'page-item disabled'}"><a th:replace="fragments :: pageLink('pedidos', ${paginasTotales},'>>')"> </a></li>
+				</ul>
+			</nav>
 		</div>
 
 
