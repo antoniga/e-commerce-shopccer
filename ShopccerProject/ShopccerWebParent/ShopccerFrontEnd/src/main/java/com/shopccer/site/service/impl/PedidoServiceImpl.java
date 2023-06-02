@@ -2,6 +2,8 @@ package com.shopccer.site.service.impl;
 
 import com.shopccer.common.entity.*;
 import com.shopccer.site.checkout.CheckoutInfo;
+import com.shopccer.site.dto.PedidoReturnRequest;
+import com.shopccer.site.exception.PedidoNotFoundException;
 import com.shopccer.site.repository.PedidoRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -91,6 +93,34 @@ public class PedidoServiceImpl implements com.shopccer.site.service.PedidoServic
     @Override
     public Pedido findByIdAndCliente(Integer idCliente, Cliente cliente) {
         return pedidoRepository.findByIdPedidoAndCliente(idCliente, cliente);
+    }
+
+    @Override
+    public void setPedidoReturnRequested(PedidoReturnRequest request, Cliente cliente) throws PedidoNotFoundException {
+
+        Pedido pedido = pedidoRepository.findByIdPedidoAndCliente(request.getIdPedido(), cliente);
+        if (pedido == null) {
+            throw new PedidoNotFoundException("Pedido Id: " + request.getIdPedido() + " no encontrado");
+        }
+
+        if (pedido.isPeticionReembolso()) return;
+
+        SeguimientoPedido track = new SeguimientoPedido();
+        track.setPedido(pedido);
+        track.setUpdatedTime(new Date());
+        track.setEstado(EstadoPedido.PETICION_REEMBOLSO);
+
+        String notas = "Razon: " + request.getRazon();
+        if (!"".equals(request.getNotas())) {
+            notas += ". " + request.getNotas();
+        }
+
+        track.setNotas(notas);
+
+        pedido.getSeguimientosPedido().add(track);
+        pedido.setEstado(EstadoPedido.PETICION_REEMBOLSO);
+
+        pedidoRepository.save(pedido);
     }
 
     private void copiarDireccionDeCliente(Pedido pedido, Cliente cliente) {

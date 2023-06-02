@@ -4,6 +4,8 @@ import com.shopccer.common.entity.Cliente;
 import com.shopccer.common.entity.ItemCarro;
 import com.shopccer.common.entity.Pedido;
 import com.shopccer.site.checkout.CheckoutInfo;
+import com.shopccer.site.dto.PedidoReturnRequest;
+import com.shopccer.site.exception.PedidoNotFoundException;
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Service;
 
@@ -17,4 +19,6 @@ public interface PedidoService {
 
 
     Pedido findByIdAndCliente(Integer idCliente, Cliente cliente);
+
+    void setPedidoReturnRequested(PedidoReturnRequest request, Cliente cliente) throws PedidoNotFoundException;
 }
