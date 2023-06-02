@@ -301,4 +301,54 @@ public class Pedido {
                 ", cliente=" + cliente.getNombre() +
                 '}';
     }
+
+    @Transient
+    public String getNombreProductos() {
+        String nombresProducto = "";
+
+        nombresProducto = "<ul>";
+
+        for (DetallePedido detalle : detallePedido) {
+            nombresProducto += "<li>" + detalle.getProducto().getNombre() + "</li>";
+        }
+
+        nombresProducto += "</ul>";
+
+        return nombresProducto;
+    }
+
+    @Transient
+    public boolean isRecogido() {
+        return hasEstado(EstadoPedido.RECOGIDO);
+    }
+
+    @Transient
+    public boolean isEnviado() {
+        return hasEstado(EstadoPedido.EN_TRANSITO);
+    }
+
+    @Transient
+    public boolean isEntregado() {
+        return hasEstado(EstadoPedido.ENTREGADO);
+    }
+
+    @Transient
+    public boolean isPeticionReembolso() {
+        return hasEstado(EstadoPedido.PETICION_REEMBOLSO);
+    }
+
+    @Transient
+    public boolean isReembolsado() {
+        return hasEstado(EstadoPedido.REEMBOLSADO);
+    }
+
+    public boolean hasEstado(EstadoPedido estado) {
+        for (SeguimientoPedido track : seguimientosPedido) {
+            if (track.getEstado().equals(estado)) {
+                return true;
+            }
+        }
+
+        return false;
+    }
 }

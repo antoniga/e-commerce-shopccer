@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="fragments :: pageHead('Carro Compra')"></head>
+<body>
+	<div th:replace="navigation :: header_menu"></div>
+	<div th:replace="navigation :: search_nav"></div>
+	<div class="container">
+
+		<div class="text-center border-bottom m-3">
+			<h2>Mis pedidos</h2>
+		</div>
+
+		<div class="row">
+			<div class="col-lg-10 col-md-12 d-lg-flex">
+				<form th:action="@{/pedidos/pagina/1}" class="form-inline mt-1 mb-1" id="searchForm">
+					<input type="hidden" name="campoOrden" th:value="${campoOrden}">
+					<input type="hidden" name="dirOrden" th:value="${dirOrden}">
+					&nbsp;
+					<input type="search" name="pedidoPalabraClave" placeholder="Busca pedidos" th:value="${pedidoPalabraClave}" class="form-control" size="40%" required/>
+					&nbsp;&nbsp;
+					<button type="submit" class="btn btn-info mt-2 mt-sm-0"><i class="fas fa-search"></i></button>
+					&nbsp;&nbsp;
+					<button type="button" class="btn btn-secondary mt-2 mt-sm-0" onclick="limpiarFiltro()"/><i class="fas fa-eraser"></i></button>
+				</form>
+			</div>
+		</div>
+
+		<div class="full-details">
+			<table class="table table-bordered table-hover table-responsive-md">
+				<thead class="thead-dark">
+				<tr>
+					<th th:replace="fragments :: columnLink ('pedidos', 'idPedido', 'ID Pedido','none')" ></th>
+					<th th:replace="fragments :: columnLink ('pedidos','fechaPedido', 'Fecha pedido','none')"></th>
+					<th>Productos</th>
+					<th th:replace="fragments :: columnLink ('pedidos','total', 'Total','none')"></th>
+					<th th:replace="fragments :: columnLink ('pedidos','estado', 'Estado','none')"></th>
+					<th></th>
+				</tr>
+				</thead>
+				<tbody>
+				<tr th:each="pedido : ${listaPedidos}">
+					<td>[[${pedido.idPedido}]]</td>
+					<td>
+						<div th:replace="fragments :: format_time(${pedido.fechaPedido})"></div>
+					</td>
+					<td th:utext="${pedido.nombreProductos}"></td>
+					<td>[[${pedido.total}]] €</td>
+					<td>[[${pedido.estado}]]</td>
+					<td>
+						<a class="fas fa-file-alt fa-2x icon-shopccer linkPedidoDetalle" style="text-decoration: none" th:href="@{'/pedidos/detalles/' + ${pedido.idPedido}}" title="Ver detalles del pedido"></a> &nbsp;
+						<th:block th:unless="${pedido.peticionReembolso}">
+							&nbsp;&nbsp;&nbsp;
+							<a class="fas fa-undo fa-2x icon-dark " href="" title="Devolver este pedido"></a>
+						</th:block>
+					</td>
+				</tr>
+				</tbody>
+			</table>
+		</div>
+
+		<div class="less-details p-2">
+			<th:block th:each="pedido : ${listaPedidos}">
+				<div class="row m-1">
+					<div class="card">
+						<div class="card-header">
+							<div class="row">
+								<div class="col">
+									<span>Pedido Id: [[${pedido.idPedido}]]</span>
+								</div>
+								<div class="col">
+									<div class="float-right">
+										<a class="fas fa-file-alt fa-2x icon-green" href=""></a>
+
+										<th:block th:unless="${pedido.peticionReembolso}">
+											&nbsp;
+											<a class="fas fa-undo fa-2x icon-dark" href="" title="Devolver este pedido"></a>
+										</th:block>
+									</div>
+								</div>
+							</div>
+						</div>
+						<div class="card-body">
+							<div>
+								<span th:utext="${pedido.nombreProductos}"></span>
+							</div>
+							<div class="row">
+								<div class="col">
+									<span>[[${pedido.total}]] €</span>
+								</div>
+								<div class="col">
+									<span>[[${pedido.estado}]]</span>
+								</div>
+							</div>
+							<div><small><div th:replace="fragments :: format_time(${pedido.fechaPedido})"></div></small></div>
+						</div>
+					</div>
+				</div>
+			</th:block>
+		</div>
+
+
+
+
+	</div>
+	<div th:replace="navigation :: footer_menu"></div>
+	<div th:replace="fragments :: footer"></div>
+
+	<script type="text/javascript">
+		moduleURL = "[[@{/pedidos}]]";
+
+		function limpiarFiltro() {
+			window.location = moduleURL;
+		}
+	</script>
+</body>
+</html>

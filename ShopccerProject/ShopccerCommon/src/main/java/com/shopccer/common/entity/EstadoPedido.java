@@ -66,6 +66,13 @@ public enum EstadoPedido {
         }
     },
 
+    PETICION_REEMBOLSO {
+        @Override
+        public String defaultDescription() {
+            return "El cliente ha solicitado una devolución del importe del pedido";
+        }
+    },
+
     REEMBOLSADO {
         @Override
         public String defaultDescription() {

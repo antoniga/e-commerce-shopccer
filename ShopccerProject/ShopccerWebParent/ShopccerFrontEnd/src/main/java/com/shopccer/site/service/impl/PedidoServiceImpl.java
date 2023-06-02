@@ -4,6 +4,10 @@ import com.shopccer.common.entity.*;
 import com.shopccer.site.checkout.CheckoutInfo;
 import com.shopccer.site.repository.PedidoRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import java.util.Date;
@@ -13,6 +17,7 @@ import java.util.Set;
 @Service
 public class PedidoServiceImpl implements com.shopccer.site.service.PedidoService {
 
+    private static final int PEDIDOS_POR_PAG = 5;
     @Autowired
     private PedidoRepository pedidoRepository;
 
@@ -66,6 +71,21 @@ public class PedidoServiceImpl implements com.shopccer.site.service.PedidoServic
 
 
         return pedidoRepository.save(pedido);
+    }
+
+    @Override
+    public Page<Pedido> listarClientesByPage(Cliente cliente, int numeroPagina, String campoOrden, String dirOrden, String palabraClave) {
+
+            Sort sort = Sort.by(campoOrden);
+            sort = dirOrden.equals("asc") ? sort.ascending() : sort.descending();
+
+            Pageable pageable = PageRequest.of(numeroPagina - 1, PEDIDOS_POR_PAG, sort);
+
+            if (palabraClave != null) {
+                return pedidoRepository.findAll(palabraClave, cliente.getIdCliente(), pageable);
+            }
+
+            return pedidoRepository.findAll(cliente.getIdCliente(), pageable);
     }
 
     private void copiarDireccionDeCliente(Pedido pedido, Cliente cliente) {

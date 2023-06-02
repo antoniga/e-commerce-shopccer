@@ -21,6 +21,13 @@
         <p>[[${COPYRIGHT}]]</p>
     </div>
 
+	<th th:fragment="columnLink(viewName,fieldName, columnLabel, removeTag)" th:remove="${removeTag}">
+		<a th:href="@{'/'+${viewName}+'/pagina/' + ${paginaActual} + '?campoOrden=' + ${fieldName} +'&dirOrden='+${campoOrden != fieldName ? dirOrden : dirOrdenContrario}
+        + ${palabraClave !=null ? '&palabraClave='+palabraClave : ''} + ${marcaId !=null ? '&marcaId='+ marcaId : ''} + ${superficieId !=null ? '&superficieId='+ superficieId : ''}}"
+		   class="text-white" style="text-decoration: none">[[${columnLabel}]]</a>
+		<span th:if="${campoOrden == fieldName}" th:class="${dirOrden == 'asc' ? 'fas fa-sort-up' : 'fas fa-sort-down'}"></span>
+	</th>
+
 	<a th:fragment="pageLink(viewName,numPag, label)" class="page-link"
 	   th:href="@{'/'+${viewName}+'/pagina/'+${numPag}+'?campoOrden='+${campoOrden}+'&dirOrden='+${dirOrden} + ${palabraClave !=null ? '&palabraClave='+palabraClave : ''}}">[[${label}]]</a>
 
@@ -62,6 +69,10 @@
 				</div>
 			</div>
 		</div>
+	</div>
+
+	<div th:fragment="format_time(dateTime)" th:remove="tag">
+		<span th:text="${#dates.format(dateTime, 'yyyy-MM-dd HH:mm:ss')}"></span>
 	</div>
 
 </body>

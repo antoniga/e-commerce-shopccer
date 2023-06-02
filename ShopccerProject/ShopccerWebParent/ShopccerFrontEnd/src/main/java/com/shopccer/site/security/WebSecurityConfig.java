@@ -29,7 +29,7 @@ public class WebSecurityConfig {
 		http.authorizeRequests()
 				.requestMatchers("/detalles_cuenta","/update_detalles_cuenta",
 						"/carro/**,","/checkout/**","/realizar_pedido/**",
-						"/procesar_pedido_paypal/**").authenticated()
+						"/procesar_pedido_paypal/**","/pedidos/**").authenticated()
 				.anyRequest().permitAll()
 				.and()
 				.formLogin()
