@@ -50,4 +50,9 @@ public class MainController {
 		return "contacto";
 	}
 
+	@GetMapping("/acerca")
+	public String viewAcercaPage() {
+		return "acerca_de_nosotros";
+	}
+
 }
