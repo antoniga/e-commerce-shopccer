@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="fragments :: pageHead('Shopccer')"></head>
+<body>
+	<div th:replace="navigation :: header_menu"></div>
+	<div class="container">
+		<div class="text-center border-bottom m-3">
+			<h2>Aviso de Privacidad</h2>
+		</div>
+		&nbsp;
+		<div>
+			<p>En Shopccer, nos tomamos muy en serio la privacidad de nuestros clientes. Este aviso de privacidad describe cómo recopilamos, utilizamos y protegemos la información personal que nos proporcionas al utilizar nuestro sitio web.</p>
+			<h4>Recopilación de información</h4>
+			<p>Recopilamos información personal cuando te registras en nuestro sitio, realizas una compra o te comunicas con nosotros a través de los formularios de contacto. Esta información puede incluir tu nombre, dirección de correo electrónico, dirección de envío y detalles de pago.</p>
+			<h4>Uso de la información</h4>
+			<p>Utilizamos la información personal recopilada para procesar tus pedidos, responder a tus consultas y proporcionarte un mejor servicio. También podemos utilizar esta información para enviarte correos electrónicos promocionales relacionados con nuestros productos y ofertas especiales, pero siempre te brindaremos la opción de darte de baja de estas comunicaciones.</p>
+			<h4>Protección de la información</h4>
+			<p>Tomamos medidas de seguridad para proteger tu información personal y mantenerla segura. Utilizamos tecnologías de encriptación y cumplimos con las mejores prácticas de seguridad para evitar accesos no autorizados y proteger tus datos.</p>
+			<h4>Divulgación de información</h4>
+			<p>No vendemos, intercambiamos ni transferimos tu información personal a terceros sin tu consentimiento, excepto en los casos necesarios para cumplir con la ley o proteger nuestros derechos legales.</p>
+			<h4>Actualización de la política de privacidad</h4>
+			<p>Podemos actualizar esta política de privacidad en cualquier momento. Te recomendamos revisarla periódicamente para estar al tanto de cualquier cambio.</p>
+			<p>Si tienes alguna pregunta o inquietud sobre nuestra política de privacidad, no dudes en contactarnos a través de la página de <a th:href="@{/contacto}">contacto</a>.</p>
+
+	</div>
+	</div>
+	<div th:replace="navigation :: footer_menu"></div>
+	<div th:replace="fragments :: footer"></div>
+</body>
+</html>

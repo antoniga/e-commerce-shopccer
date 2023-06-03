@@ -55,4 +55,9 @@ public class MainController {
 		return "acerca_de_nosotros";
 	}
 
+	@GetMapping("/privacidad")
+	public String viewPrivacidadPage() {
+		return "politica_privacidad";
+	}
+
 }
