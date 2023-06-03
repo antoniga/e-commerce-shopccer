@@ -45,12 +45,15 @@
 					</td>
 					<td th:utext="${pedido.nombreProductos}"></td>
 					<td>[[${pedido.total}]] €</td>
-					<td>[[${pedido.estado}]]</td>
+					<td> <span th:class="'textOrderStatus' + ${pedido.idPedido}">[[${pedido.estado}]]</span></td>
 					<td>
 						<a class="fas fa-file-alt fa-2x icon-shopccer linkPedidoDetalle" style="text-decoration: none" th:href="@{'/pedidos/detalles/' + ${pedido.idPedido}}" title="Ver detalles del pedido"></a> &nbsp;
-						<th:block th:unless="${pedido.peticionReembolso}">
+						<th:block th:if="${pedido.peticionReembolso == false && pedido.entregado == true && pedido.reembolsado == false}">
 							&nbsp;&nbsp;&nbsp;
-							<a class="fas fa-undo fa-2x icon-dark " href="" title="Devolver este pedido"></a>
+							<a class="fas fa-undo fa-2x icon-dark linkReturnOrder" href=""
+							   th:classappend="'linkReturn' + ${pedido.idPedido}"
+							   th:orderId="${pedido.idPedido}"
+							   title="Devolver este pedido"></a>
 						</th:block>
 					</td>
 				</tr>
@@ -71,9 +74,12 @@
 									<div class="float-right">
 										<a class="fas fa-file-alt fa-2x icon-shopccer linkPedidoDetalle" style="text-decoration: none" th:href="@{'/pedidos/detalles/' + ${pedido.idPedido}}" title="Ver detalles del pedido"></a> &nbsp;
 
-										<th:block th:unless="${pedido.peticionReembolso}">
+										<th:block th:if="${pedido.peticionReembolso == false && pedido.entregado == true && pedido.reembolsado == false}">
 											&nbsp;
-											<a class="fas fa-undo fa-2x icon-dark" href="" title="Devolver este pedido"></a>
+											<a class="fas fa-undo fa-2x icon-dark linkReturnOrder" href=""
+											   th:classappend="'linkReturn' + ${pedido.idPedido}"
+											   th:orderId="${pedido.idPedido}"
+											   title="Devolver este pedido"></a>
 										</th:block>
 									</div>
 								</div>
@@ -88,7 +94,7 @@
 									<span>[[${pedido.total}]] €</span>
 								</div>
 								<div class="col">
-									<span>[[${pedido.estado}]]</span>
+									<span th:class="'textOrderStatus' + ${pedido.idPedido}">[[${pedido.estado}]]</span>
 								</div>
 							</div>
 							<div><small><div th:replace="fragments :: format_time(${pedido.fechaPedido})"></div></small></div>
@@ -117,6 +123,8 @@
 			</nav>
 		</div>
 
+		<div th:replace="pedidos/pedido_return_modal :: content"></div>
+
 		<div class="modal fade" id="orderDetailsModal">
 			<div class="modal-dialog modal-xl">
 				<div class="modal-content">
@@ -131,6 +139,9 @@
 
 	<script type="text/javascript">
 		moduleURL = "[[@{/pedidos}]]";
+		contextPath = "[[@{/}]]";
+		var csrfHeaderName = "[[${_csrf.headerName}]]";
+		var csrfValue = "[[${_csrf.token}]]";
 
 		function limpiarFiltro() {
 			window.location = moduleURL;
@@ -147,5 +158,6 @@
 			});
 		}
 	</script>
+	<script type="text/javascript" th:src="@{/js/pedido_return.js}"></script>
 </body>
 </html>
