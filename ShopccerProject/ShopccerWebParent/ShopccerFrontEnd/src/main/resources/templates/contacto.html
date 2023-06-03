@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="fragments :: pageHead('Shopccer')"></head>
+<body>
+	<div th:replace="navigation :: header_menu"></div>
+	<div class="container">
+		<div class="text-center border-bottom m-3">
+			<h2>¿Tienes alguna pregunta o consulta? ¡Contáctanos!</h2>
+		</div>
+		&nbsp;
+		<div class="row">
+			<div class="col-md-6 text-center">
+				<span><h3>Redes sociales</h3></span>
+				<ul class="list-unstyled" >
+					<li><a href="https://www.facebook.com" target="_blank"><i class="fa-brands fa-facebook"></i> Facebook</a></li>
+					<li><a href="https://www.instagram.com" target="_blank"><i class="fa-brands fa-instagram"></i> Instagram</a></li>
+					<li><a href="https://www.twitter.com" target="_blank"><i class="fa-brands fa-twitter"></i> Twitter</a></li>
+				</ul>
+			</div>
+			<div class="col-md-6 text-center">
+				<span><h3>Contacto</h3></span>
+				<p>Correo electrónico: <a href="mailto:info@shopccer.com">info@shopccer.com</a></p>
+				<p>Teléfono: +1234567890</p>
+			</div>
+		</div>
+
+		<div class="text-center full-details">
+			<div>Nuestras oficinas se encuentran en el Parque Científico Tecnológico de Gijón, ¡ven a vernos!</div>&nbsp;
+			<iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d1587.343578238045!2d-5.610705388540347!3d43.5220010117425!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0xd367b6db6d691db%3A0x5d563e0634a6ee87!2sParque%20Cient%C3%ADfico%20Tecnol%C3%B3gico%20de%20Gij%C3%B3n!5e1!3m2!1ses!2ses!4v1685774103359!5m2!1ses!2ses"
+					width="720" height="550" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+		</div>
+
+		<div class="text-center less-details">
+			<div>Nuestras oficinas se encuentran en el Parque Científico Tecnológico de Gijón, ¡ven a vernos!</div>&nbsp;
+			<iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d1587.343578238045!2d-5.610705388540347!3d43.5220010117425!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0xd367b6db6d691db%3A0x5d563e0634a6ee87!2sParque%20Cient%C3%ADfico%20Tecnol%C3%B3gico%20de%20Gij%C3%B3n!5e1!3m2!1ses!2ses!4v1685774103359!5m2!1ses!2ses"
+					width="350" height="275" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+		</div>
+	</div>
+	</div>
+	<div th:replace="navigation :: footer_menu"></div>
+	<div th:replace="fragments :: footer"></div>
+</body>
+</html>
