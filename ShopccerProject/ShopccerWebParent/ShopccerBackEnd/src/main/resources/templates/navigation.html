@@ -25,7 +25,6 @@
                     <li class="nav-item" sec:authorize="hasAnyAuthority('Super-Admin', 'Admin')"><a class="nav-link" th:href="@{/marcas}">MARCAS</a> </li>
                     <li class="nav-item" sec:authorize="hasAnyAuthority('Super-Admin', 'Admin')"><a class="nav-link" th:href="@{/productos}">PRODUCTOS</a></li>
                     <li class="nav-item" sec:authorize="hasAnyAuthority('Super-Admin', 'Admin')"><a class="nav-link" th:href="@{/clientes}">CLIENTES</a></li>
-                    <li class="nav-item"><a class="nav-link" th:href="@{/envios}">ENVÍOS</a> </li>
                     <li class="nav-item" sec:authorize="hasAnyAuthority('Super-Admin', 'Admin')"><a class="nav-link" th:href="@{/pedidos}">PEDIDOS</a></li>
                     <li class="nav-item" sec:authorize="hasAuthority('Super-Admin')"><a class="nav-link" th:href="@{/ajustes}">CONFIGURACIÓN</a></li>
                     <li class="nav-item pl-2"><span class="fas fa-user fa-2x icon-silver"></span></li>
