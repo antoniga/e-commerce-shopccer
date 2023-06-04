@@ -17,9 +17,9 @@
 <body>
     <!-- Plantilla para escribir codigo reusable por thymeleaf en nuestras vistas -->
 
-    <div th:fragment="footer" class="text-center">
-        <p>[[${COPYRIGHT}]]</p>
-    </div>
+    <div th:fragment="footer" class="text-center mt-2">
+		<p><em>[[${COPYRIGHT}]]</em></p>
+	</div>
 
 	<th th:fragment="columnLink(viewName,fieldName, columnLabel, removeTag)" th:remove="${removeTag}">
 		<a th:href="@{'/'+${viewName}+'/pagina/' + ${paginaActual} + '?campoOrden=' + ${fieldName} +'&dirOrden='+${campoOrden != fieldName ? dirOrden : dirOrdenContrario}

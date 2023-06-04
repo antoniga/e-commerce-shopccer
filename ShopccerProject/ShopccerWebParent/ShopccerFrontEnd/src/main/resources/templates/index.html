@@ -2,40 +2,93 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head th:replace="fragments :: pageHead('Shopccer')"></head>
 <body>
+<div class="sticky-top">
 	<div th:replace="navigation :: header_menu"></div>
-	<div th:replace="navigation :: search_nav"></div>
+</div>
+<!--	<div th:replace="navigation :: search_nav"></div>-->
+	<div id="carouselExampleControls" class="carousel slide" data-ride="carousel">
+		<div class="carousel-inner">
+			<div class="carousel-item active">
+				<img style="width: 100%;" src="images/shopccer_.gif" class="img-fluid" alt="GIF">
+			</div>
+		</div>
+	</div>
 	<div class="container">
 
-		<div class="text-center border-bottom m-3">
-			<h2>Colecciones de botas por marca</h2>
+		<div class="full-details">
+
+			<div class="text-center border-bottom m-3">
+				<h2>Colecciones de botas por marca</h2>
+			</div>
+
+			<div class="row text-center">
+				<th:block th:each="marca : ${listMarcas}">
+					<div class="col-md-4" th:if="${marca.activo == true}">
+						<a th:href="@{'/productos/marcas/' + ${marca.idMarca}}">
+							<img th:src="@{${marca.pathFoto}}" height="100" alt="">
+							<br><br>
+							<b class="text-uppercase">[[${marca.nombre}]]</b>
+						</a>
+					</div>
+				</th:block>
+			</div>
+
+			<div class="text-center border-bottom m-3">
+				<h2>Colecciones de botas por superficie</h2>
+			</div>
+
+			<div class="row text-center">
+				<th:block th:each="superficie : ${listSuperficies}">
+					<div class="col-md-4" th:if="${superficie.activo == true}">
+						<a th:href="@{'/productos/superficies/' + ${superficie.idSuperficie}}">
+							<img th:src="@{${superficie.pathFoto}}" height="100" alt="">
+							<br><br>
+							<b class="text-uppercase">[[${superficie.nombre}]]</b>
+						</a>
+					</div>
+				</th:block>
+			</div>
+
 		</div>
 
-		<div class="row text-center">
-			<th:block th:each="marca : ${listMarcas}">
-				<div class="col" th:if="${marca.activo == true}">
-					<a th:href="@{'/productos/marcas/' + ${marca.idMarca}}">
-						<img th:src="@{${marca.pathFoto}}" height="100" alt="">
-						<br><br>
-						<b class="text-uppercase">[[${marca.nombre}]]</b>
-					</a>
+
+		<div class="less-details">
+			<div class="text-center border m-3">
+				<h4 data-toggle="collapse" data-target="#collapseMarcas">Colecciones de botas por marca</h4>
+			</div>
+
+			<div class="collapse" id="collapseMarcas">
+				<div class="row text-center">
+					<th:block th:each="marca : ${listMarcas}">
+						<div class="col-md-4" th:if="${marca.activo == true}">
+							<a th:href="@{'/productos/marcas/' + ${marca.idMarca}}">
+								<img th:src="@{${marca.pathFoto}}" height="80" alt="">
+								<br><br>
+								<b class="text-uppercase">[[${marca.nombre}]]</b>
+							</a>
+						</div>
+					</th:block>
 				</div>
-			</th:block>
-		</div>
+			</div>
 
-		<div class="text-center border-bottom m-3">
-			<h2>Colecciones de botas por superficie</h2>
-		</div>
 
-		<div class="row text-center">
-			<th:block th:each="superficie : ${listSuperficies}">
-				<div class="col" th:if="${superficie.activo == true}">
-					<a th:href="@{'/productos/superficies/' + ${superficie.idSuperficie}}">
-						<img th:src="@{${superficie.pathFoto}}" height="100" alt="">
-						<br><br>
-						<b class="text-uppercase">[[${superficie.nombre}]]</b>
-					</a>
+			<div class="text-center border m-3">
+				<h4 data-toggle="collapse" data-target="#collapseSuperficies">Colecciones de botas por superficie</h4>
+			</div>
+
+			<div class="collapse" id="collapseSuperficies">
+				<div class="row text-center">
+					<th:block th:each="superficie : ${listSuperficies}">
+						<div class="col-md-4" th:if="${superficie.activo == true}">
+							<a th:href="@{'/productos/superficies/' + ${superficie.idSuperficie}}">
+								<img th:src="@{${superficie.pathFoto}}" height="80" alt="">
+								<br><br>
+								<b class="text-uppercase">[[${superficie.nombre}]]</b>
+							</a>
+						</div>
+					</th:block>
 				</div>
-			</th:block>
+			</div>
 		</div>
 
 	</div>

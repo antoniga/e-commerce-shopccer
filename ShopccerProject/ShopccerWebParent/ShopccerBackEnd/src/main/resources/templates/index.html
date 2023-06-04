@@ -12,7 +12,32 @@
 			<a th:href="@{/cuenta}" sec:authentication="principal.fullname"></a>
 			<strong><span sec:authentication="principal.authorities"></span></strong>
 		</div>
-
+		&nbsp;
+		<div class="row">
+			<div class="col mb-3" sec:authorize="hasAuthority('Super-Admin')">
+				<a th:href="@{/usuarios}" title="Gestión de usuarios"><i class="fa-solid fa-users fa-5x icon-shopccer"></i></a>
+			</div>
+			<div class="col mb-3" sec:authorize="hasAnyAuthority('Super-Admin','Admin')">
+				<a th:href="@{/superficies}" title="Gestión de superficies"><i class="fas fa-futbol fa-5x icon-shopccer"></i></a>
+			</div>
+			<div class="col mb-3" sec:authorize="hasAnyAuthority('Super-Admin','Admin')">
+				<a th:href="@{/marcas}" title="Gestión de marcas"><i class="fa-regular fa-copyright fa-5x icon-shopccer"></i></a>
+			</div>
+			<div class="col mb-3" sec:authorize="hasAnyAuthority('Super-Admin','Admin')">
+				<a th:href="@{/productos}" title="Gestión de productos"><i class="fa-solid fa-bag-shopping fa-5x icon-shopccer"></i></a>
+			</div>
+			<div class="col mb-3" sec:authorize="hasAnyAuthority('Super-Admin','Admin')">
+				<a th:href="@{/clientes}" title="Gestión de clientes"><i class="fa-solid fa-users-rectangle fa-5x icon-shopccer"></i></a>
+			</div>
+			<div class="col mb-3" sec:authorize="hasAnyAuthority('Super-Admin','Admin')">
+				<a th:href="@{/pedidos}" title="Gestión de pedidos"><i class="fa-solid fa-people-carry-box fa-5x icon-shopccer"></i></a>
+			</div>
+			<div class="col mb-3" sec:authorize="hasAuthority('Super-Admin')">
+				<a th:href="@{/ajustes}" title="Ajustes del sistema"><i class="fa-solid fa-gears fa-5x icon-shopccer"></i></a>
+			</div>
+		</div>
+	</div>
+	&nbsp;
 	<div th:replace="fragments :: footer"></div>
 	</div>
 </body>
