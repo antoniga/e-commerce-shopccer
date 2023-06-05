@@ -26,7 +26,7 @@
       <div class="form-group row">
         <div class="col-sm-12">
           <label class="form-label">Logo de la página:</label>
-          <img id="thumbnail" width="250" height="100" alt="Vista previa foto" th:src="@{${SITE_LOGO}}">
+          <img id="thumbnail" width="250" height="100" alt="Vista previa foto" th:src="@{${S3_BASE_URI + SITE_LOGO}}">
           <input type="file" id="fileImg" name="logoImg" accept="image/png, image/jpeg">
         </div>
       </div>

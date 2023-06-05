@@ -3,6 +3,7 @@ package com.shopccer.admin.controller;
 import com.shopccer.admin.service.AjusteService;
 import com.shopccer.admin.utils.FileLoadUtil;
 import com.shopccer.admin.utils.GeneralUtil;
+import com.shopccer.common.Constants;
 import com.shopccer.common.entity.Ajuste;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,6 +31,8 @@ public class AjusteController {
         List<Ajuste> listaAjustes = ajusteService.listAllAjustes();
 
         listaAjustes.forEach(ajuste -> model.addAttribute(ajuste.getClave(), ajuste.getValor()));
+
+        model.addAttribute("S3_BASE_URI", Constants.S3_BASE_URI);
 
         return "ajustes/ajustes";
     }

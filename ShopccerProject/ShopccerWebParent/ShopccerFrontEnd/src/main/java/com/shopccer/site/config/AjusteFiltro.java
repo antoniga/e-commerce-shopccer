@@ -1,5 +1,6 @@
 package com.shopccer.site.config;
 
+import com.shopccer.common.Constants;
 import com.shopccer.common.entity.Ajuste;
 import com.shopccer.site.service.AjusteService;
 import jakarta.servlet.*;
@@ -35,6 +36,7 @@ public class AjusteFiltro implements Filter {
             request.setAttribute(ajuste.getClave(),ajuste.getValor());
         });
 
+        request.setAttribute("S3_BASE_URI", Constants.S3_BASE_URI);
         chain.doFilter(request,response);
 
     }

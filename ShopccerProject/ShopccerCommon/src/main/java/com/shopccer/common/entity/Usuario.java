@@ -2,6 +2,7 @@ package com.shopccer.common.entity;
 
 import java.util.Objects;
 
+import com.shopccer.common.Constants;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -166,7 +167,7 @@ public class Usuario {
 		if(idUsuario == null || fotos == null) {
 			return "/images/default-user.png";
 		}
-		return "/fotos-usuarios/" + this.idUsuario + "/" + this.fotos;
+		return Constants.S3_BASE_URI + "/fotos-usuarios/" + this.idUsuario + "/" + this.fotos;
 	}	
 	
 	@Transient

@@ -3,6 +3,7 @@ package com.shopccer.common.entity;
 import java.util.List;
 import java.util.Objects;
 
+import com.shopccer.common.Constants;
 import jakarta.persistence.*;
 
 @Entity
@@ -132,7 +133,7 @@ public class Marca {
 		
 		if(this.idMarca == null || foto == null) return"/images/default-marca.png";
 		
-		return "/fotos-marcas/" + this.idMarca + "/" + this.foto;
+		return Constants.S3_BASE_URI +  "/fotos-marcas/" + this.idMarca + "/" + this.foto;
 	}
 
 }

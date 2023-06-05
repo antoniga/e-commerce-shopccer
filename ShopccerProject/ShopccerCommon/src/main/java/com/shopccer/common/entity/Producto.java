@@ -1,5 +1,6 @@
 package com.shopccer.common.entity;
 
+import com.shopccer.common.Constants;
 import jakarta.persistence.*;
 
 import java.text.DecimalFormat;
@@ -268,13 +269,13 @@ public class Producto {
 
         if(this.idProducto == null || fotoPrincipal == null) return"/images/default-producto.png";
 
-        return "/fotos-productos/" + this.idProducto + "/" + this.fotoPrincipal;
+        return Constants.S3_BASE_URI +  "/fotos-productos/" + this.idProducto + "/" + this.fotoPrincipal;
     }
 
     @Transient
     public String getPathFotosDetalle(String fotoDetalle) {
 
-        return "/fotos-productos/" + this.idProducto + "/detalles/"+fotoDetalle;
+        return Constants.S3_BASE_URI + "/fotos-productos/" + this.idProducto + "/detalles/"+fotoDetalle;
     }
 
     public Boolean contieneFotoDetalle(String nombreArchivo){

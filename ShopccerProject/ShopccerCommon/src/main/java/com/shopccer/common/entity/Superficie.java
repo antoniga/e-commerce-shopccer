@@ -1,5 +1,6 @@
 package com.shopccer.common.entity;
 
+import com.shopccer.common.Constants;
 import jakarta.persistence.*;
 
 import java.util.List;
@@ -121,6 +122,6 @@ public class Superficie {
 
         if(this.idSuperficie == null || foto == null) return"/images/default-superficie.png";
 
-        return "/fotos-superficies/" + this.idSuperficie + "/" + this.foto;
+        return Constants.S3_BASE_URI +  "/fotos-superficies/" + this.idSuperficie + "/" + this.foto;
     }
 }
