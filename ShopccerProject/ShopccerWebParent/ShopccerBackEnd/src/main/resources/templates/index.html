@@ -14,26 +14,33 @@
 		</div>
 		&nbsp;
 		<div class="row">
-			<div class="col mb-3" sec:authorize="hasAuthority('Super-Admin')">
+			<div class="col mb-3 text-center" sec:authorize="hasAuthority('Super-Admin')">
 				<a th:href="@{/usuarios}" title="Gestión de usuarios"><i class="fa-solid fa-users fa-5x icon-shopccer"></i></a>
+				<p style="color: #17a2b8;">USUARIOS</p>
 			</div>
-			<div class="col mb-3" sec:authorize="hasAnyAuthority('Super-Admin','Admin')">
+			<div class="col mb-3 text-center" sec:authorize="hasAnyAuthority('Super-Admin','Admin')">
 				<a th:href="@{/superficies}" title="Gestión de superficies"><i class="fas fa-futbol fa-5x icon-shopccer"></i></a>
+				<p style="color: #17a2b8;">SUPERFICIES</p>
 			</div>
-			<div class="col mb-3" sec:authorize="hasAnyAuthority('Super-Admin','Admin')">
+			<div class="col mb-3 text-center" sec:authorize="hasAnyAuthority('Super-Admin','Admin')">
 				<a th:href="@{/marcas}" title="Gestión de marcas"><i class="fa-regular fa-copyright fa-5x icon-shopccer"></i></a>
+				<p style="color: #17a2b8;">MARCAS</p>
 			</div>
-			<div class="col mb-3" sec:authorize="hasAnyAuthority('Super-Admin','Admin')">
+			<div class="col mb-3 text-center" sec:authorize="hasAnyAuthority('Super-Admin','Admin')">
 				<a th:href="@{/productos}" title="Gestión de productos"><i class="fa-solid fa-bag-shopping fa-5x icon-shopccer"></i></a>
+				<p style="color: #17a2b8;">PRODUCTOS</p>
 			</div>
-			<div class="col mb-3" sec:authorize="hasAnyAuthority('Super-Admin','Admin')">
+			<div class="col mb-3 text-center" sec:authorize="hasAnyAuthority('Super-Admin','Admin')">
 				<a th:href="@{/clientes}" title="Gestión de clientes"><i class="fa-solid fa-users-rectangle fa-5x icon-shopccer"></i></a>
+				<p style="color: #17a2b8;">CLIENTES</p>
 			</div>
-			<div class="col mb-3" sec:authorize="hasAnyAuthority('Super-Admin','Admin')">
+			<div class="col mb-3 text-center" sec:authorize="hasAnyAuthority('Super-Admin','Admin')">
 				<a th:href="@{/pedidos}" title="Gestión de pedidos"><i class="fa-solid fa-people-carry-box fa-5x icon-shopccer"></i></a>
+				<p style="color: #17a2b8;">PEDIDOS</p>
 			</div>
-			<div class="col mb-3" sec:authorize="hasAuthority('Super-Admin')">
+			<div class="col mb-3 text-center" sec:authorize="hasAuthority('Super-Admin')">
 				<a th:href="@{/ajustes}" title="Ajustes del sistema"><i class="fa-solid fa-gears fa-5x icon-shopccer"></i></a>
+				<p style="color: #17a2b8;">AJUSTES</p>
 			</div>
 		</div>
 	</div>
