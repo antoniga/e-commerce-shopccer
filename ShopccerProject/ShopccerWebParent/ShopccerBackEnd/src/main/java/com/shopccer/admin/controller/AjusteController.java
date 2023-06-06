@@ -1,6 +1,7 @@
 package com.shopccer.admin.controller;
 
 import com.shopccer.admin.service.AjusteService;
+import com.shopccer.admin.utils.AmazonS3Util;
 import com.shopccer.admin.utils.FileLoadUtil;
 import com.shopccer.admin.utils.GeneralUtil;
 import com.shopccer.common.Constants;
@@ -94,9 +95,9 @@ public class AjusteController {
             listaAjustes.stream()
                     .filter(ajuste -> ajuste.getClave().equals("SITE_LOGO"))
                     .findFirst().orElse(null).setValor(valor);
-            String dirSubida="../site-logo/";
-            FileLoadUtil.cleanDir(dirSubida);
-            FileLoadUtil.saveFile(dirSubida, nombreArchivo, multipartFile);
+            String dirSubida="site-logo";
+            AmazonS3Util.removeFolder(dirSubida);
+            AmazonS3Util.uploadFile(dirSubida, nombreArchivo, multipartFile.getInputStream());
         }
     }
 

@@ -4,6 +4,7 @@ import com.shopccer.admin.exception.UsuarioNotFoundException;
 import com.shopccer.admin.service.RolService;
 import com.shopccer.admin.service.UsuarioService;
 import com.shopccer.admin.service.impl.UsuarioServiceImpl;
+import com.shopccer.admin.utils.AmazonS3Util;
 import com.shopccer.admin.utils.FileLoadUtil;
 import com.shopccer.common.entity.Rol;
 import com.shopccer.common.entity.Usuario;
@@ -88,10 +89,10 @@ public class UsuarioController {
 			String nombreArchivo = StringUtils.cleanPath(multipartFile.getOriginalFilename());
 			usuario.setFotos(nombreArchivo);
 			Usuario savedUsuario = usuarioService.save(usuario);
-			String dirSubida = "fotos-usuarios/" + savedUsuario.getIdUsuario();		
-			
-			FileLoadUtil.cleanDir(dirSubida);
-			FileLoadUtil.saveFile(dirSubida, nombreArchivo, multipartFile);
+			String dirSubida = "fotos-usuarios/" + savedUsuario.getIdUsuario();
+
+			AmazonS3Util.removeFolder(dirSubida);
+			AmazonS3Util.uploadFile(dirSubida,nombreArchivo,multipartFile.getInputStream());
 		}else {
 			
 			if (usuario.getFotos().isEmpty()) {
@@ -131,6 +132,8 @@ public class UsuarioController {
 		try {
 
 			usuarioService.deleteByID(idUsuario);
+			String userPhotosDir = "fotos-usuarios/" + idUsuario;
+			AmazonS3Util.removeFolder(userPhotosDir);
 			redirectAttributes.addFlashAttribute("msg", "El usuario con id: " + idUsuario + " ha sido eliminado.");
 		} catch (UsuarioNotFoundException e) {
 

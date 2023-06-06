@@ -107,6 +107,9 @@
 					email: userEmail,
 					_csrf: csrf
 				};
+				console.log(url);
+				console.log(userEmail);
+				console.log(userId);
 				$.post(
 					url,
 					data,
@@ -123,7 +126,12 @@
 						}
 
 					}).fail(
-						function () {
+						function (jqXHR, textStatus, errorThrown) {
+
+							// Código adicional para manejar el error o mostrar información específica del error
+							console.log("Error en la solicitud AJAX. Código de estado: " + jqXHR.status);
+							console.log("Mensaje de error: " + errorThrown);
+							console.log("TextStatus: " + textStatus);
 							showModalDialog("Error.",
 								"No se pudo conectar con el servidor.");
 						});
