@@ -13,7 +13,7 @@ public class MarcaRestController {
 	private MarcaService marcaService;
 
 	@PostMapping("/marcas/checknombre")
-	public String checkNombreUnico(@RequestParam("idMarca") Integer idMarca, @RequestParam("nombre") String nombre) {
+	public String checkNombreUnico(Integer idMarca, String nombre) {
 		return marcaService.isNombreUnique(idMarca, nombre) ? "ok" : "duplicado";
 	}
 

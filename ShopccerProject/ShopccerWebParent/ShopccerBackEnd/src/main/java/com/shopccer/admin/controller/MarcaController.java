@@ -3,6 +3,7 @@ package com.shopccer.admin.controller;
 import com.shopccer.admin.exception.MarcaNotFoundException;
 import com.shopccer.admin.service.MarcaService;
 import com.shopccer.admin.service.impl.MarcaServiceImpl;
+import com.shopccer.admin.utils.AmazonS3Util;
 import com.shopccer.admin.utils.FileLoadUtil;
 import com.shopccer.common.entity.Marca;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -86,9 +87,9 @@ public class MarcaController {
 			
 			Marca savedMarca = marcaService.save(marca);
 			
-			String dirSubida = "../fotos-marcas/" + savedMarca.getIdMarca();
-			FileLoadUtil.cleanDir(dirSubida);
-			FileLoadUtil.saveFile(dirSubida, nombreArchivo, multipartFile);
+			String dirSubida = "fotos-marcas/" + savedMarca.getIdMarca();
+			AmazonS3Util.removeFolder(dirSubida);
+			AmazonS3Util.uploadFile(dirSubida, nombreArchivo, multipartFile.getInputStream());
 		} else {
 			
 			if(marca.getFoto().isEmpty()) {
@@ -128,6 +129,9 @@ public class MarcaController {
 
 		try {
 			marcaService.deleteById(idMarca);
+			String marcaFotosDir = "fotos-marcas/" + idMarca;
+			AmazonS3Util.removeFolder(marcaFotosDir);
+
 			redirectAttributes.addFlashAttribute("msg", "La marca con id: " + idMarca + " ha sido eliminada.");
 		} catch (MarcaNotFoundException e) {
 			redirectAttributes.addFlashAttribute("msg", e.getMessage());

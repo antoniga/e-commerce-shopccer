@@ -13,7 +13,7 @@ public class SuperficieRestController {
 	private SuperficieService superficieService;
 
 	@PostMapping("/superficies/checknombre")
-	public String checkNombreUnico(@RequestParam("idSuperficie") Integer idSuperficie, @RequestParam("nombre") String nombre) {
+	public String checkNombreUnico(Integer idSuperficie, String nombre) {
 		return superficieService.isNombreUnique(idSuperficie, nombre) ? "ok" : "duplicado";
 	}
 

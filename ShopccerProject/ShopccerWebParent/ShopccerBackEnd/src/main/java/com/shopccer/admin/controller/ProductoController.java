@@ -6,6 +6,7 @@ import com.shopccer.admin.service.MarcaService;
 import com.shopccer.admin.service.ProductoService;
 import com.shopccer.admin.service.SuperficieService;
 import com.shopccer.admin.service.impl.ProductoServiceImpl;
+import com.shopccer.admin.utils.AmazonS3Util;
 import com.shopccer.admin.utils.FileLoadUtil;
 import com.shopccer.common.entity.Marca;
 import com.shopccer.common.entity.Producto;
@@ -168,24 +169,17 @@ public class ProductoController {
 
     private void deleteFotosDetalleRemovedOnForm(Producto producto) {
 
-        String dirFotosDetalle = "../fotos-productos/" + producto.getIdProducto() + "/detalles";
-        Path dirPath = Paths.get(dirFotosDetalle);
+        String dirFotosDetalle = "fotos-productos/" + producto.getIdProducto() + "/detalles";
+        List<String> listObjectKeys = AmazonS3Util.listFolder(dirFotosDetalle);
 
-        try {
-            Files.list(dirPath).forEach(file ->{
-                String filename = file.toFile().getName();
+        for (String objectKey : listObjectKeys) {
+            int lastIndexOfSlash = objectKey.lastIndexOf("/");
+            String fileName = objectKey.substring(lastIndexOfSlash + 1, objectKey.length());
 
-                if(!producto.contieneFotoDetalle(filename)){
-                    try{
-                        Files.delete(file);
-                        LOGGER.info("Borrada foto detalle: " + filename);
-                    }catch (IOException e){
-                        LOGGER.error("No se puede eliminar la foto detalle : "+ filename);
-                    }
-                }
-            } );
-        }catch (IOException e){
-            LOGGER.error("No se puede listar el directorio: " + dirPath);
+            if (!producto.contieneFotoDetalle(fileName)) {
+                AmazonS3Util.deleteFile(objectKey);
+                System.out.println("Borrada foto detalle: " + objectKey);
+            }
         }
 
     }
@@ -194,18 +188,23 @@ public class ProductoController {
 
         if(!multipartFile.isEmpty()) {
             String nombreArchivo = StringUtils.cleanPath(multipartFile.getOriginalFilename());
-            String dirSubida = "../fotos-productos/" + savedProducto.getIdProducto();
-            FileLoadUtil.cleanDir(dirSubida);
-            FileLoadUtil.saveFile(dirSubida, nombreArchivo, multipartFile);
+            String dirSubida = "fotos-productos/" + savedProducto.getIdProducto();
+            List<String> listObjectKeys = AmazonS3Util.listFolder(dirSubida + "/");
+            for (String objectKey : listObjectKeys) {
+                if (!objectKey.contains("/detalles/")) {
+                    AmazonS3Util.deleteFile(objectKey);
+                }
+            }
+            AmazonS3Util.uploadFile(dirSubida, nombreArchivo, multipartFile.getInputStream());
         }
 
         if(fotosDetalle.length > 0) {
-            String dirSubidaDetalle = "../fotos-productos/" + savedProducto.getIdProducto() + "/detalles";
+            String dirSubidaDetalle = "fotos-productos/" + savedProducto.getIdProducto() + "/detalles";
 
             for (MultipartFile multipartFileDetalle : fotosDetalle) {
                 if (multipartFileDetalle.isEmpty()) continue;
                 String nombreArchivoDetalle = StringUtils.cleanPath(multipartFileDetalle.getOriginalFilename());
-                FileLoadUtil.saveFile(dirSubidaDetalle, nombreArchivoDetalle, multipartFileDetalle);
+                AmazonS3Util.uploadFile(dirSubidaDetalle, nombreArchivoDetalle, multipartFileDetalle.getInputStream());
             }
         }
     }
@@ -284,11 +283,11 @@ public class ProductoController {
 
         try {
             productoService.deleteById(idProducto);
-            String productoDirFotosDetalle = "../fotos-productos/" + idProducto + "/detalles";
-            String productoDirFotos = "../fotos-productos/" + idProducto;
+            String productoDirFotosDetalle = "fotos-productos/" + idProducto + "/detalles";
+            String productoDirFotos = "fotos-productos/" + idProducto;
 
-            FileLoadUtil.cleanDir(productoDirFotosDetalle);
-            FileLoadUtil.cleanDir(productoDirFotos);
+            AmazonS3Util.removeFolder(productoDirFotosDetalle);
+            AmazonS3Util.removeFolder(productoDirFotos);
 
             redirectAttributes.addFlashAttribute("msg", "El producto con id: " + idProducto + " ha sido eliminada.");
         } catch (ProductoNotFoundException e) {

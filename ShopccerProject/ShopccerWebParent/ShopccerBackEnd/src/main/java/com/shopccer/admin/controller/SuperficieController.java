@@ -3,6 +3,7 @@ package com.shopccer.admin.controller;
 import com.shopccer.admin.exception.SuperficieNotFoundException;
 import com.shopccer.admin.service.SuperficieService;
 import com.shopccer.admin.service.impl.SuperficieServiceImpl;
+import com.shopccer.admin.utils.AmazonS3Util;
 import com.shopccer.admin.utils.FileLoadUtil;
 import com.shopccer.common.entity.Superficie;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -86,9 +87,9 @@ public class SuperficieController {
 
             Superficie savedSuperficie = superficieService.save(superficie);
 
-            String dirSubida = "../fotos-superficies/" + savedSuperficie.getIdSuperficie();
-            FileLoadUtil.cleanDir(dirSubida);
-            FileLoadUtil.saveFile(dirSubida, nombreArchivo, multipartFile);
+            String dirSubida = "fotos-superficies/" + savedSuperficie.getIdSuperficie();
+            AmazonS3Util.removeFolder(dirSubida);
+            AmazonS3Util.uploadFile(dirSubida,nombreArchivo,multipartFile.getInputStream());
         } else{
 
             if(superficie.getFoto().isEmpty()){
@@ -129,6 +130,8 @@ public class SuperficieController {
 
         try {
             superficieService.deleteById(idSuperficie);
+            String superficieFotosDir = "fotos-superficies/" + idSuperficie;
+            AmazonS3Util.removeFolder(superficieFotosDir);
             redirectAttributes.addFlashAttribute("msg", "La superficie con id: " + idSuperficie + " ha sido eliminada.");
         } catch (SuperficieNotFoundException e) {
             redirectAttributes.addFlashAttribute("msg", e.getMessage());

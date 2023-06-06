@@ -13,7 +13,7 @@ public class ProductoRestController {
     private ProductoService productoService;
 
     @PostMapping("/productos/checknombre")
-    public String checkNombreUnico(@RequestParam("idProducto") Integer idProducto, @RequestParam("nombre") String nombre) {
+    public String checkNombreUnico(Integer idProducto, String nombre) {
         return productoService.isNombreUnique(idProducto, nombre) ? "ok" : "duplicado";
     }
 }

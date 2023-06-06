@@ -24,7 +24,7 @@ public class ClienteRestController {
 	private PaisRepository paisRepository;
 	
 	@PostMapping("/clientes/checkemail")
-	public String checkDuplicateEmail(@RequestParam("idCliente") Integer idCliente, @RequestParam("email") String email) {
+	public String checkDuplicateEmail(Integer idCliente, String email) {
 		return clienteService.isEmailUnique(idCliente,email) ? "ok" : "duplicado";
 	}
 
