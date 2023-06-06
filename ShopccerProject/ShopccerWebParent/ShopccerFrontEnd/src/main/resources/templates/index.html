@@ -1,6 +1,27 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head th:replace="fragments :: pageHead('Shopccer')"></head>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Montserrat&display=swap">
+
+<style>
+	.div-shopccer {
+		position: relative;
+		display: inline-block;
+		border-radius: 10px;
+		background: linear-gradient(45deg, rgba(23, 162, 184, 0.36), rgba(253, 53, 207, 0.36));
+		padding: 10px;
+		width: 90%;
+	}
+
+	.div-shopccer h4,h2 {
+		font-family: "Montserrat", Arial, sans-serif;
+		font-weight: bold;
+		color: black;
+	}
+	a:hover {
+		text-decoration: none;
+	}
+</style>
 <body>
 <div class="sticky-top">
 	<div th:replace="navigation :: header_menu"></div>
@@ -16,8 +37,8 @@
 	<div class="container">
 
 		<div class="full-details">
-
-			<div class="text-center border-bottom m-3">
+			&nbsp;
+			<div class="text-center border-bottom m-3 div-shopccer" style="width: 100%;">
 				<h2>Colecciones de botas por marca</h2>
 			</div>
 
@@ -27,13 +48,12 @@
 						<a th:href="@{'/productos/marcas/' + ${marca.idMarca}}">
 							<img th:src="@{${marca.pathFoto}}" height="100" alt="">
 							<br><br>
-							<b class="text-uppercase">[[${marca.nombre}]]</b>
 						</a>
 					</div>
 				</th:block>
 			</div>
 
-			<div class="text-center border-bottom m-3">
+			<div class="text-center border-bottom m-3 div-shopccer" style="width: 100%;">
 				<h2>Colecciones de botas por superficie</h2>
 			</div>
 
@@ -43,8 +63,9 @@
 						<a th:href="@{'/productos/superficies/' + ${superficie.idSuperficie}}">
 							<img th:src="@{${superficie.pathFoto}}" height="100" alt="">
 							<br><br>
-							<b class="text-uppercase">[[${superficie.nombre}]]</b>
+							<b class="text-uppercase" style="text-decoration: none; color: black;">[[${superficie.nombre}]]</b>
 						</a>
+						<br><br>
 					</div>
 				</th:block>
 			</div>
@@ -53,8 +74,13 @@
 
 
 		<div class="less-details">
-			<div class="text-center border m-3">
-				<h4 data-toggle="collapse" data-target="#collapseMarcas">Colecciones de botas por marca</h4>
+			&nbsp;
+			<div class="text-center" style="font-size: larger; font-family: 'Montserrat', Arial, sans-serif;">
+				<p>Explora nuestras botas de fútbol:</p>
+			</div>
+
+			<div class="text-center border m-3 div-shopccer">
+				<h4 data-toggle="collapse" data-target="#collapseMarcas">Por marca</h4>
 			</div>
 
 			<div class="collapse" id="collapseMarcas">
@@ -64,16 +90,16 @@
 							<a th:href="@{'/productos/marcas/' + ${marca.idMarca}}">
 								<img th:src="@{${marca.pathFoto}}" height="80" alt="">
 								<br><br>
-								<b class="text-uppercase">[[${marca.nombre}]]</b>
 							</a>
 						</div>
+						<br>
 					</th:block>
 				</div>
 			</div>
 
 
-			<div class="text-center border m-3">
-				<h4 data-toggle="collapse" data-target="#collapseSuperficies">Colecciones de botas por superficie</h4>
+			<div class="text-center border m-3 div-shopccer">
+				<h4 data-toggle="collapse" data-target="#collapseSuperficies">Por superficie de juego</h4>
 			</div>
 
 			<div class="collapse" id="collapseSuperficies">
@@ -83,9 +109,10 @@
 							<a th:href="@{'/productos/superficies/' + ${superficie.idSuperficie}}">
 								<img th:src="@{${superficie.pathFoto}}" height="80" alt="">
 								<br><br>
-								<b class="text-uppercase">[[${superficie.nombre}]]</b>
+								<b class="text-uppercase" style="text-decoration: none; color: black;">[[${superficie.nombre}]]</b>
 							</a>
 						</div>
+						&nbsp;
 					</th:block>
 				</div>
 			</div>

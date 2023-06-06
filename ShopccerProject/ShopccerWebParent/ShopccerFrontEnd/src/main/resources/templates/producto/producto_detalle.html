@@ -2,9 +2,10 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head th:replace="fragments :: pageHead(${tituloPagina})"></head>
 <body>
+<div class="sticky-top">
 	<div th:replace="navigation :: header_menu"></div>
+</div>
 	<div th:replace="breadcrumb :: content"></div>
-	<div th:replace="navigation :: search_nav"></div>
 		<div class="container">
 			<div class="row">
 				<div class="col-sm">
