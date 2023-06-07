@@ -49,7 +49,7 @@ $(document).ready(function() {
 function deleteState() {
     stateId = dropDownStates.val();
 
-    url = "/ShopccerAdmin/comunidades/delete/" + stateId;
+    url = "/comunidades/delete/" + stateId;
 
     $.ajax({
         type: 'DELETE',
@@ -69,7 +69,7 @@ function deleteState() {
 function updateState() {
     if (!validateFormState()) return;
 
-    url = "/ShopccerAdmin/comunidades/save";
+    url = "/comunidades/save";
     stateId = dropDownStates.val();
     stateName = fieldStateName.val();
 
@@ -99,7 +99,7 @@ function updateState() {
 function addState() {
     if (!validateFormState()) return;
 
-    url ="/ShopccerAdmin/comunidades/save";
+    url ="/comunidades/save";
     stateName = fieldStateName.val();
 
     selectedCountry = $("#dropDownCountriesForStates option:selected");
@@ -168,7 +168,7 @@ function changeFormStateToSelectedState() {
 function loadStates4Country() {
     selectedCountry = $("#dropDownCountriesForStates option:selected");
     countryId = selectedCountry.val();
-    url = "/ShopccerAdmin/comunidades/list_by_pais/" + countryId;
+    url = "/comunidades/list_by_pais/" + countryId;
 
     $.get(url, function(responseJSON) {
         dropDownStates.empty();
@@ -186,7 +186,7 @@ function loadStates4Country() {
 }
 
 function loadCountries4States() {
-    url = "/ShopccerAdmin/paises/list";
+    url = "/paises/list";
     $.get(url, function(responseJSON) {
         dropDownCountry4States.empty();
 

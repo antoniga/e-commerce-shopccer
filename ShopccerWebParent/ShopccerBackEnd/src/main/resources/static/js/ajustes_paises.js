@@ -59,7 +59,7 @@ function deleteCountry() {
     optionValue = desplegablePais.val();
     countryId = optionValue.split("-")[0];
 
-    url = "/ShopccerAdmin/paises/delete/" + countryId;
+    url = "/paises/delete/" + countryId;
 
     $.ajax({
         type: 'DELETE',
@@ -79,7 +79,7 @@ function deleteCountry() {
 function updateCountry() {
     if (!validateFormCountry()) return;
 
-    url = "/ShopccerAdmin/paises/save";
+    url = "/paises/save";
     countryName = campoNombrePais.val();
     countryCode = campoCodigoPais.val();
 
@@ -110,7 +110,7 @@ function savePais() {
 
    if (!validateFormCountry()) return;
 
-    url = "/ShopccerAdmin/paises/save";
+    url = "/paises/save";
     countryName = campoNombrePais.val();
     countryCode = campoCodigoPais.val();
     jsonData = {nombre: countryName, codigo: countryCode};
@@ -168,7 +168,7 @@ function changeFormComunidadToSelectedPais() {
 }
 
 function cargaPaises(){
-    url=  "/ShopccerAdmin/paises/list";
+    url=  "/paises/list";
     $.get(url, function (responseJSON){
         desplegablePais.empty();
 
